@@ -1165,7 +1165,7 @@ const DB_HEROES = [
         }
     },
     { 
-        id: 'h107', name: '拉葳', nameEn: 'Loraine', element: 'fire', rarity: 'rare',
+        id: 'h107', name: '拉葳', nameEn: 'Lavi', element: 'fire', rarity: 'rare',
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w107'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
@@ -1176,7 +1176,7 @@ const DB_HEROES = [
         }
     },
     { 
-        id: 'h108', name: '法葳', nameEn: 'Loraine', element: 'water', rarity: 'rare',
+        id: 'h108', name: '法葳', nameEn: 'Favi', element: 'water', rarity: 'rare',
         chain: { ex1: { start: 'all', end: 'injured' }}, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w108'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
