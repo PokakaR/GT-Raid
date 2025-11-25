@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>守望傳說 - 公會討伐戰術板 (v21)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>守望傳說 - 公會討伐戰術板</h1>
+        <div class="controls">
+            <button id="global-state-toggle">全部開花: 🌱</button>
+			<button id="global-style-toggle" onclick="toggleAllHeroStyle()">造型: BASE</button>
+			
+            <button onclick="saveToLocal()">💾 儲存</button>
+            <button onclick="exportData()">📤 匯出 JSON</button>
+            <label class="btn-import" style="background:#444; color:#fff; padding:0.4rem 0.8rem; border-radius:0.3rem; cursor:pointer; font-size:0.9rem;">
+                📥 匯入 JSON
+                <input type="file" accept=".json" onchange="importData(this)" hidden>
+            </label>
+            <button onclick="clearAllData()" class="btn-danger">🗑️ 重置全部</button>
+        </div>
+    </header>
+
+    <div id="quadrant-container">
+        <div class="quadrant" id="q-0">
+            <div class="quadrant-header"></div>
+            <div class="team-list"></div>
+        </div>
+        <div class="quadrant" id="q-1">
+            <div class="quadrant-header"></div>
+            <div class="team-list"></div>
+        </div>
+        <div class="quadrant" id="q-2">
+            <div class="quadrant-header"></div>
+            <div class="team-list"></div>
+        </div>
+        <div class="quadrant" id="q-3">
+            <div class="quadrant-header"></div>
+            <div class="team-list"></div>
+        </div>
+    </div>
+
+    <div id="selection-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+
+            <div class="modal-header">
+                <h2 id="modal-title" style="margin:0; margin-bottom:10px; color:#ffcc00;">選擇項目</h2>
+            </div>
+            
+            <div class="search-bar" id="search-bar">
+                <input type="text" id="search-input" class="search-input" placeholder="搜尋名稱 (中/英)...">
+                
+                <div id="modal-hero-state-toggle-container" style="display:none !important;">
+                    <button id="modal-hero-state-toggle-btn">開花預覽: 🌱</button>
+                </div>
+                
+                <label style="display:inline-flex; align-items:center; cursor:pointer; font-size:0.9rem; color:#aaa;">
+                    <input type="checkbox" id="toggle-exclusive" style="margin-right:5px;"> 僅顯示專武
+                </label>
+            </div>
+
+            <div id="tab-container" class="tab-container"></div>
+
+            <button id="btn-clear-slot" class="btn-clear-slot" onclick="clearCurrentSlot()" style="background:#555; margin-bottom:10px; width:100%;">清除此格</button>
+
+            <div id="grid-content" class="grid-container"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
