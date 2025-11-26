@@ -8,7 +8,7 @@ let editContext = { qIdx: 0, tIdx: 0, mIdx: 0, type: '' };
 let currentTab = 'all';
 let currentRarity = 'all';
 let modalBossState = { step: 'element', element: null };
-let globalHeroState = 'base';
+let globalHeroState = 'sixStar';
 let globalHeroStyle = 'base';
 
 // DOM Elements
