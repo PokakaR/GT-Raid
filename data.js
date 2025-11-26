@@ -1277,7 +1277,7 @@ const DB_HEROES = [
     { 
         id: 'h117', name: '飛兒', nameEn: 'Fei', element: 'light', rarity: 'rare',
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
-        allowWeapons: ['gauntlet'], exclusiveWeapons: ['w117'], 
+        allowWeapons: ['gauntlet'], exclusiveWeapons: ['w116'], 
         coreStates: { base: {}, ascended: {} , sixStar: null },
         buffs: {
             base: { ex1: { text: '近戰防+64%' } },
@@ -1376,7 +1376,7 @@ const DB_HEROES = [
     { 
         id: 'h126', name: '愛彌', nameEn: 'Amy', element: 'basic', rarity: 'rare',
         chain: { ex1: { start: 'downed', end: 'injured' }}, 
-        allowWeapons: ['staff'], exclusiveWeapons: ['w126'], 
+        allowWeapons: ['2h_sword'], exclusiveWeapons: ['w126'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
         buffs: {
             base: { ex1: { text: '近戰傷+48%' } },
@@ -1398,7 +1398,7 @@ const DB_HEROES = [
     { 
         id: 'h128', name: '凱特琳', nameEn: 'Catherine', element: 'water', rarity: 'rare',
         chain: { ex1: { start: 'airborne', end: 'injured' }}, 
-        allowWeapons: ['staff'], exclusiveWeapons: ['w128'], 
+        allowWeapons: ['bow'], exclusiveWeapons: ['w128'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
         buffs: {
             base: { ex1: { text: '遠程防+66%' } },
@@ -1409,7 +1409,7 @@ const DB_HEROES = [
     { 
         id: 'h129', name: '麗', nameEn: 'Rie', element: 'basic', rarity: 'rare',
         chain: { ex1: { start: 'airborne', end: 'downed' }}, 
-        allowWeapons: ['staff'], exclusiveWeapons: ['w129'], 
+        allowWeapons: ['2h_sword'], exclusiveWeapons: ['w129'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
         buffs: {
             base: { ex1: { text: '爆擊率+37%' } },
@@ -1551,7 +1551,35 @@ const DB_WEAPONS = [
 	{ id: 's009', name: '龍指虎', nameEn: 'Dragon Kunckles', type: 'claw', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s009_Dragon Kunckles.png' },
 	{ id: 's010', name: '芙莉蓮的手杖', nameEn: 'Frierens Staff', type: 'staff', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s010_Frierens Staff.png' },
 	{ id: 's011', name: '修塔爾克的斧頭', nameEn: 'Starks Axe', type: '2h_sword', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s011_Starks Axe.png' },
-	{ id: 's012', name: '費倫的手杖', nameEn: 'Ferns Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s012_Ferns Staff.png' }
+	{ id: 's012', name: '費倫的手杖', nameEn: 'Ferns Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s012_Ferns Staff.png' },
+	{ id: 'w101', name: '利貝拉', nameEn: 'Libera', type: '1h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w101_Libera.png' },
+	{ id: 'w101_ex2', name: '利貝拉Type.B', nameEn: 'Libera Type.B', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w101_ex2_Libera Type.B.png' },
+	{ id: 'w102', name: '正義', nameEn: 'Justice', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w102_Justice.png' },
+	{ id: 'w103', name: '麻煩精', nameEn: 'Trouble Maker', type: 'rifle', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w103_Trouble Maker.png' },
+	{ id: 'w104', name: '芬里爾', nameEn: 'Fenrir', type: 'claw', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w104_Fenrir.png' },
+	{ id: 'w105', name: '新月', nameEn: 'Crescent Moon', type: 'staff', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w105_Crescent Moon.png' },
+	{ id: 'w106', name: '艾瑪', nameEn: 'Emma', type: 'basket', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w106_Emma.png' },
+	{ id: 'w107', name: '粉碎者', nameEn: 'Pulverizer', type: 'gauntlet', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w107_Pulverizer.png' },
+	{ id: 'w108', name: '冰霜傑克', nameEn: 'Jack Frost', type: 'basket', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w108_Jack Frost.png' },
+	{ id: 'w109', name: '奧伯隆', nameEn: 'Oberon', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w109_Oberon.png' },
+	{ id: 'w110', name: '好奇解答者', nameEn: 'Curiosity Solver', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w110_Curiosity Solver.png' },
+	{ id: 'w111', name: '藍玫瑰', nameEn: 'Blue Rose', type: 'rifle', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w111_Blue Rose.png' },
+	{ id: 'w112', name: '赫卡蒂', nameEn: '', type: 'rifle', isExclusive: true, chainSkill: '', icon: './images/weapons/w112_.png' },
+	{ id: 'w113', name: '女巫之心', nameEn: 'Witch Heart', type: 'staff', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w113_Witch Heart.png' },
+	{ id: 'w114', name: '無情', nameEn: 'Merciless', type: 'rifle', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w114_Merciless.png' },
+	{ id: 'w115', name: '瑪奇頓破壞者', nameEn: 'Magiton Buster', type: 'rifle', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w115_Magiton Buster.png' },
+	{ id: 'w116', name: '鬥士的自尊', nameEn: 'Pride of Fighter', type: 'gauntlet', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w116_Pride of Fighter.png' },
+	{ id: 'w118', name: '法爾肯', nameEn: 'Vulkan', type: 'gauntlet', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w118_Vulkan.png' },
+	{ id: 'w119', name: '沉默', nameEn: 'Silence', type: '1h_sword', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w119_Silence.png' },
+	{ id: 'w120', name: '村雨', nameEn: 'Murasame', type: '1h_sword', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w120_Murasame.png' },
+	{ id: 'w121', name: '堅決的心', nameEn: 'Firm Determination', type: 'claw', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w121_Firm Determination.png' },
+	{ id: 'w122', name: '塔爾塔羅斯', nameEn: 'Tartaros', type: '2h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w122_Tartaros.png' },
+	{ id: 'w123', name: '真理', nameEn: 'Veritas', type: '1h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w123_Veritas.png' },
+	{ id: 'w124', name: '法夫納', nameEn: 'Fafnir', type: '2h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w124_Fafnir.png' },
+	{ id: 'w125', name: '太陽神', nameEn: 'Helios', type: 'staff', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w125_Helios.png' },
+	{ id: 'w126', name: '雙子座', nameEn: 'Geminus', type: '2h_sword', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w126_Geminus.png' },
+	{ id: 'w127', name: '龍之怒', nameEn: 'Wrath of Dragon', type: 'staff', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w127_Wrath of Dragon.png' },
+	{ id: 'w128', name: '掠奪者', nameEn: 'Marauder', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w128_Marauder.png' },
 ];
 
 const DB_ACCESSORIES = [
