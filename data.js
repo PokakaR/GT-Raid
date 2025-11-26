@@ -1439,7 +1439,7 @@ const DB_WEAPONS = [
     { id: 'w004', name: '集體滅絕', nameEn: 'Genocide', type: 'rifle', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w004_Genocide.png' },
     { id: 'w005', name: '天使之聲', nameEn: 'Angel Voice', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w005_Angel Voice.png' },
     { id: 'w006', name: '梅麗爾', nameEn: 'Mayreel', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w006_Mayreel.png' },
-    { id: 'w006_ex2', name: '土花二專', nameEn: 'Pino', type: 'basket', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w006_ex2_Pino.png' },
+    { id: 'w006_ex2', name: '皮諾', nameEn: 'Pino', type: 'basket', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w006_ex2_Pino.png' },
     { id: 'w007', name: '亞馬洛克', nameEn: 'Amarok', type: 'staff', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w007_Amarok.png' },
     { id: 'w008', name: '純潔的心', nameEn: 'Pure Mind', type: 'gauntlet', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w008_Pure Mind.png' },
     { id: 'w008_ex2', name: '鏡花水月', nameEn: 'Elusive Reflection', type: 'basket', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w008_ex2_Elusive Reflection.png' },
