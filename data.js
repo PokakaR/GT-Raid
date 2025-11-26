@@ -1564,7 +1564,7 @@ const DB_WEAPONS = [
 	{ id: 'w109', name: '奧伯隆', nameEn: 'Oberon', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w109_Oberon.png' },
 	{ id: 'w110', name: '好奇解答者', nameEn: 'Curiosity Solver', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w110_Curiosity Solver.png' },
 	{ id: 'w111', name: '藍玫瑰', nameEn: 'Blue Rose', type: 'rifle', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w111_Blue Rose.png' },
-	{ id: 'w112', name: '赫卡蒂', nameEn: '', type: 'rifle', isExclusive: true, chainSkill: '', icon: './images/weapons/w112_.png' },
+	{ id: 'w112', name: '交涉者', nameEn: 'Negotiator', type: 'rifle', isExclusive: true, chainSkill: '', icon: './images/weapons/w112_Negotiator.png' },
 	{ id: 'w113', name: '女巫之心', nameEn: 'Witch Heart', type: 'staff', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w113_Witch Heart.png' },
 	{ id: 'w114', name: '無情', nameEn: 'Merciless', type: 'rifle', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w114_Merciless.png' },
 	{ id: 'w115', name: '瑪奇頓破壞者', nameEn: 'Magiton Buster', type: 'rifle', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w115_Magiton Buster.png' },
