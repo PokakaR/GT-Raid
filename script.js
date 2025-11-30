@@ -864,36 +864,37 @@ function importData(input) {
 document.addEventListener('DOMContentLoaded', init);
 
 // ==========================================================
-// 5. 快照匯出功能 (Standalone HTML)
+// 5. 快照匯出功能 (Standalone HTML) - 修正版
 // ==========================================================
 
 async function exportSnapshot() {
-    if (!confirm("這將會下載一個包含當前所有設定的獨立 HTML 檔案。\n\n您可以將此檔案傳送給他人，他們打開後將看到與您完全相同的畫面。\n\n確定匯出嗎？")) return;
+    // 檢查是否已設定 GitHub URL (簡單檢查是否包含預設字串或為空)
+    if (!GITHUB_REPO_URL || GITHUB_REPO_URL.includes('您的帳號')) {
+        alert("請注意：您尚未在 script.js 中設定正確的 GITHUB_REPO_URL。\n匯出的檔案圖片可能會無法顯示。");
+    }
+
+    if (!confirm("這將會下載一個包含當前所有設定的獨立 HTML 檔案。\n確定匯出嗎？")) return;
 
     try {
-        // 1. 獲取當前所有外部資源的內容
-        // 注意：這需要在伺服器環境(如 GitHub Pages)下才能運作，本地直接開啟 html 可能會因為 CORS 失敗
+        // 1. 獲取原始碼內容
         const cssContent = await fetch('style.css').then(res => res.text());
         const dataJsContent = await fetch('data.js').then(res => res.text());
-        
-        // 我們不 fetch script.js，而是直接用當前的 script 邏輯，但需要去除 init 的監聽，改由我們手動控制
-        // 為了簡單起見，我們還是 fetch script.js，但會在寫入時插入資料變數
         const scriptJsContent = await fetch('script.js').then(res => res.text());
 
         // 2. 準備當前的資料
         const currentDataJson = JSON.stringify(appData);
 
-        // 3. 處理圖片路徑：將相對路徑 ./images 替換為絕對路徑
-        // 這樣別人在沒有 images 資料夾的情況下打開 HTML 也能看到圖片
+        // 3. 定義替換邏輯：將相對路徑 ./images 替換為絕對路徑
         const fixImgPaths = (content) => {
+            // 使用正則表達式全域替換 ./images/ 為 GITHUB_URL + images/
             return content.replace(/\.\/images\//g, GITHUB_REPO_URL + 'images/');
         };
 
-        // 4. 替換資料中的圖片路徑 (針對 data.js 和 CSS 中的背景圖)
-        const fixedCss = fixImgPaths(cssContent);
-        const fixedDataJs = fixImgPaths(dataJsContent);
-        // appData 內的圖片路徑也要替換
-        const fixedDataJson = currentDataJson.replace(/\.\/images\//g, GITHUB_REPO_URL + 'images/');
+        // 4. ★★★ 關鍵修正：替換所有部分的圖片路徑 ★★★
+        const fixedCss = fixImgPaths(cssContent);       // 替換 CSS 中的背景圖
+        const fixedDataJs = fixImgPaths(dataJsContent); // 替換 data.js 資料庫圖示
+        const fixedScriptJs = fixImgPaths(scriptJsContent); // 替換 script.js 程式碼內的字串
+        const fixedDataJson = fixImgPaths(currentDataJson); // 替換當前存檔的圖示
 
         // 5. 組合新的 HTML 內容
         const newHtml = `
@@ -904,6 +905,7 @@ async function exportSnapshot() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>守望傳說戰術板 - 快照 (${new Date().toLocaleDateString()})</title>
     <style>
+        /* 嵌入 CSS */
         ${fixedCss}
     </style>
 </head>
@@ -911,30 +913,34 @@ async function exportSnapshot() {
     ${document.body.innerHTML}
     
     <script>
-        // 這是快照資料
         window.SNAPSHOT_DATA = ${fixedDataJson};
-        
-        // 覆寫 data.js 的內容 (因為我們無法輕易修改 const，這裡我們直接執行 data.js 的內容，但變數宣告可能會衝突)
-        // 更好的方式是將 data.js 內容包在 function 或是直接在此定義
-        // 由於 data.js 都是 const，我們不重複宣告，而是依賴 script.js 的邏輯
     </script>
 
     <script>
         ${fixedDataJs.replace(/const /g, 'var ')} 
-        // 將 const 改為 var 避免與可能的重複宣告衝突，或直接貼上內容
     </script>
 
     <script>
-        ${scriptJsContent}
+        // 覆蓋掉 init 函數，避免它去 fetch 外部檔案，而是直接使用嵌入的資料
+        // 但因為我們直接嵌入了 script.js 的內容，它會執行 init
+        // 下面的 fixedScriptJs 已經包含替換過的路徑
+        ${fixedScriptJs}
     </script>
     
     <script>
-        // 移除所有控制按鈕中的 "匯出快照" 和 "儲存"，避免混淆
-        // 這裡可以加入一些清理 UI 的程式碼
-        const controlsDiv = document.querySelector('.controls');
-        if(controlsDiv) {
-            // 可以在這裡移除按鈕，但為了保持功能完整，暫不移除
-        }
+        // 額外清理：移除匯出按鈕，避免在快照中再次匯出
+        setTimeout(() => {
+            const controls = document.querySelector('.controls');
+            if(controls) {
+                // 隱藏儲存與匯出相關按鈕
+                const btns = controls.querySelectorAll('button, label');
+                btns.forEach(btn => {
+                    if(btn.innerText.includes('儲存') || btn.innerText.includes('匯出') || btn.innerText.includes('匯入')) {
+                        btn.style.display = 'none';
+                    }
+                });
+            }
+        }, 100);
     </script>
 </body>
 </html>`;
@@ -952,6 +958,6 @@ async function exportSnapshot() {
 
     } catch (error) {
         console.error(error);
-        alert("匯出失敗！請確保您是在 GitHub Pages 或本地伺服器環境下執行。\n錯誤: " + error.message);
+        alert("匯出失敗！\n錯誤: " + error.message);
     }
 }
