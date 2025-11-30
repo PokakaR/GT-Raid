@@ -11,6 +11,8 @@ let modalBossState = { step: 'element', element: null };
 let globalHeroState = 'sixStar';
 let globalHeroStyle = 'base';
 
+const GITHUB_REPO_URL = 'https://pokakar.github.io/GT-Raid/';
+
 // DOM Elements
 const modal = document.getElementById('selection-modal');
 const grid = document.getElementById('grid-content');
@@ -25,11 +27,11 @@ const styleToggleBtn = document.getElementById('global-style-toggle');
 const BUFF_PARSER_MAP = {
     '技回': 'wepRegen', '技傷': 'skillDmg', '防禦力': 'def', '生命力': 'hp',
     '爆擊率': 'crit', '爆傷': 'critDmg', '遠程防': 'rangeDef', '近戰防': 'meleeDef',
-    '普屬攻': 'normalAtk', '火屬攻': 'fireAtk', '水屬攻': 'waterAtk', 
+    '普屬攻': 'normalAtk', '火屬攻': 'fireAtk', '水屬攻': 'waterAtk',
     '土屬攻': 'earthAtk', '光屬攻': 'lightAtk', '暗屬攻': 'darkAtk',
     '遠程': 'rangeAtk', '近戰': 'meleeAtk', '攻擊力': 'Atk', '一般攻': 'generalAtk',
-    '遠程攻': 'rangeAtk', '近戰攻': 'meleeAtk', '護盾': 'shieldIncr' ,
-	"擊殺恢復" : 'killRecover' , "受傷連鎖，攻擊力、回復力" : 'injuredAtkHealIncr'
+    '遠程攻': 'rangeAtk', '近戰攻': 'meleeAtk', '護盾': 'shieldIncr',
+    "擊殺恢復": 'killRecover', "受傷連鎖，攻擊力、回復力": 'injuredAtkHealIncr'
 };
 
 const MAX_CHAIN_ROWS = 4; // 已修正: 從 3 改為 4
@@ -39,16 +41,16 @@ const MAX_CHAIN_SETS = 2;
 const defaultChainSlot = {
     time: '',
     // selectedIndex: -1 (未選中), 0, 1, 2, 3 (英雄在 team.members 陣列中的索引)
-    selectedIndex: -1, 
+    selectedIndex: -1,
 };
 
 function createDefaultChainSet() {
     return {
-        presets: Array(MAX_CHAIN_ROWS).fill(null).map(() => 
-            Array(4).fill(null).map(() => ({...defaultChainSlot}))
+        presets: Array(MAX_CHAIN_ROWS).fill(null).map(() =>
+            Array(4).fill(null).map(() => ({ ...defaultChainSlot }))
         ),
         note: '',
-        activeRows: 2, 
+        activeRows: 2,
     };
 }
 
@@ -59,15 +61,15 @@ function createDefaultChainSet() {
 
 function findHero(id) { return (typeof DB_HEROES !== 'undefined' ? DB_HEROES : []).find(h => h.id === id); }
 function findWeapon(id) { return (typeof DB_WEAPONS !== 'undefined' ? DB_WEAPONS : []).find(w => w.id === id); }
-function findAccessory(id) { return (typeof DB_ACCESSORIES !== 'undefined' ? DB_ACCESSORIES : []).find(a => a.id === id); } 
+function findAccessory(id) { return (typeof DB_ACCESSORIES !== 'undefined' ? DB_ACCESSORIES : []).find(a => a.id === id); }
 function findRelic(id) { return (typeof DB_RELICS !== 'undefined' ? DB_RELICS : []).find(r => r.id === id); }
 
 //英雄狀態造型路徑
 function getHeroIconUrl(id, state, style) {
     const hero = findHero(id);
     let stateSuffix = '';
-	
-	if (state === 'ascended' && hero.coreStates && hero.coreStates.ascended !== null) {
+
+    if (state === 'ascended' && hero.coreStates && hero.coreStates.ascended !== null) {
         stateSuffix = '_Ascended';
     } else if (state === 'sixStar' && hero.coreStates && hero.coreStates.sixStar !== null) {
         stateSuffix = '_6Star';
@@ -77,9 +79,9 @@ function getHeroIconUrl(id, state, style) {
     let stylePrefix = '';
     if (style !== 'base' && hero.styles && hero.styles.includes(style)) {
         // 假設造型圖片放在 ./images/heroes/styles/ 中，且命名為 HeroName_style.png
-        return `./images/heroes/styles/${hero.nameEn}_${style}.png`; 
+        return `./images/heroes/styles/${hero.nameEn}_${style}.png`;
     }
-    
+
     // 預設路徑 (英雄基本名稱 + 狀態後綴)
     return `./images/heroes/${hero.nameEn}${stateSuffix}.png`;
 }
@@ -99,9 +101,9 @@ function parseBuffText(text) {
             const val = parseInt(match[2], 10);
             let type = BUFF_PARSER_MAP[match[1].trim()];
             if (!type) {
-                 for(let k in BUFF_PARSER_MAP) {
-                     if (match[1].includes(k)) type = BUFF_PARSER_MAP[k];
-                 }
+                for (let k in BUFF_PARSER_MAP) {
+                    if (match[1].includes(k)) type = BUFF_PARSER_MAP[k];
+                }
             }
             if (type && val > 0) buffVal.push({ type, value: val });
         }
@@ -123,17 +125,17 @@ function getHeroInfo(heroData, globalState, w1Id) {
 
     const hasSixStar = heroData.coreStates && heroData.coreStates.sixStar !== null;
     const hasAscended = heroData.coreStates && heroData.coreStates.ascended !== null;
-    
+
     // 決定使用哪個狀態的數據 (ascended > sixStar > base)
     let stateKey = 'base';
-	
-	if (globalState === 'ascended') {
+
+    if (globalState === 'ascended') {
         // 狀態 2: 強制晉升 (🌟)
         if (hasAscended) {
             stateKey = 'ascended';
         }
-        
-    } else if (globalState === 'sixStar') { 
+
+    } else if (globalState === 'sixStar') {
         // 狀態 3: 智能判斷 (開花/晉升混合模式 🌸)
         if (hasSixStar) {
             stateKey = 'sixStar'; // 優先使用開花狀態
@@ -141,14 +143,14 @@ function getHeroInfo(heroData, globalState, w1Id) {
             stateKey = 'ascended'; // 如果沒有開花，但有晉升，則使用晉升狀態
         }
     }
-	
-	
-    
+
+
+
     // 傳遞 globalHeroStyle 來決定圖標
     const iconPath = getHeroIconUrl(heroData.id, stateKey, globalHeroStyle);
 
     const isEx2 = heroData.exclusiveWeapons && heroData.exclusiveWeapons.some(w => w.endsWith('_ex2') && w1Id === w);
-    
+
     // 讀取對應狀態的 buffs
     const buffs = heroData.buffs[stateKey] || heroData.buffs.base;
     const activeBuff = isEx2 ? (buffs.ex2 || buffs.ex1) : buffs.ex1;
@@ -158,7 +160,7 @@ function getHeroInfo(heroData, globalState, w1Id) {
     let chain = heroData.chain.ex1 || heroData.chain;
     if (isEx2 && heroData.chain.ex2) chain = heroData.chain.ex2;
     // 如果有 ascended 專屬 chain，則使用它 (假設命名為 chain.ascended)
-    if (stateKey === 'ascended' && heroData.chain.ascended) chain = heroData.chain.ascended; 
+    if (stateKey === 'ascended' && heroData.chain.ascended) chain = heroData.chain.ascended;
 
     return { icon: iconPath, partyBuffVal, chain, stateKey }; // 返回 stateKey 供後續判斷
 }
@@ -184,67 +186,81 @@ function calculateTeamBuffs(team) {
 
 function init() {
     if (typeof DB_BOSSES === 'undefined') { console.error("Data not loaded"); return; }
-    
-    const saved = localStorage.getItem('gt_raid_v21'); 
-    if (saved) {
-        try {
-            appData = JSON.parse(saved);
-            appData.forEach(q => {
-                if(!q.teams) q.teams = [];
-                while(q.teams.length < 3) addTeamToData(q);
-                q.teams.forEach(t => {
-                    if(!t.members || t.members.length < 5) {
-                        const oldM = t.members || [];
-                        t.members = Array(5).fill().map((_, i) => oldM[i] || { heroId: null, w1Id: null, w2Id: null, accId: null, relicId: null });
-                    }
-                    
-                    // Migration / Initialization
-                    if(!t.chainData || t.chainData.length !== MAX_CHAIN_SETS) { 
-                        t.chainData = Array(MAX_CHAIN_SETS).fill(null).map(() => createDefaultChainSet());
-                        t.activeChainSets = 1;
-                    }
-                    if(typeof t.activeChainSets !== 'number' || t.activeChainSets < 1 || t.activeChainSets > MAX_CHAIN_SETS) {
-                        t.activeChainSets = 1; 
-                    }
-                    
-                    // Validate internals and migrate old 'active' to new 'selectedIndex'
-                    t.chainData.forEach(set => {
-                        if (!set.presets) set.presets = createDefaultChainSet().presets;
-                        if (!set.note) set.note = '';
-                        if (typeof set.activeRows !== 'number' || set.activeRows > MAX_CHAIN_ROWS) {
-                             set.activeRows = Math.min(2, MAX_CHAIN_ROWS);
-                        }
-                        
-                        // Ensure 'presets' array has MAX_CHAIN_ROWS length for consistency
-                        while (set.presets.length < MAX_CHAIN_ROWS) {
-                            set.presets.push(Array(4).fill(null).map(() => ({...defaultChainSlot})));
-                        }
-                        set.presets.length = MAX_CHAIN_ROWS; 
 
-                        set.presets.forEach(row => {
-                           row.forEach(slot => {
-                               if (typeof slot.active === 'boolean' || typeof slot.selectedIndex !== 'number') {
-                                   slot.selectedIndex = -1; // Reset to unselected for new logic
-                                   delete slot.active; // Clean up old field
-                               }
-                           });
-                       });
-                    });
+    if (window.SNAPSHOT_DATA) {
+        console.log("Loading from Snapshot...");
+        appData = window.SNAPSHOT_DATA;
 
-                    delete t.chainTimings;
-                    delete t.chainNotes;
-                });
-            });
-        } catch(e) { appData = getEmptyData(); }
+        // 如果是快照模式，隱藏一些不需要的按鈕 (可選)
+        const saveBtn = document.querySelector('button[onclick="saveToLocal()"]');
+        if (saveBtn) saveBtn.style.display = 'none'; // 快照檔不需要再存到 Local
+        const importLabel = document.querySelector('.btn-import');
+        if (importLabel) importLabel.style.display = 'none';
+
     } else {
-        appData = getEmptyData();
-        appData.forEach(q => { addTeamToData(q); addTeamToData(q); addTeamToData(q); });
+
+        const saved = localStorage.getItem('gt_raid_v21');
+        if (saved) {
+            try {
+                appData = JSON.parse(saved);
+                appData.forEach(q => {
+                    if (!q.teams) q.teams = [];
+                    while (q.teams.length < 3) addTeamToData(q);
+                    q.teams.forEach(t => {
+                        if (!t.members || t.members.length < 5) {
+                            const oldM = t.members || [];
+                            t.members = Array(5).fill().map((_, i) => oldM[i] || { heroId: null, w1Id: null, w2Id: null, accId: null, relicId: null });
+                        }
+
+                        // Migration / Initialization
+                        if (!t.chainData || t.chainData.length !== MAX_CHAIN_SETS) {
+                            t.chainData = Array(MAX_CHAIN_SETS).fill(null).map(() => createDefaultChainSet());
+                            t.activeChainSets = 1;
+                        }
+                        if (typeof t.activeChainSets !== 'number' || t.activeChainSets < 1 || t.activeChainSets > MAX_CHAIN_SETS) {
+                            t.activeChainSets = 1;
+                        }
+
+                        // Validate internals and migrate old 'active' to new 'selectedIndex'
+                        t.chainData.forEach(set => {
+                            if (!set.presets) set.presets = createDefaultChainSet().presets;
+                            if (!set.note) set.note = '';
+                            if (typeof set.activeRows !== 'number' || set.activeRows > MAX_CHAIN_ROWS) {
+                                set.activeRows = Math.min(2, MAX_CHAIN_ROWS);
+                            }
+
+                            // Ensure 'presets' array has MAX_CHAIN_ROWS length for consistency
+                            while (set.presets.length < MAX_CHAIN_ROWS) {
+                                set.presets.push(Array(4).fill(null).map(() => ({ ...defaultChainSlot })));
+                            }
+                            set.presets.length = MAX_CHAIN_ROWS;
+
+                            set.presets.forEach(row => {
+                                row.forEach(slot => {
+                                    if (typeof slot.active === 'boolean' || typeof slot.selectedIndex !== 'number') {
+                                        slot.selectedIndex = -1; // Reset to unselected for new logic
+                                        delete slot.active; // Clean up old field
+                                    }
+                                });
+                            });
+                        });
+
+                        delete t.chainTimings;
+                        delete t.chainNotes;
+                    });
+                });
+            } catch (e) { appData = getEmptyData(); }
+        } else {
+            appData = getEmptyData();
+            appData.forEach(q => { addTeamToData(q); addTeamToData(q); addTeamToData(q); });
+        }
     }
-    
-    if(searchInput) searchInput.addEventListener('input', renderGrid);
-    if(toggleExclusive) toggleExclusive.addEventListener('change', renderGrid);
-    if(globalStateToggleBtn) globalStateToggleBtn.onclick = toggleAllHeroStates;
-    
+
+    if (searchInput) searchInput.addEventListener('input', renderGrid);
+    if (toggleExclusive) toggleExclusive.addEventListener('change', renderGrid);
+    if (globalStateToggleBtn) globalStateToggleBtn.onclick = toggleAllHeroStates;
+    if (styleToggleBtn) styleToggleBtn.onclick = toggleAllHeroStyle;
+
     renderApp();
 }
 
@@ -264,14 +280,14 @@ function addTeamToData(quadrant) {
         id: Date.now().toString() + Math.random(),
         members: Array(5).fill().map(() => ({ heroId: null, w1Id: null, w2Id: null, accId: null, relicId: null })),
         chainData: Array(MAX_CHAIN_SETS).fill(null).map(() => createDefaultChainSet()),
-        activeChainSets: 1 
+        activeChainSets: 1
     });
 }
 
 function saveToLocal() { localStorage.setItem('gt_raid_v21', JSON.stringify(appData)); }
 function saveAndRender() { saveToLocal(); renderApp(); }
 function promptSave() { saveToLocal(); alert('已儲存'); }
-function clearAllData() { if(confirm('重置？')) { localStorage.removeItem('gt_raid_v21'); location.reload(); }}
+function clearAllData() { if (confirm('重置？')) { localStorage.removeItem('gt_raid_v21'); location.reload(); } }
 
 // ==========================================================
 // 4. 渲染
@@ -280,11 +296,11 @@ function clearAllData() { if(confirm('重置？')) { localStorage.removeItem('gt
 function renderApp() {
     appData.forEach((qData, qIdx) => {
         const qEl = document.getElementById(`q-${qIdx}`);
-        if(!qEl) return;
+        if (!qEl) return;
 
         const boss = DB_BOSSES.find(b => b.id === qData.bossId) || DB_BOSSES.find(b => b.element === qData.element);
         const elemData = CONSTANTS.elements[qData.element] || CONSTANTS.elements.basic;
-        
+
         qEl.querySelector('.quadrant-header').innerHTML = `
             <div class="boss-display-wrapper" onclick="openModal(${qIdx},0,0,'boss')" style="border-color:${elemData.color}">
                 <div class="boss-info-text">
@@ -295,57 +311,57 @@ function renderApp() {
             </div>
             <button onclick="addTeam(${qIdx})">+ 隊伍</button>
         `;
-        
+
         qEl.querySelector('.team-list').innerHTML = qData.teams.map((t, tIdx) => renderTeam(t, qIdx, tIdx)).join('');
     });
-	
+
     // 更新狀態按鈕文字 (base: 🌱, sixStar: 🌸, ascended: 🌟)
-    let stateText = '🌱 基本'; 
-	if (globalHeroState === 'ascended') stateText = '🌟 晉升'; 
+    let stateText = '🌱 基本';
+    if (globalHeroState === 'ascended') stateText = '🌟 晉升';
     if (globalHeroState === 'sixStar') stateText = '🌸 最大';
-    
+
     globalStateToggleBtn.innerText = `${stateText}`;
-    
+
     // NEW: 更新造型按鈕文字
     if (styleToggleBtn) {
-         let styleLabel = globalHeroStyle.toUpperCase();
-         if (globalHeroStyle === 'april_fool') styleLabel = '愚人節';
-         if (globalHeroStyle === 'supper') styleLabel = '超時';
-         styleToggleBtn.innerText = `造型: ${styleLabel}`;
+        let styleLabel = globalHeroStyle.toUpperCase();
+        if (globalHeroStyle === 'april_fool') styleLabel = '愚人節';
+        if (globalHeroStyle === 'supper') styleLabel = '超時';
+        styleToggleBtn.innerText = `造型: ${styleLabel}`;
     }
 }
 
 function renderTeam(team, qIdx, tIdx) {
     const stats = calculateTeamBuffs(team);
-    const buffText = generateBuffText(Object.entries(stats).map(([k,v]) => ({type:k, value:v})), ' | ') || '無加成';
-    
+    const buffText = generateBuffText(Object.entries(stats).map(([k, v]) => ({ type: k, value: v })), ' | ') || '無加成';
+
     const auxHtml = renderAuxMember(team.members[4], qIdx, tIdx, 4);
     const heroesHtml = team.members.slice(0, 4).map((m, mIdx) => renderHeroMember(m, qIdx, tIdx, mIdx)).join('');
-    
+
     let chainPanelsHtml = '';
-    
+
     // Loop through active chain sets (1 or 2)
-    for(let setIdx = 0; setIdx < team.activeChainSets; setIdx++) { 
+    for (let setIdx = 0; setIdx < team.activeChainSets; setIdx++) {
         const chainSet = team.chainData[setIdx];
-        
+
         let chainSetContent = '';
 
         // Render Chain Rows (Presets)
-        for(let rowIdx = 0; rowIdx < chainSet.activeRows; rowIdx++) {
+        for (let rowIdx = 0; rowIdx < chainSet.activeRows; rowIdx++) {
             const chainRow = chainSet.presets[rowIdx];
-            
+
             // mIdx here is the chain slot position (0 to 3)
             const heroSlotsHtml = chainRow.map((slot, mIdx) => {
-                
+
                 const selectedHeroIndex = slot.selectedIndex; // -1, 0, 1, 2, or 3
                 let iconPath = './images/slots/hero.png';
                 let isSelected = selectedHeroIndex !== -1;
-                let heroLabel = `H${mIdx+1} slot`;
+                let heroLabel = `H${mIdx + 1} slot`;
 
                 if (isSelected) {
                     const selectedMember = team.members[selectedHeroIndex];
                     const h = findHero(selectedMember.heroId);
-                    
+
                     // 檢查被選中的英雄槽位是否真的有英雄
                     if (h) {
                         const info = getHeroInfo(h, globalHeroState, selectedMember.w1Id);
@@ -357,7 +373,7 @@ function renderTeam(team, qIdx, tIdx) {
                         isSelected = false;
                     }
                 }
-                
+
                 return `
                     <div class="chain-step-item">
                         <div class="chain-row-icon ${!isSelected ? 'unselected' : ''}" 
@@ -370,10 +386,10 @@ function renderTeam(team, qIdx, tIdx) {
                     </div>
                 `;
             }).join('');
-            
+
             // 新增：刪除連鎖行按鈕 (只有在 activeRows > 1 時才顯示)
-            const removeRowButtonHtml = (chainSet.activeRows > 1) ? 
-                `<button class="btn-remove-chain-row" title="刪除此行" onclick="removeChainRow(${qIdx}, ${tIdx}, ${setIdx}, ${rowIdx})">x</button>` : 
+            const removeRowButtonHtml = (chainSet.activeRows > 1) ?
+                `<button class="btn-remove-chain-row" title="刪除此行" onclick="removeChainRow(${qIdx}, ${tIdx}, ${setIdx}, ${rowIdx})">x</button>` :
                 `<div style="width: 1.2rem; flex-shrink: 0;"></div>`; // 保持對齊的空白佔位符
 
             chainSetContent += `
@@ -395,9 +411,9 @@ function renderTeam(team, qIdx, tIdx) {
                 </button>
             `;
         }
-        
+
         chainPanelsHtml += `
-            <div class="chain-set-group set-${setIdx+1}">
+            <div class="chain-set-group set-${setIdx + 1}">
                 <button class="btn-remove-chain-set" onclick="removeChainSet(${qIdx}, ${tIdx}, ${setIdx})">x</button>
                 <div class="chain-set-content">
                     <div class="chain-timing-steps-content">
@@ -420,7 +436,7 @@ function renderTeam(team, qIdx, tIdx) {
             </div>
         `;
     }
-    
+
     return `
         <div class="team-container">
             <div class="team-header">
@@ -444,7 +460,7 @@ function renderHeroMember(member, qIdx, tIdx, mIdx) {
     const h = findHero(member.heroId);
     const info = getHeroInfo(h, globalHeroState, member.w1Id);
     const elem = h ? CONSTANTS.elements[h.element] : CONSTANTS.elements.basic;
-    
+
     let chainHtml = '';
     if (info.chain) {
         chainHtml = `
@@ -487,11 +503,11 @@ function renderAuxMember(member, qIdx, tIdx, mIdx) {
 
 /* --- Actions --- */
 function addTeam(qIdx) { addTeamToData(appData[qIdx]); saveAndRender(); }
-function removeTeam(q, t) { if(confirm('刪除此隊伍?')) { appData[q].teams.splice(t,1); saveAndRender(); }}
+function removeTeam(q, t) { if (confirm('刪除此隊伍?')) { appData[q].teams.splice(t, 1); saveAndRender(); } }
 
 // MODIFIED: 支援 base, sixStar, ascended 循環
-function toggleAllHeroStates() { 
-	if (globalHeroState === 'base') {
+function toggleAllHeroStates() {
+    if (globalHeroState === 'base') {
         globalHeroState = 'ascended'; // 進入強制晉升模式 🌟
     } else if (globalHeroState === 'ascended') {
         globalHeroState = 'sixStar'; // 進入智能判斷模式 (開花/晉升混合模式 🌸)
@@ -523,7 +539,7 @@ function removeChainSet(q, t, setIdx) {
     const team = appData[q].teams[t];
     if (team.activeChainSets > 0) {
         team.chainData.splice(setIdx, 1);
-        team.chainData.push(createDefaultChainSet()); 
+        team.chainData.push(createDefaultChainSet());
         team.activeChainSets--;
         saveAndRender();
     }
@@ -542,13 +558,13 @@ function removeChainRow(q, t, setIdx, rowIdx) {
     if (chainSet.activeRows > 1) {
         // 1. 刪除指定行
         chainSet.presets.splice(rowIdx, 1);
-        
+
         // 2. 在尾部新增一個預設行，以維持陣列長度 (MAX_CHAIN_ROWS)
-        chainSet.presets.push(Array(4).fill(null).map(() => ({...defaultChainSlot})));
-        
+        chainSet.presets.push(Array(4).fill(null).map(() => ({ ...defaultChainSlot })));
+
         // 3. 減少活躍行數
         chainSet.activeRows--;
-        
+
         saveAndRender();
     }
 }
@@ -557,7 +573,7 @@ function removeChainRow(q, t, setIdx, rowIdx) {
 // 獨立循環選擇邏輯
 function cycleChainSelection(q, t, setIdx, rowIdx, slotIdx) {
     const chainSlot = appData[q].teams[t].chainData[setIdx].presets[rowIdx][slotIdx];
-    const members = appData[q].teams[t].members; 
+    const members = appData[q].teams[t].members;
 
     // 1. 取得所有已放置英雄的索引 (0, 1, 2, 3)
     const placedHeroIndices = [];
@@ -567,7 +583,7 @@ function cycleChainSelection(q, t, setIdx, rowIdx, slotIdx) {
             placedHeroIndices.push(i);
         }
     }
-    
+
     // 如果隊伍中沒有任何英雄，則直接儲存並返回 (保持未選中)
     if (placedHeroIndices.length === 0) {
         chainSlot.selectedIndex = -1;
@@ -577,16 +593,16 @@ function cycleChainSelection(q, t, setIdx, rowIdx, slotIdx) {
 
     // 2. 建立完整的循環序列: [未選中: -1, H1, H2, ..., Hn]
     const fullCycle = [-1, ...placedHeroIndices];
-    
+
     // 3. 尋找當前選中的索引在循環序列中的位置
     const currentIndex = chainSlot.selectedIndex;
     let currentCycleIndex = fullCycle.indexOf(currentIndex);
 
     // 如果當前索引不在序列中 (例如英雄被移除後數據殘留)，則從 -1 (未選中) 開始
     if (currentCycleIndex === -1) {
-        currentCycleIndex = 0; 
+        currentCycleIndex = 0;
     }
-    
+
     // 4. 計算下一個位置
     const nextCycleIndex = (currentCycleIndex + 1) % fullCycle.length;
 
@@ -597,7 +613,7 @@ function cycleChainSelection(q, t, setIdx, rowIdx, slotIdx) {
 }
 
 function updateChainTime(q, t, setIdx, rowIdx, mIdx, v) {
-    appData[q].teams[t].chainData[setIdx].presets[rowIdx][mIdx].time = v; 
+    appData[q].teams[t].chainData[setIdx].presets[rowIdx][mIdx].time = v;
     saveToLocal();
 }
 
@@ -608,11 +624,11 @@ function updateChainNote(q, t, setIdx, v) {
 /* --- Modal --- */
 function openModal(qIdx, tIdx, mIdx, type) {
     editContext = { qIdx, tIdx, mIdx, type };
-    
+
     document.getElementById('search-bar').style.display = 'flex';
     document.getElementById('btn-clear-slot').style.display = 'block';
     toggleExclusive.parentElement.style.display = 'none';
-    
+
     if (type === 'boss') {
         modalTitle.textContent = '選擇 BOSS';
         modalBossState.step = 'element';
@@ -638,35 +654,35 @@ function selectItem(id) {
     if (type === 'hero') {
         m.heroId = id;
         m.w1Id = null; m.w2Id = null;
-        
+
         // 英雄槽位 (mIdx) 發生變動，必須檢查所有連鎖排程並重設
         t.chainData.forEach(set => set.presets.forEach(row => {
             row.forEach(slot => {
-                 // 如果任何一個連鎖槽位選中這個位置的英雄，則必須清除選中狀態
-                 if (slot.selectedIndex === mIdx) {
+                // 如果任何一個連鎖槽位選中這個位置的英雄，則必須清除選中狀態
+                if (slot.selectedIndex === mIdx) {
                     slot.selectedIndex = -1;
                     slot.time = '';
-                 }
+                }
             });
         }));
-        
+
     } else if (type === 'w1') m.w1Id = id;
     else if (type === 'w2') m.w2Id = id;
     else if (type === 'relic') m.relicId = id;
     else if (type === 'acc') m.accId = id;
-    
+
     saveAndRender();
     closeModal();
 }
 
-function renderGrid() { 
+function renderGrid() {
     grid.innerHTML = '';
     const { type, qIdx, tIdx, mIdx } = editContext;
     const search = searchInput.value.toLowerCase();
-    
+
     const member = appData[qIdx].teams[tIdx].members[mIdx];
     const hero = member && member.heroId ? findHero(member.heroId) : null;
-    
+
     let items = [];
     if (type === 'hero') items = DB_HEROES;
     else if (type.startsWith('w')) {
@@ -676,8 +692,8 @@ function renderGrid() {
     else if (type === 'relic') items = DB_RELICS;
 
     items = items.filter(i => i.name.toLowerCase().includes(search) || (i.nameEn && i.nameEn.toLowerCase().includes(search)));
-	
-	if (currentTab !== 'all') {
+
+    if (currentTab !== 'all') {
         if (type === 'hero') {
             // 英雄篩選：根據 element (元素/屬性)
             items = items.filter(i => i.element === currentTab);
@@ -692,26 +708,26 @@ function renderGrid() {
         const el = document.createElement('div');
         el.className = 'selection-grid-item';
         el.onclick = () => selectItem(item.id);
-        
+
         let icon = item.icon;
         let buffInfo = '';
         let overlay = '';
 
         if (type === 'hero') {
-            const previewState = (globalHeroState==='sixStar' && item.coreStates && item.coreStates.sixStar) ? 'sixStar' : 'base';
+            const previewState = (globalHeroState === 'sixStar' && item.coreStates && item.coreStates.sixStar) ? 'sixStar' : 'base';
             icon = getHeroIconUrl(item.id, previewState);
             const s = item.buffs[previewState] || item.buffs.base;
             const t1 = s.ex1 ? s.ex1.text.replace(/\n/g, ' / ') : '-';
             const t2 = s.ex2 ? s.ex2.text.replace(/\n/g, ' / ') : '-';
             buffInfo = `<div class="modal-hero-buff-summary">1專:${t1}\n2專:${t2}</div>`;
             const c = item.chain.ex1 || item.chain;
-            if(c) overlay = `<div class="hero-chain-icons"><img src="${CHAIN_IMAGES[c.start]}"><span>→</span><img src="${CHAIN_IMAGES[c.end]}"></div>`;
+            if (c) overlay = `<div class="hero-chain-icons"><img src="${CHAIN_IMAGES[c.start]}"><span>→</span><img src="${CHAIN_IMAGES[c.end]}"></div>`;
         } else if (type.startsWith('w')) {
             icon = getWeaponIconUrl(item.id);
-            if(hero && hero.chain) {
+            if (hero && hero.chain) {
                 const isEx2 = item.id.endsWith('_ex2');
                 const c = isEx2 && hero.chain.ex2 ? hero.chain.ex2 : hero.chain.ex1;
-                if(c) overlay = `<div class="weapon-chain-overlay"><img src="${CHAIN_IMAGES[c.end]}"></div>`;
+                if (c) overlay = `<div class="weapon-chain-overlay"><img src="${CHAIN_IMAGES[c.end]}"></div>`;
             }
         }
         el.innerHTML = `<div class="selection-icon-container"><img src="${icon}">${overlay}</div><div class="modal-item-name">${item.name}</div>${buffInfo}`;
@@ -722,18 +738,18 @@ function renderGrid() {
 // NEW: 渲染屬性選擇網格
 function renderElementSelectionGrid() {
     grid.innerHTML = '';
-    
-    Object.entries(CONSTANTS.elements).forEach(([k,v]) => {
+
+    Object.entries(CONSTANTS.elements).forEach(([k, v]) => {
         const el = document.createElement('div');
         el.className = 'selection-grid-item';
         el.innerHTML = `<div class="selection-icon-container" style="background:${v.bg}"><img src="${v.icon}"></div><div class="modal-item-name" style="color:${v.color}">${v.label}</div>`;
-        
+
         // 點擊屬性時的處理邏輯
-        el.onclick = () => { 
+        el.onclick = () => {
             // 1. 設定象限屬性
-            appData[editContext.qIdx].element = k; 
+            appData[editContext.qIdx].element = k;
             // 2. 儲存並渲染主畫面 (更新象限顏色)
-            saveAndRender(); 
+            saveAndRender();
             // 3. 關閉當前屬性選擇模態視窗
             closeModal();
             // 4. 立即開啟 BOSS 選擇模態視窗
@@ -746,11 +762,11 @@ function renderElementSelectionGrid() {
 // NEW: 渲染純 BOSS 列表網格
 function renderBossListGrid() {
     grid.innerHTML = '';
-    
+
     DB_BOSSES.forEach(b => {
         const el = document.createElement('div');
         el.className = 'selection-grid-item';
-        
+
         // 由於 BOSS 無屬性，這裡只顯示 BOSS 名稱
         el.innerHTML = `
             <div class="selection-icon-container">
@@ -758,7 +774,7 @@ function renderBossListGrid() {
             </div>
             <div class="modal-item-name">${b.name}</div>
         `;
-        
+
         el.onclick = () => {
             // 只設定 BOSS ID
             appData[editContext.qIdx].bossId = b.id;
@@ -788,11 +804,11 @@ function renderBossModal() {
 // MODIFIED: openModal 支援新的 'boss-list' 類型
 function openModal(qIdx, tIdx, mIdx, type) {
     editContext = { qIdx, tIdx, mIdx, type };
-    
+
     document.getElementById('search-bar').style.display = 'flex';
     document.getElementById('btn-clear-slot').style.display = 'block';
     toggleExclusive.parentElement.style.display = 'none';
-    
+
     if (type === 'boss') {
         // 初始點擊 '選擇BOSS' 按鈕時，只顯示屬性選擇
         modalTitle.textContent = '選擇屬性';
@@ -820,13 +836,13 @@ function openModal(qIdx, tIdx, mIdx, type) {
 function renderTabs(type) {
     tabContainer.innerHTML = '';
     let tabs = [];
-    if(type === 'hero') tabs = Object.keys(CONSTANTS.elements);
-    if(type.startsWith('w')) tabs = Object.keys(CONSTANTS.weaponTypes);
-    let html = `<button class="tab-button ${currentTab==='all'?'active':''}" onclick="switchTab('all')">全部</button>`;
+    if (type === 'hero') tabs = Object.keys(CONSTANTS.elements);
+    if (type.startsWith('w')) tabs = Object.keys(CONSTANTS.weaponTypes);
+    let html = `<button class="tab-button ${currentTab === 'all' ? 'active' : ''}" onclick="switchTab('all')">全部</button>`;
     tabs.forEach(t => {
         const label = CONSTANTS.elements[t]?.label || CONSTANTS.weaponTypes[t] || t;
         const color = CONSTANTS.elements[t]?.color || '#fff';
-        html += `<button class="tab-button ${currentTab===t?'active':''}" onclick="switchTab('${t}')" style="color:${color}">${label}</button>`;
+        html += `<button class="tab-button ${currentTab === t ? 'active' : ''}" onclick="switchTab('${t}')" style="color:${color}">${label}</button>`;
     });
     tabContainer.innerHTML = html;
 }
@@ -839,10 +855,103 @@ function exportData() {
     document.body.appendChild(a); a.click(); a.remove();
 }
 function importData(input) {
-    const file = input.files[0]; if(!file)return;
+    const file = input.files[0]; if (!file) return;
     const reader = new FileReader();
-    reader.onload = (e) => { try{ appData=JSON.parse(e.target.result); saveAndRender(); }catch(x){alert('Error');} };
+    reader.onload = (e) => { try { appData = JSON.parse(e.target.result); saveAndRender(); } catch (x) { alert('Error'); } };
     reader.readAsText(file);
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+// ==========================================================
+// 5. 快照匯出功能 (Standalone HTML)
+// ==========================================================
+
+async function exportSnapshot() {
+    if (!confirm("這將會下載一個包含當前所有設定的獨立 HTML 檔案。\n\n您可以將此檔案傳送給他人，他們打開後將看到與您完全相同的畫面。\n\n確定匯出嗎？")) return;
+
+    try {
+        // 1. 獲取當前所有外部資源的內容
+        // 注意：這需要在伺服器環境(如 GitHub Pages)下才能運作，本地直接開啟 html 可能會因為 CORS 失敗
+        const cssContent = await fetch('style.css').then(res => res.text());
+        const dataJsContent = await fetch('data.js').then(res => res.text());
+        
+        // 我們不 fetch script.js，而是直接用當前的 script 邏輯，但需要去除 init 的監聽，改由我們手動控制
+        // 為了簡單起見，我們還是 fetch script.js，但會在寫入時插入資料變數
+        const scriptJsContent = await fetch('script.js').then(res => res.text());
+
+        // 2. 準備當前的資料
+        const currentDataJson = JSON.stringify(appData);
+
+        // 3. 處理圖片路徑：將相對路徑 ./images 替換為絕對路徑
+        // 這樣別人在沒有 images 資料夾的情況下打開 HTML 也能看到圖片
+        const fixImgPaths = (content) => {
+            return content.replace(/\.\/images\//g, GITHUB_REPO_URL + 'images/');
+        };
+
+        // 4. 替換資料中的圖片路徑 (針對 data.js 和 CSS 中的背景圖)
+        const fixedCss = fixImgPaths(cssContent);
+        const fixedDataJs = fixImgPaths(dataJsContent);
+        // appData 內的圖片路徑也要替換
+        const fixedDataJson = currentDataJson.replace(/\.\/images\//g, GITHUB_REPO_URL + 'images/');
+
+        // 5. 組合新的 HTML 內容
+        const newHtml = `
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>守望傳說戰術板 - 快照 (${new Date().toLocaleDateString()})</title>
+    <style>
+        ${fixedCss}
+    </style>
+</head>
+<body>
+    ${document.body.innerHTML}
+    
+    <script>
+        // 這是快照資料
+        window.SNAPSHOT_DATA = ${fixedDataJson};
+        
+        // 覆寫 data.js 的內容 (因為我們無法輕易修改 const，這裡我們直接執行 data.js 的內容，但變數宣告可能會衝突)
+        // 更好的方式是將 data.js 內容包在 function 或是直接在此定義
+        // 由於 data.js 都是 const，我們不重複宣告，而是依賴 script.js 的邏輯
+    </script>
+
+    <script>
+        ${fixedDataJs.replace(/const /g, 'var ')} 
+        // 將 const 改為 var 避免與可能的重複宣告衝突，或直接貼上內容
+    </script>
+
+    <script>
+        ${scriptJsContent}
+    </script>
+    
+    <script>
+        // 移除所有控制按鈕中的 "匯出快照" 和 "儲存"，避免混淆
+        // 這裡可以加入一些清理 UI 的程式碼
+        const controlsDiv = document.querySelector('.controls');
+        if(controlsDiv) {
+            // 可以在這裡移除按鈕，但為了保持功能完整，暫不移除
+        }
+    </script>
+</body>
+</html>`;
+
+        // 6. 下載檔案
+        const blob = new Blob([newHtml], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `GT_Raid_Snapshot_${Date.now()}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+    } catch (error) {
+        console.error(error);
+        alert("匯出失敗！請確保您是在 GitHub Pages 或本地伺服器環境下執行。\n錯誤: " + error.message);
+    }
+}

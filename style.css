@@ -6,41 +6,144 @@
     --accent: #ffcc00;
     --text: #eee;
     --slot-bg: #2a2a2a;
-    
+
     /* 尺寸定義 */
-    --slot-size: 2.0rem; 
-    --hero-size: 4.2rem; 
-    --general-slot-size: 4.2rem; 
+    --slot-size: 2.0rem;
+    --hero-size: 4.2rem;
+    --general-slot-size: 4.2rem;
 }
 
-html { font-size: 14px; } 
-@media (min-width: 1600px) { html { font-size: 16px; } } 
-@media (max-width: 1000px) { html { font-size: 12px; } } 
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 1600px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 1000px) {
+    html {
+        font-size: 12px;
+    }
+}
 
 body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
     background: var(--bg-color);
     color: var(--text);
-    margin: 0; padding: 0.5rem;
-    min-height: 100vh; box-sizing: border-box;
-    display: flex; flex-direction: column;
+    margin: 0;
+    padding: 0.5rem;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
-* { box-sizing: border-box; }
+
+* {
+    box-sizing: border-box;
+}
 
 /* Header */
 header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
-    margin-bottom: 0.5rem; flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+    flex-shrink: 0;
 }
-header h1 { font-size: 1.2rem; color: var(--accent); margin: 0; }
-header .controls button, .btn-danger, #global-state-toggle {
-    background: #444; color: var(--text); padding: 0.4rem 0.8rem; border: none;
-    border-radius: 0.3rem; cursor: pointer; font-size: 0.9rem; margin-left: 0.5rem;
+
+header h1 {
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin: 0;
+}
+
+header .controls button,
+.btn-danger,
+#global-state-toggle {
+    background: #444;
+    color: var(--text);
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
     transition: background 0.2s;
 }
-.btn-danger { background: #883333; }
-.btn-danger:hover { background: #aa4444; }
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.season-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+#season-select {
+    padding: 0.3rem;
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+}
+
+/* 鎖定狀態樣式 */
+.quadrant.locked {
+    opacity: 0.8;
+    pointer-events: none;
+    /* 禁止所有點擊 */
+    position: relative;
+}
+
+.quadrant.locked::after {
+    content: "🔒 已鎖定";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 1rem;
+    border-radius: 1rem;
+    transform: translate(-50%, -50%) rotate(-10deg);
+}
+
+/* 預設隊伍列表樣式 */
+.preset-item {
+    background: #333;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #555;
+    border-radius: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.preset-item:hover {
+    border-color: var(--accent);
+}
+
+.btn-danger {
+    background: #883333;
+}
+
+.btn-danger:hover {
+    background: #aa4444;
+}
 
 /* Quadrant Container */
 #quadrant-container {
@@ -57,36 +160,61 @@ header .controls button, .btn-danger, #global-state-toggle {
     border: 1px solid var(--border);
     border-radius: 0.5rem;
     padding: 0.5rem;
-    display: flex; flex-direction: column;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
-	min-width: 700px;
+    min-width: 700px;
     min-height: 300px;
 }
 
 .quadrant-header {
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 0.5rem;
 }
+
 .quadrant-header button {
-    background: #444; color: var(--text); border: none; padding: 0.3rem 0.6rem;
-    border-radius: 0.2rem; cursor: pointer; font-size: 0.8rem;
+    background: #444;
+    color: var(--text);
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.8rem;
 }
 
 .boss-display-wrapper {
-    background: #2a2a2a; padding: 0.3rem 0.6rem; border-radius: 0.2rem;
-    font-weight: bold; font-size: 0.9rem; border: 2px solid; cursor: pointer;
+    background: #2a2a2a;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.2rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border: 2px solid;
+    cursor: pointer;
     display: inline-flex;
 }
-.boss-info-text { display: flex; align-items: center; gap: 5px; }
-.boss-attr-icon { width: 1.2rem; height: 1.2rem; }
+
+.boss-info-text {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.boss-attr-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+}
 
 
 /* Team List */
 .team-list {
-    display: flex; flex-direction: column;
+    display: flex;
+    flex-direction: column;
     gap: 0.8rem;
     overflow-y: auto;
-    padding-right: 5px; /* for scrollbar spacing */
+    padding-right: 5px;
+    /* for scrollbar spacing */
 }
 
 /* Team Container */
@@ -95,19 +223,31 @@ header .controls button, .btn-danger, #global-state-toggle {
     background: #222;
     padding: 0.5rem;
     border-radius: 0.4rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+
 .team-header {
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 0.5rem;
 }
+
 .team-buff-summary {
-    font-size: 0.8rem; color: #ffcc00;
+    font-size: 0.8rem;
+    color: #ffcc00;
     flex-grow: 1;
 }
+
 .btn-remove-team {
-    background: #555; color: var(--text); border: none; padding: 0.1rem 0.4rem;
-    border-radius: 0.2rem; cursor: pointer; font-size: 0.8rem; margin-left: 0.5rem;
+    background: #555;
+    color: var(--text);
+    border: none;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
 }
 
 .team-content {
@@ -118,10 +258,12 @@ header .controls button, .btn-danger, #global-state-toggle {
 /* Member Grid (Hero Slots) - 修正：改為水平排列 */
 .member-grid {
     display: flex;
-    flex-direction: row; /* 修正為水平排列 */
+    flex-direction: row;
+    /* 修正為水平排列 */
     gap: 0.5rem;
     flex-shrink: 0;
-    align-items: flex-start; /* 確保內容在頂部對齊 */
+    align-items: flex-start;
+    /* 確保內容在頂部對齊 */
 }
 
 .member-container {
@@ -135,81 +277,103 @@ header .controls button, .btn-danger, #global-state-toggle {
     font-size: 0.8rem;
     font-weight: bold;
     margin-bottom: 3px;
-    height: 1.2rem; /* 固定高度防止抖動 */
+    height: 1.2rem;
+    /* 固定高度防止抖動 */
 }
 
 /* --- Hero Slot --- */
 .hero-slot {
-    width: var(--hero-size); height: var(--hero-size);
+    width: var(--hero-size);
+    height: var(--hero-size);
     border: 2px solid #555;
     cursor: pointer;
-	border-radius: 5%;
+    border-radius: 5%;
     background: var(--slot-bg);
     position: relative;
     box-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
 }
-.hero-slot > img {
-    width: 100%; height: 100%; object-fit: cover;
+
+.hero-slot>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 
 /* --- 屬性圖標修正 (Hero Attribute Badge) --- */
-.hero-attribute-badge { /* 替換 .hero-element-icon */
+.hero-attribute-badge {
+    /* 替換 .hero-element-icon */
     position: absolute;
-    bottom: -5px; 
-    right: -5px; 
-    width: 33%; 
+    bottom: -5px;
+    right: -5px;
+    width: 33%;
     height: 33%;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.8);
     border-radius: 50%;
-    border: 2px solid; 
-    z-index: 5; 
+    border: 2px solid;
+    z-index: 5;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.hero-attribute-badge-img { /* 替換 .hero-element-icon img */
-    max-width: 100%; 
-    max-height: 100%; 
-	border-radius: 50%;
-    object-fit: contain; 
+
+.hero-attribute-badge-img {
+    /* 替換 .hero-element-icon img */
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+    object-fit: contain;
 }
 
 
 /* --- Chain Icons (Inside hero-slot) --- */
 .hero-chain-icons {
     position: absolute;
-    top: 0px; left: 0px;
-	padding: 0.1rem 0.1rem;
+    top: 0px;
+    left: 0px;
+    padding: 0.1rem 0.1rem;
     transform: translate(0%, 0%);
-    display: flex; 
-	align-items: center; gap: 2px;
-    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 0.3rem;
     z-index: 10;
 }
+
 .hero-chain-icons img {
     /*width: 1.2rem; height: 1.2rem; */
-	width: 35%; height: 35%;
-	object-fit: contain;
+    width: 35%;
+    height: 35%;
+    object-fit: contain;
 }
+
 .hero-chain-icons span {
-    color: #fff; font-weight: bold; font-size: 0.9rem;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 /* --- Equipment Slots (w1, w2) --- */
 .equipment-slots {
-    display: flex; gap: 0.3rem;
+    display: flex;
+    gap: 0.3rem;
     margin-top: 0.3rem;
 }
+
 .slot {
-    width: var(--slot-size); height: var(--slot-size);
-    border: 1px solid #555; background: var(--slot-bg);
+    width: var(--slot-size);
+    height: var(--slot-size);
+    border: 1px solid #555;
+    background: var(--slot-bg);
     border-radius: 0.2rem;
     cursor: pointer;
 }
+
 .slot img {
-    width: 100%; height: 100%; object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 /* --- Aux Container (Relic, Acc) --- */
@@ -218,18 +382,23 @@ header .controls button, .btn-danger, #global-state-toggle {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; 
+    justify-content: flex-start;
 }
+
 .aux-container .hero-name-top {
-    font-size: 0.7rem; color: #999;
+    font-size: 0.7rem;
+    color: #999;
 }
+
 .general-slots {
     display: grid;
-    grid-template-columns: 1fr; /* 兩欄，平均分配 */
-	grid-template-rows: 0.5fr 0.5fr;    /* 兩列，平均分配 */
+    grid-template-columns: 1fr;
+    /* 兩欄，平均分配 */
+    grid-template-rows: 0.5fr 0.5fr;
+    /* 兩列，平均分配 */
     gap: 0.3rem;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
 }
 
 /* Chain Panels */
@@ -238,7 +407,7 @@ header .controls button, .btn-danger, #global-state-toggle {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    position: relative; 
+    position: relative;
 }
 
 .chain-set-group {
@@ -249,14 +418,24 @@ header .controls button, .btn-danger, #global-state-toggle {
     display: flex;
     flex-direction: column;
 }
+
 .chain-set-group .btn-remove-chain-set {
     position: absolute;
-    top: -8px; right: -8px;
-    background: #883333; color: white; border: none;
-    border-radius: 50%; width: 16px; height: 16px;
-    font-size: 0.6rem; line-height: 1; cursor: pointer;
-    display: flex; justify-content: center; align-items: center;
-	display: none;
+    top: -8px;
+    right: -8px;
+    background: #883333;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 0.6rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
 }
 
 .chain-set-content {
@@ -276,8 +455,9 @@ header .controls button, .btn-danger, #global-state-toggle {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-	flex-shrink: 0;
+    flex-shrink: 0;
 }
+
 .chain-steps-row-container {
     display: flex;
     align-items: center;
@@ -288,21 +468,24 @@ header .controls button, .btn-danger, #global-state-toggle {
     display: flex;
     gap: 0.2rem;
     align-items: center;
-    flex-grow: 1; /* 讓連鎖步驟佔據大部分空間 */
+    flex-grow: 1;
+    /* 讓連鎖步驟佔據大部分空間 */
 }
 
 .chain-step-item {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 25%; /* 確保 4 個格子平均分佈 */
+    width: 25%;
+    /* 確保 4 個格子平均分佈 */
     flex-shrink: 0;
 }
 
 .chain-row-icon {
-    width: var(--slot-size); height: var(--slot-size);
+    width: var(--slot-size);
+    height: var(--slot-size);
     border: 1.5px solid;
-	border-color: #555;
+    border-color: #555;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
@@ -311,10 +494,13 @@ header .controls button, .btn-danger, #global-state-toggle {
 }
 
 .chain-row-icon img {
-    width: 100%; height: 100%; object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
+
 .chain-row-icon.unselected {
-	border: 1.5px dashed #555;
+    border: 1.5px dashed #555;
     border-color: #555;
     background: #444;
 }
@@ -343,118 +529,179 @@ header .controls button, .btn-danger, #global-state-toggle {
     font-size: 0.7rem;
     padding: 3px;
     resize: vertical;
-	min-width: 60px;
+    min-width: 60px;
     min-height: 30px;
 }
 
 .btn-add-chain-step {
-    background: #333; color: #bbb; border: 1px dashed #555;
-    padding: 0.2rem; border-radius: 0.2rem;
-    font-size: 0.7rem; cursor: pointer;
+    background: #333;
+    color: #bbb;
+    border: 1px dashed #555;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    font-size: 0.7rem;
+    cursor: pointer;
     transition: background 0.2s;
 }
-.btn-add-chain-step:hover { background: #555; }
+
+.btn-add-chain-step:hover {
+    background: #555;
+}
 
 .btn-remove-chain-row {
-    background: #444; 
-    color: white; 
-    border: none; 
-    border-radius: 0.3rem; 
-    width: 1rem; 
+    background: #444;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    width: 1rem;
     height: 1rem;
-    font-size: 0.7rem; 
-    line-height: 1; 
+    font-size: 0.7rem;
+    line-height: 1;
     cursor: pointer;
-    display: flex; 
-    justify-content: center; 
+    display: flex;
+    justify-content: center;
     align-items: center;
     flex-shrink: 0;
 }
 
 .btn-add-chain-set-set {
     position: absolute;
-    top: 0; right: 0;
-    width: 20px; height: 20px;
-    background: var(--accent); color: #222;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    color: #222;
     border-radius: 0.2rem;
-    display: flex; justify-content: center; align-items: center;
-    font-weight: bold; font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
     cursor: pointer;
     transform: translate(50%, -50%);
     z-index: 10;
-	display: none; /* 已隱藏 */
+    display: none;
+    /* 已隱藏 */
 }
 
 
 /* Modal */
 .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.8);
-    display: none; justify-content: center; align-items: center;
+    display: none;
+    justify-content: center;
+    align-items: center;
     z-index: 1000;
 }
 
 .modal-content {
-    background: var(--panel-bg); padding: 1.5rem; border-radius: 0.5rem;
-    width: 80%; max-width: 900px; max-height: 90vh;
+    background: var(--panel-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    width: 80%;
+    max-width: 900px;
+    max-height: 90vh;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    display: flex; flex-direction: column;
-	position :absolute;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
 }
 
 .modal-close {
-    position: absolute; top: 10px; right: 10px;
-    font-size: 1.5rem; color: #aaa; cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: #aaa;
+    cursor: pointer;
 }
+
 .modal-close:hover {
-    position: absolute; top: 10px; right: 10px;
-    font-size: 1.5rem; color: #f00; cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: #f00;
+    cursor: pointer;
 }
 
 .search-bar {
-    display: flex; align-items: center; gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 0.5rem;
 }
+
 .search-input {
-    flex-grow: 1; padding: 0.4rem; background: #333;
-    border: 1px solid #555; color: var(--text);
-    border-radius: 0.2rem; font-size: 0.9rem;
+    flex-grow: 1;
+    padding: 0.4rem;
+    background: #333;
+    border: 1px solid #555;
+    color: var(--text);
+    border-radius: 0.2rem;
+    font-size: 0.9rem;
 }
 
 .tab-container {
-    display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 0.5rem;
 }
+
 .tab-button {
-    background: #333; color: #aaa; border: 1px solid #555;
-    padding: 0.3rem 0.6rem; border-radius: 0.2rem;
-    cursor: pointer; font-size: 0.8rem;
+    background: #333;
+    color: #aaa;
+    border: 1px solid #555;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.8rem;
     transition: background 0.2s;
 }
+
 .tab-button:hover {
-    background-color: #444; /* 使用您在 :root 中定義的強調色 (#ffcc00) */
-    color: #111;                     /* 將文字顏色變深以搭配亮色背景 */
+    background-color: #444;
+    /* 使用您在 :root 中定義的強調色 (#ffcc00) */
+    color: #111;
+    /* 將文字顏色變深以搭配亮色背景 */
     /* 或者，僅變亮背景 */
-    /* background-color: #444; */ 
+    /* background-color: #444; */
 }
 
 .tab-button.active {
-    background: var(--accent); color: #111; border-color: var(--accent);
+    background: var(--accent);
+    color: #111;
+    border-color: var(--accent);
 }
+
 .tab-button.active:hover {
-    background-color: #ffbb00; /* 保持激活狀態的顏色不變或輕微變化 */
-    border-color: #ffffff; 
+    background-color: #ffbb00;
+    /* 保持激活狀態的顏色不變或輕微變化 */
+    border-color: #ffffff;
 }
 
 #grid-content {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); 
-    gap: 0.5rem; overflow-y: auto; flex-grow: 1; padding: 2px;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: 0.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 2px;
 }
+
 @media (min-width: 700px) {
     #grid-content {
         grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
     }
 }
+
 @media (min-width: 1000px) {
     #grid-content {
         grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
@@ -462,46 +709,103 @@ header .controls button, .btn-danger, #global-state-toggle {
 }
 
 .selection-grid-item {
-    background: #333; border: 1px solid #444; height: 10rem; 
-    cursor: pointer; position: relative; display: flex; flex-direction: column;
-    transition: transform 0.1s; border-radius: 0.3rem; overflow: hidden;
+    background: #333;
+    border: 1px solid #444;
+    height: 10rem;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.1s;
+    border-radius: 0.3rem;
+    overflow: hidden;
 }
-.selection-grid-item:hover{ border-color: var(--accent); transform: translateY(-2px); z-index: 10; }
-.slot:hover{ border-color: var(--accent); z-index: 10; }
-.hero-slot:hover{ border-color: var(--accent); transform: translateY(1px); z-index: 10; }
-.chain-row-icon:hover{ border-color: var(--accent); z-index: 10; }
+
+.selection-grid-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    z-index: 10;
+}
+
+.slot:hover {
+    border-color: var(--accent);
+    z-index: 10;
+}
+
+.hero-slot:hover {
+    border-color: var(--accent);
+    transform: translateY(1px);
+    z-index: 10;
+}
+
+.chain-row-icon:hover {
+    border-color: var(--accent);
+    z-index: 10;
+}
 
 .selection-icon-container {
-    display: flex; justify-content: center; align-items: center; 
-    overflow: hidden; padding: 0.3rem; background: #222; position: relative;
-	aspect-ratio: 1 / 1;
-	flex-grow: 0;
-    flex-shrink: 0; /* 確保它不會在 flex-direction: column 中被壓縮 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 0.3rem;
+    background: #222;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    flex-grow: 0;
+    flex-shrink: 0;
+    /* 確保它不會在 flex-direction: column 中被壓縮 */
 }
-.selection-icon-container > img:first-child { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
+
+.selection-icon-container>img:first-child {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 
-.modal-item-name { background: #111; font-size: 0.7rem; text-align: center; padding: 2px; color: #fff; font-weight: bold; }
+.modal-item-name {
+    background: #111;
+    font-size: 0.7rem;
+    text-align: center;
+    padding: 2px;
+    color: #fff;
+    font-weight: bold;
+}
+
 .modal-hero-buff-summary {
-    font-size: 0.6rem; padding: 3px; background: #1a1a1a; color: #bbb;
-    text-align: left; white-space: pre-wrap; line-height: 1.2; 
+    font-size: 0.6rem;
+    padding: 3px;
+    background: #1a1a1a;
+    color: #bbb;
+    text-align: left;
+    white-space: pre-wrap;
+    line-height: 1.2;
     min-height: 2.2rem;
 }
 
 .weapon-chain-overlay {
     position: absolute;
-    bottom: 0; left: 0;
-    background: rgba(0,0,0,0.8);
-    padding: 2px; border-top-right-radius: 0.3rem;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2px;
+    border-top-right-radius: 0.3rem;
     z-index: 5;
 }
-.weapon-chain-overlay img { width: 1.2rem; height: 1.2rem; object-fit: contain; }
+
+.weapon-chain-overlay img {
+    width: 1.2rem;
+    height: 1.2rem;
+    object-fit: contain;
+}
 
 .btn-clear-slot {
-    background: #555; color: var(--text); padding: 0.4rem 0.8rem; border: none;
-    border-radius: 0.3rem; cursor: pointer; font-size: 0.9rem;
+    background: #555;
+    color: var(--text);
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 0.9rem;
 }
