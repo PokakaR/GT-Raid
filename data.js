@@ -378,7 +378,7 @@ const DB_HEROES = [
         id: 'h37', name: '奧爾卡', nameEn: 'Orca', element: 'earth', rarity: 'unique',
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w037'], 
-        coreStates: { base: {}, ascended: null, sixStar: () },
+        coreStates: { base: {}, ascended: null, sixStar: {} },
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+55%' } }
