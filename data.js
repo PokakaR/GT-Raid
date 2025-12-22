@@ -750,8 +750,8 @@ const DB_HEROES = [
         allowWeapons: ['bow'], exclusiveWeapons: ['w074'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
         buffs: {
-            base: { ex1: { text: '技回+30\n技傷+30%' } },
-            sixStar: { ex1: { text: '技回+30\n技傷+30%' } }
+            base: { ex1: { text: '技回+30%\n技傷+30%' } },
+            sixStar: { ex1: { text: '技回+30%\n技傷+30%' } }
         }
     },
     { 
@@ -990,8 +990,8 @@ const DB_HEROES = [
         allowWeapons: ['basket'], exclusiveWeapons: ['w098'], 
         coreStates: { base: {}, ascended: null, sixStar: {} },
         buffs: {
-            base: { ex1: { text: '技回+30\n技傷+30%' } },
-            sixStar: { ex1: { text: '技回+30\n技傷+50%' } }
+            base: { ex1: { text: '技回+30%\n技傷+30%' } },
+            sixStar: { ex1: { text: '技回+30%\n技傷+50%' } }
         }
     },
     { 
@@ -1012,6 +1012,16 @@ const DB_HEROES = [
         buffs: {
             base: { ex1: { text: '近戰傷+50%' } },
             sixStar: { ex1: { text: '近戰傷+55%' } }
+        }
+    },
+	{ 
+        id: 'h131', name: '諾艾爾', nameEn: 'Noel', element: 'earth', rarity: 'unique',
+        chain: { ex1: { start: 'all', end: 'downed' } }, 
+        allowWeapons: ['basket'], exclusiveWeapons: ['w131'], 
+        coreStates: { base: {}, ascended: null, sixStar: {} },
+        buffs: {
+            base: { ex1: { text: '技回+30%\n技傷+30%' } },
+            sixStar: { ex1: { text: '技回+30%\n技傷+50%' } }
         }
     },
     { 
@@ -1540,18 +1550,7 @@ const DB_WEAPONS = [
     { id: 'w098', name: '魔力護符', nameEn: 'Talisman of Mana', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w098_Talisman of Mana.png' },
     { id: 'w099', name: '森羅萬象', nameEn: 'Entirety', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w099_Entirety.png' },
     { id: 'w100', name: '星能王冠', nameEn: 'Star Power Tiara', type: 'staff', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w100_Star Power Tiara.png' },
-    { id: 's001', name: '魔血符', nameEn: 'Demons Blood Talisman', type: 'gauntlet', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s001_Demons Blood Talisman.png' },
-	{ id: 's002', name: '光之劍', nameEn: 'Sword of Light', type: '2h_sword', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s002_Sword of Light.png' },
-	{ id: 's003', name: '傑洛士的權杖', nameEn: 'Xellos Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s003_Xellos Staff.png' },
-	{ id: 's004', name: '達伊之劍', nameEn: 'Sword of Dai', type: '1h_sword', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s004_Sword of Dai.png' },
-	{ id: 's005', name: '魔甲拳', nameEn: 'Dark Armour Fist', type: 'gauntlet', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s005_Dark Armour Fist.png' },
-	{ id: 's006', name: '黑魔杖', nameEn: 'Black Rod', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s006_Black Rod.png' },
-	{ id: 's007', name: '利姆露的劍', nameEn: 'Rimurus Blade', type: '1h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s007_Rimurus Blade.png' },
-	{ id: 's008', name: '朱菜的杖', nameEn: 'Shunas Staff', type: 'staff', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s008_Shunas Staff.png' },
-	{ id: 's009', name: '龍指虎', nameEn: 'Dragon Kunckles', type: 'claw', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s009_Dragon Kunckles.png' },
-	{ id: 's010', name: '芙莉蓮的手杖', nameEn: 'Frierens Staff', type: 'staff', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s010_Frierens Staff.png' },
-	{ id: 's011', name: '修塔爾克的斧頭', nameEn: 'Starks Axe', type: '2h_sword', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s011_Starks Axe.png' },
-	{ id: 's012', name: '費倫的手杖', nameEn: 'Ferns Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s012_Ferns Staff.png' },
+	{ id: 'w131', name: '地精醫療包', nameEn: 'Gnome Medical Bag', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w101_Gnome Medical Bag.png' },
 	{ id: 'w101', name: '利貝拉', nameEn: 'Libera', type: '1h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w101_Libera.png' },
 	{ id: 'w101_ex2', name: '利貝拉Type.B', nameEn: 'Libera Type.B', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w101_ex2_Libera Type.B.png' },
 	{ id: 'w102', name: '正義', nameEn: 'Justice', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w102_Justice.png' },
@@ -1580,6 +1579,19 @@ const DB_WEAPONS = [
 	{ id: 'w126', name: '雙子座', nameEn: 'Geminus', type: '2h_sword', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w126_Geminus.png' },
 	{ id: 'w127', name: '龍之怒', nameEn: 'Wrath of Dragon', type: 'staff', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w127_Wrath of Dragon.png' },
 	{ id: 'w128', name: '掠奪者', nameEn: 'Marauder', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w128_Marauder.png' },
+	{ id: 'w129', name: '維多利亞', nameEn: 'Victoria', type: '2h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w129_Victoria.png' },
+	{ id: 's001', name: '魔血符', nameEn: 'Demons Blood Talisman', type: 'gauntlet', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s001_Demons Blood Talisman.png' },
+	{ id: 's002', name: '光之劍', nameEn: 'Sword of Light', type: '2h_sword', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s002_Sword of Light.png' },
+	{ id: 's003', name: '傑洛士的權杖', nameEn: 'Xellos Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s003_Xellos Staff.png' },
+	{ id: 's004', name: '達伊之劍', nameEn: 'Sword of Dai', type: '1h_sword', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s004_Sword of Dai.png' },
+	{ id: 's005', name: '魔甲拳', nameEn: 'Dark Armour Fist', type: 'gauntlet', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s005_Dark Armour Fist.png' },
+	{ id: 's006', name: '黑魔杖', nameEn: 'Black Rod', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s006_Black Rod.png' },
+	{ id: 's007', name: '利姆露的劍', nameEn: 'Rimurus Blade', type: '1h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s007_Rimurus Blade.png' },
+	{ id: 's008', name: '朱菜的杖', nameEn: 'Shunas Staff', type: 'staff', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s008_Shunas Staff.png' },
+	{ id: 's009', name: '龍指虎', nameEn: 'Dragon Kunckles', type: 'claw', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s009_Dragon Kunckles.png' },
+	{ id: 's010', name: '芙莉蓮的手杖', nameEn: 'Frierens Staff', type: 'staff', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s010_Frierens Staff.png' },
+	{ id: 's011', name: '修塔爾克的斧頭', nameEn: 'Starks Axe', type: '2h_sword', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s011_Starks Axe.png' },
+	{ id: 's012', name: '費倫的手杖', nameEn: 'Ferns Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s012_Ferns Staff.png' },
 ];
 
 const DB_ACCESSORIES = [
