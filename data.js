@@ -1550,7 +1550,7 @@ const DB_WEAPONS = [
     { id: 'w098', name: '魔力護符', nameEn: 'Talisman of Mana', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w098_Talisman of Mana.png' },
     { id: 'w099', name: '森羅萬象', nameEn: 'Entirety', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w099_Entirety.png' },
     { id: 'w100', name: '星能王冠', nameEn: 'Star Power Tiara', type: 'staff', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w100_Star Power Tiara.png' },
-	{ id: 'w131', name: '地精醫療包', nameEn: 'Gnome Medical Bag', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w101_Gnome Medical Bag.png' },
+	{ id: 'w131', name: '地精醫療包', nameEn: 'Gnome Medical Bag', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w131_Gnome Medical Bag.png' },
 	{ id: 'w101', name: '利貝拉', nameEn: 'Libera', type: '1h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w101_Libera.png' },
 	{ id: 'w101_ex2', name: '利貝拉Type.B', nameEn: 'Libera Type.B', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w101_ex2_Libera Type.B.png' },
 	{ id: 'w102', name: '正義', nameEn: 'Justice', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w102_Justice.png' },
