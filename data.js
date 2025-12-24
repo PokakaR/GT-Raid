@@ -1639,7 +1639,7 @@ const DB_BOSSES = [
 	{ id: 'b23', name: '沙沙', icon: './images/boss/Sandmonster.png' },
 	{ id: 'b24', name: '鉻小姐', icon: './images/boss/Miss Chrome.png' },
 	{ id: 'b25', name: '暗砲', icon: './images/boss/Arabelle.png' },
-	{ id: 'b26', name: '小紅帽', icon: './images/boss/Elvirabium' },
+	{ id: 'b26', name: '小紅帽', icon: './images/boss/Elvirabium.png' },
 ];
 //#5cd65c
 const CONSTANTS = {
