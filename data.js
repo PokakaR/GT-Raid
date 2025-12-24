@@ -1635,6 +1635,11 @@ const DB_BOSSES = [
 	{ id: 'b19', name: '熊貓', icon: './images/boss/Mad Panda.png' },
 	{ id: 'b20', name: '導演', icon: './images/attribute/ic_attribute_basic.png' },
 	{ id: 'b21', name: '鄧肯', icon: './images/boss/Minister Duncan.png' },
+	{ id: 'b22', name: '老頭', icon: './images/boss/Viper Clan Leader.png' },
+	{ id: 'b23', name: '沙沙', icon: './images/boss/Sandmonster.png' },
+	{ id: 'b24', name: '鉻小姐', icon: './images/boss/Miss Chrome.png' },
+	{ id: 'b25', name: '暗砲', icon: './images/boss/Arabelle.png' },
+	{ id: 'b26', name: '小紅帽', icon: './images/boss/Elvirabium' },
 ];
 //#5cd65c
 const CONSTANTS = {
