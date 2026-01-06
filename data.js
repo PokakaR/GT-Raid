@@ -708,10 +708,10 @@ const DB_HEROES = [
         id: 'h70', name: '米可', nameEn: 'Mikke', element: 'basic', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w070'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
+        coreStates: { base: {}, ascended: null, sixStar: {} },
         buffs: {
             base: { ex1: { text: '近戰傷+50%' } },
-            sixStar: { ex1: { text: '近戰傷+50%' } }
+            sixStar: { ex1: { text: '近戰傷+55%' } }
         }
     },
     { 
