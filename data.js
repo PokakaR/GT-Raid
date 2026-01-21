@@ -1211,11 +1211,11 @@ const DB_HEROES = [
         id: 'h110', name: '葛蕾茉莉', nameEn: 'Gremory', element: 'dark', rarity: 'rare',
         chain: { ex1: { start: 'all', end: 'airborne' }}, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w110'], 
-        coreStates: { base: {}, ascended: null , sixStar: null },
+        coreStates: { base: {}, ascended: {} , sixStar: {} },
         buffs: {
             base: { ex1: { text: '技傷+80%' } },
-			ascended: { ex1: { text: '技傷+80%' } },
-            sixStar: { ex1: { text: '技傷+80%' } }
+			ascended: { ex1: { text: '技傷+93%' } },
+            sixStar: { ex1: { text: '技傷+93%' } }
         }
     },
     { 
