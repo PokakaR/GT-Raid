@@ -45,21 +45,40 @@ header .controls button, .btn-danger, #global-state-toggle {
 /* Quadrant Container */
 #quadrant-container {
     display: grid;
+    /* 預設維持兩欄 */
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
     gap: 0.5rem;
-    flex-grow: 1;
-    overflow-y: auto;
+    flex-grow: 1; 
+    overflow: hidden;
+}
+/* 新增：當螢幕寬度小於 1100px 時，強制變為單欄顯示 */
+@media (max-width: 1100px) {
+    #quadrant-container {
+        grid-template-columns: 1fr; /* 改為單欄 */
+        overflow-y: auto; /* 允許垂直捲動 */
+    }
+    
+    /* 讓區域高度自適應內容，而不是被壓縮 */
+    .quadrant {
+        min-height: auto; 
+        height: auto;
+    }
 }
 
 /* --- 1. Quadrant Dragging (區域拖曳) --- */
 .quadrant {
-   /* 確保有足夠空間與樣式 */
-    background: var(--panel-bg);
+   background: var(--panel-bg);
     border: 1px solid var(--border);
     border-radius: 0.5rem;
     padding: 0.5rem;
     display: flex; flex-direction: column;
-    min-width: 300px; /* 稍微調整手機版寬度容忍度 */
+    
+    /* 修改這裡：原本可能是 min-width: 300px; */
+    /* 改為 0 或 100%，讓它能隨 Grid 縮小 */
+    min-width: 0; 
+    width: 100%;
+    
     height: 100%;
     transition: transform 0.2s, opacity 0.2s;
 }
@@ -292,21 +311,38 @@ header .controls button, .btn-danger, #global-state-toggle {
 }
 
 /* Chain Panels */
+
+/* 確保連鎖設定容器不會超出父層寬度 */
 .chain-panels-container {
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    position: relative; 
+    gap: 2px;
+    width: 100%;       /* 限制寬度 */
+    max-width: 100%;   /* 強制不超出 */
+    overflow-x: auto;  /* 關鍵：內容過長時顯示橫向捲軸 */
+    padding-bottom: 5px; /* 預留捲軸空間 */
 }
 
+/* 美化橫向捲軸 (Chrome/Safari/Edge) */
+.chain-panels-container::-webkit-scrollbar {
+    height: 6px;
+}
+.chain-panels-container::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+}
+.chain-panels-container::-webkit-scrollbar-track {
+    background: #222;
+}
+
+/* 針對連鎖按鈕群組 */
 .chain-set-group {
-    border: 1px dashed #444;
-    padding: 0.5rem;
-    border-radius: 0.3rem;
-    position: relative;
     display: flex;
-    flex-direction: column;
+    align-items: center; /* 垂直置中 */
+    gap: 5px;            /* 元件間距 */
+    
+    /* 關鍵：強制佔滿父容器的 100% 寬度，這樣內部的輸入框才有空間伸展 */
+    width: 100%;
 }
 .chain-set-group .btn-remove-chain-set {
     position: absolute;
@@ -322,6 +358,9 @@ header .controls button, .btn-danger, #global-state-toggle {
     display: flex;
     flex-direction: row;
     gap: 0.3rem;
+    
+    /* 修正重點：加入這行，強制這個容器填滿上一層 (.chain-set-group) 的空間 */
+    width: 100%;
 }
 
 .chain-timing-steps-content {
@@ -394,17 +433,33 @@ header .controls button, .btn-danger, #global-state-toggle {
 }
 
 .chain-note-input {
-    width: 100%;
-    background: #333;
-    color: var(--text);
-    border: 1px solid #555;
-    border-radius: 0.2rem;
-    font-size: 0.7rem;
-    padding: 3px;
-    resize: vertical;
-	min-width: 60px;
-    min-height: 30px;
+    /* --- 佈局設定 (解決縮放問題) --- */
+    flex: 1;              /* 關鍵：分配所有剩餘空間給這個輸入框 */
+    width: 100%;          /* 保險起見，確保寬度撐開 */
+    min-width: 0;         /* 防止 Flex 子元素溢出問題 */
+
+    /* --- 視覺設定 (解決不明顯問題) --- */
+    background-color: rgba(255, 255, 255, 0.1); /* 深色半透明背景，讓它與底色區分 */
+    border: 1px solid #444;               /* 給予明顯的邊框 */
+    border-radius: 4px;                   /* 圓角比較好看 */
+    color: #eee;                          /* 文字顏色 */
+    
+    /* --- 其他設定 --- */
+    padding: 4px 8px;     /* 內距，讓文字不要貼邊 */
+    font-size: 0.85rem;
+    line-height: 1.4;
+    resize: none;         /* 禁止手動拉大，由程式控制高度 */
+    
+    /* 確保有最小高度，方便點擊 */
+    min-height: 28px;
 }
+
+.chain-note-input:focus {
+    background-color: rgba(0, 0, 0, 0.6); /* 聚焦時背景變更深 */
+    border-color: var(--accent);          /* 邊框變亮 */
+    outline: none;
+}
+
 
 .btn-add-chain-step {
     background: #333; color: #bbb; border: 1px dashed #555;

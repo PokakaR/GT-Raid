@@ -36,7 +36,7 @@ const BUFF_PARSER_MAP = {
 	"擊殺恢復" : 'killRecover' , "受傷連鎖，攻擊力、回復力" : 'injuredAtkHealIncr'
 };
 
-const MAX_CHAIN_ROWS = 4; // 已修正: 從 3 改為 4
+const MAX_CHAIN_ROWS = 4;
 const MAX_CHAIN_SETS = 2;
 
 // 修正結構：現在儲存的是 '這個連鎖槽位選了哪一個英雄的索引'
@@ -1103,12 +1103,14 @@ function openModal(qIdx, tIdx, mIdx, type) {
         modalTitle.textContent = '選擇屬性';
         document.getElementById('search-bar').style.display = 'none';
         document.getElementById('btn-clear-slot').style.display = 'none';
+		document.getElementById('tab-container').style.display = 'none';
         renderElementSelectionGrid();
     } else if (type === 'boss-list') {
         // 單獨選擇 Boss
         modalTitle.textContent = '選擇 BOSS';
         document.getElementById('search-bar').style.display = 'none';
         document.getElementById('btn-clear-slot').style.display = 'none';
+		document.getElementById('tab-container').style.display = 'none';
         renderBossListGrid();
     } else if (type === 'boss') { 
         // 保留舊代碼相容 (雖然 UI 已改用 element/boss-list)
