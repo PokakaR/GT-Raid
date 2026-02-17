@@ -1095,6 +1095,7 @@ function openModal(qIdx, tIdx, mIdx, type) {
     /// UI 重置
     document.getElementById('search-bar').style.display = 'flex';
     document.getElementById('btn-clear-slot').style.display = 'block';
+	document.getElementById('tab-container').style.display = 'flex';
     toggleExclusive.parentElement.style.display = 'none';
     
 	// --- 邏輯分流 ---
