@@ -19,6 +19,7 @@ const DB_HEROES = [
         allowWeapons: ['1h_sword', '2h_sword'], 
         exclusiveWeapons: ['w001', 'w001_ex2'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '火屬攻+50%' }, ex2: { text: '爆傷+100%' } },
             sixStar: { ex1: { text: '火屬攻+50%' }, ex2: { text: '爆傷+100%' } }
@@ -29,6 +30,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' }, ex2: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['1h_sword', '2h_sword'], exclusiveWeapons: ['w002', 'w002_ex2'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '光屬攻+50%' }, ex2: { text: '近戰攻+50%' } },
             sixStar: { ex1: { text: '光屬攻+50%' }, ex2: { text: '近戰攻+50%' } }
@@ -39,6 +41,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w003'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+40%' } },
             sixStar: { ex1: { text: '光屬攻+50%' } } // 這裡原文似乎有誤(光屬攻?)，保留原樣
@@ -48,7 +51,8 @@ const DB_HEROES = [
         id: 'h4', name: '阿拉貝爾', nameEn: 'Arabelle', element: 'dark', rarity: 'unique',
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w004'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '暗屬攻+50%' } },
             sixStar: { ex1: { text: '暗屬攻+55%' } }
@@ -58,7 +62,8 @@ const DB_HEROES = [
         id: 'h5', name: '偶像伊娃', nameEn: 'IdolCaptain Eva', element: 'basic', rarity: 'unique',
         chain: { ex1: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w005'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '普屬攻+50%' } },
             sixStar: { ex1: { text: '普屬攻+55%' } }
@@ -69,6 +74,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' }, ex2: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w006', 'w006_ex2'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+90%' }, ex2: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '技傷+90%' }, ex2: { text: '爆擊率+40%' } }
@@ -79,6 +85,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w007'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -89,6 +96,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'injured' }, ex2: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['gauntlet' ,'basket'], exclusiveWeapons: ['w008' , 'w008_ex2'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+40%' }, ex2: { text: '技傷+90%' } },
             sixStar: { ex1: { text: '生命力+40%' }, ex2: { text: '技傷+90%' } }
@@ -99,6 +107,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'injured' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w009'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰攻+50%' } },
             sixStar: { ex1: { text: '近戰攻+50%' } }
@@ -109,6 +118,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['bow'], exclusiveWeapons: ['w010'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+50%' } }
@@ -119,6 +129,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'injured' }, ex2: { start: 'all', end: 'airborne' } }, 
         allowWeapons: ['claw' , 'gauntlet'], exclusiveWeapons: ['w011' , 'w011_ex2'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命+40%' }, ex2: { text: '爆傷+100%' } },
             sixStar: { ex1: { text: '生命+40%' }, ex2: { text: '爆傷+100%' } }
@@ -129,6 +140,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w012'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+50%' } }
@@ -138,7 +150,8 @@ const DB_HEROES = [
         id: 'h13', name: '比安卡', nameEn: 'Bianca', element: 'water', rarity: 'unique',
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w013'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%\n爆傷+20%' } }
@@ -149,6 +162,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' }, ex2: { start: 'airborne', end: 'injured' } }, 
         allowWeapons: ['1h_sword' , 'rifle'], exclusiveWeapons: ['w014' , 'w014_ex2'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+45%' }, ex2: { text: '技傷+90%' } },
             sixStar: { ex1: { text: '防禦力+45%' }, ex2: { text: '技傷+90%' } }
@@ -159,6 +173,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w015'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程防+80%' } },
             sixStar: { ex1: { text: '遠程防+80%' } }
@@ -169,16 +184,18 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w016'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+90%' } },
             sixStar: { ex1: { text: '技傷+90%' } }
         }
 	},
     { 
-        id: 'h17', name: '未來公主', nameEn: 'FuturePrincess', element: 'light', rarity: 'unique',
+        id: 'h17', name: '未來公主', nameEn: 'Future Princess', element: 'light', rarity: 'unique',
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w017'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+40%' } },
             sixStar: { ex1: { text: '生命力+40%' } }
@@ -189,6 +206,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' }, ex2: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w018','w018_ex2'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '水屬攻+50%' }, ex2: { text: '技回+30%\n技傷+30%' } },
             sixStar: { ex1: { text: '水屬攻+50%' }, ex2: { text: '技回+30%\n技傷+30%' } }
@@ -198,7 +216,8 @@ const DB_HEROES = [
         id: 'h19', name: '貝斯', nameEn: 'Beth', element: 'dark', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w019'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰攻+50%' } },
             sixStar: { ex1: { text: '近戰攻+55%' } }
@@ -209,6 +228,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' }, ex2: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['rifle' , '2h_sword'], exclusiveWeapons: ['w020','w020_ex2'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '土屬攻+50%' }, ex2: { text: '土屬攻+50%' } },
             sixStar: { ex1: { text: '土屬攻+50%' }, ex2: { text: '土屬攻+50%' } }
@@ -218,7 +238,8 @@ const DB_HEROES = [
         id: 'h21', name: '加百列', nameEn: 'Gabriel', element: 'light', rarity: 'unique',
         chain: { ex1: { start: 'all', end: 'injured' } }, 
         allowWeapons: ['bow'], exclusiveWeapons: ['w021'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%\n爆傷+20%' } }
@@ -229,16 +250,18 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w022'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰攻+50%' } },
             sixStar: { ex1: { text: '近戰攻+50%' } }
         }
     },
     { 
-        id: 'h23', name: '未來騎士', nameEn: 'FutureKnight', element: 'basic', rarity: 'unique',
+        id: 'h23', name: '未來騎士', nameEn: 'Future Knight', element: 'basic', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'airborne' }, ex2: { start: 'airborne', end: 'injured' } }, 
         allowWeapons: ['rifle', '2h_sword'], exclusiveWeapons: ['w023' , 'w023_ex2'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '技回+30%\n技傷+30%' }, ex2: { text: '防禦力+45%' } },
             sixStar: { ex1: { text: '技回+30%\n技傷+30%' }, ex2: { text: '防禦力+45%' } }
@@ -249,6 +272,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w024'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+90%' } },
             sixStar: { ex1: { text: '技傷+90%' } }
@@ -259,6 +283,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'airborne' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w025'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+40%' } },
             sixStar: { ex1: { text: '生命力+40%' } }
@@ -269,6 +294,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['claw'], exclusiveWeapons: ['w026'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -279,6 +305,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w027'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+50%' } }
@@ -289,6 +316,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['claw'], exclusiveWeapons: ['w028'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '近戰攻+50%' } },
             sixStar: { ex1: { text: '近戰攻+50%' } }
@@ -298,7 +326,8 @@ const DB_HEROES = [
         id: 'h29', name: '露西', nameEn: 'Lucy', element: 'fire', rarity: 'unique',
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w029'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%\n爆傷+20%' } }
@@ -309,6 +338,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w030'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰攻+50%' } },
             sixStar: { ex1: { text: '近戰攻+50%' } }
@@ -319,6 +349,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w031'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技回+30%\n技傷+30%' } },
             sixStar: { ex1: { text: '技回+30%\n技傷+30%' } }
@@ -329,6 +360,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['bow'], exclusiveWeapons: ['w032'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+45%\n光屬攻+25%' } },
             sixStar: { ex1: { text: '技傷+45%\n光屬攻+25%' } }
@@ -339,6 +371,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w033'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰攻+50%' } },
             sixStar: { ex1: { text: '近戰攻+50%' } }
@@ -349,6 +382,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w034'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+45%' } },
             sixStar: { ex1: { text: '防禦力+45%' } }
@@ -358,7 +392,8 @@ const DB_HEROES = [
         id: 'h35', name: '卡瑪爾', nameEn: 'Kamael', element: 'earth', rarity: 'unique',
         chain: { ex1: { start: 'airborne', end: 'injured' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w035'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+55%' } }
@@ -369,6 +404,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'injured' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w036'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -378,7 +414,8 @@ const DB_HEROES = [
         id: 'h37', name: '奧爾卡', nameEn: 'Orca', element: 'water', rarity: 'unique',
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w037'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+55%' } }
@@ -389,6 +426,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w038'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '普屬攻+50%' } },
             sixStar: { ex1: { text: '普屬攻+50%' } }
@@ -399,6 +437,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w039'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -409,6 +448,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w040'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -418,7 +458,8 @@ const DB_HEROES = [
         id: 'h41', name: '克拉拉', nameEn: 'Clara', element: 'fire', rarity: 'unique',
         chain: { ex1: { start: 'airborne', end: 'injured' } }, 
         allowWeapons: ['bow'], exclusiveWeapons: ['w041'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+55%' } }
@@ -429,6 +470,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w042'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -439,6 +481,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w043'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '護盾+40%' } },
             sixStar: { ex1: { text: '護盾+40%' } }
@@ -449,6 +492,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w044'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+50%' } }
@@ -459,6 +503,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w045'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+40%' } },
             sixStar: { ex1: { text: '生命力+40%' } }
@@ -469,6 +514,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w046'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -478,7 +524,8 @@ const DB_HEROES = [
         id: 'h47', name: 'AA.72', nameEn: 'AA72', element: 'water', rarity: 'unique',
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w047'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%\n爆傷+20%' } }
@@ -489,6 +536,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w048'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+50%' } }
@@ -499,6 +547,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w049'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰攻+50%' } },
             sixStar: { ex1: { text: '近戰攻+50%' } }
@@ -509,6 +558,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w050'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -519,6 +569,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w051'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆傷+100%' } },
             sixStar: { ex1: { text: '爆傷+100%' } }
@@ -529,6 +580,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w052'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+40%' } },
             sixStar: { ex1: { text: '生命力+40%' } }
@@ -539,6 +591,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w053'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+50%' } }
@@ -549,6 +602,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w054'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -559,6 +613,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w055'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+45%' } },
             sixStar: { ex1: { text: '防禦力+45%' } }
@@ -569,6 +624,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w056'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '一般攻+55%\n技傷+30%' } },
             sixStar: { ex1: { text: '一般攻+55%\n技傷+30%' } }
@@ -579,6 +635,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'injured' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w057'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰傷+50%' } },
             sixStar: { ex1: { text: '近戰傷+50%' } }
@@ -589,6 +646,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w058'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -599,6 +657,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w059'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '一般攻+55%\n技傷+30%' } },
             sixStar: { ex1: { text: '一般攻+55%\n技傷+30%' } }
@@ -609,6 +668,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w060'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+50%' } }
@@ -619,6 +679,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['claw'], exclusiveWeapons: ['w061'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '土屬攻+50%' } },
             sixStar: { ex1: { text: '土屬攻+50%' } }
@@ -629,6 +690,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w062'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+45%\n攻擊力20%' } },
             sixStar: { ex1: { text: '技傷+45%\n攻擊力20%' } }
@@ -639,6 +701,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w063'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -648,7 +711,8 @@ const DB_HEROES = [
         id: 'h64', name: '銀荷', nameEn: 'Eunha', element: 'basic', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w064'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程傷+50%' } },
             sixStar: { ex1: { text: '遠程傷+55%' } }
@@ -659,6 +723,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w065'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '光屬攻+50%' } },
             sixStar: { ex1: { text: '光屬攻+50%' } }
@@ -669,6 +734,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w066'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '護盾+40%' } },
             sixStar: { ex1: { text: '護盾+40%' } }
@@ -679,6 +745,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w067'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技回+30%\n技傷+30%' } },
             sixStar: { ex1: { text: '技回+30%\n技傷+30%' } }
@@ -689,6 +756,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w068'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '火屬攻+50%' } },
             sixStar: { ex1: { text: '火屬攻+50%' } }
@@ -699,6 +767,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['claw'], exclusiveWeapons: ['w069'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+45%' } },
             sixStar: { ex1: { text: '防禦力+45%' } }
@@ -708,7 +777,8 @@ const DB_HEROES = [
         id: 'h70', name: '米可', nameEn: 'Mikke', element: 'basic', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w070'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰傷+50%' } },
             sixStar: { ex1: { text: '近戰傷+55%' } }
@@ -719,6 +789,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w071'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰傷+50%' } },
             sixStar: { ex1: { text: '近戰傷+50%' } }
@@ -729,6 +800,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w072'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '一般攻+55%\n技傷+30%' } },
             sixStar: { ex1: { text: '一般攻+55%\n技傷+30%' } }
@@ -739,6 +811,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['bow'], exclusiveWeapons: ['w073'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+45%\n攻擊力+20%' } },
             sixStar: { ex1: { text: '技傷+45%\n攻擊力+20%' } }
@@ -749,6 +822,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['bow'], exclusiveWeapons: ['w074'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技回+30%\n技傷+30%' } },
             sixStar: { ex1: { text: '技回+30%\n技傷+30%' } }
@@ -759,6 +833,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w076'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -769,6 +844,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w076'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -779,6 +855,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w077'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '光屬攻+50%' } },
             sixStar: { ex1: { text: '光屬攻+50%' } }
@@ -789,6 +866,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w078'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+45%' } },
             sixStar: { ex1: { text: '防禦力+45' } }
@@ -798,7 +876,8 @@ const DB_HEROES = [
         id: 'h79', name: '多彬', nameEn: 'Dabin', element: 'earth', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w079'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%\n爆傷+20%' } }
@@ -809,6 +888,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'injured' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w080'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+45%' } },
             sixStar: { ex1: { text: '防禦力+45%' } }
@@ -819,6 +899,7 @@ const DB_HEROES = [
 		chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w081'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰傷+50%' } },
             sixStar: { ex1: { text: '近戰傷+50%' } }
@@ -829,6 +910,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w082'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技回+30%\n技傷30%' } },
             sixStar: { ex1: { text: '防禦力+45' } }
@@ -839,6 +921,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w083'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+50%' } },
             sixStar: { ex1: { text: '遠程攻+50%' } }
@@ -849,6 +932,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w084'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '普屬攻+50%' } },
             sixStar: { ex1: { text: '普屬攻+50%' } }
@@ -859,6 +943,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w085'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -869,6 +954,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w086'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰傷+50%' } },
             sixStar: { ex1: { text: '近戰傷+50%' } }
@@ -878,7 +964,8 @@ const DB_HEROES = [
         id: 'h87', name: '妮芙堤', nameEn: 'Nifty', element: 'dark', rarity: 'unique',
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w087'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程傷+50%' } },
             sixStar: { ex1: { text: '遠程傷+50%' } }
@@ -889,6 +976,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w088'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆傷+100%' } },
             sixStar: { ex1: { text: '爆傷+100%' } }
@@ -899,6 +987,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w089'], 
         coreStates: { base: {}, ascended: null, sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%' } }
@@ -908,7 +997,8 @@ const DB_HEROES = [
         id: 'h90', name: '卡莉', nameEn: 'Callie', element: 'dark', rarity: 'unique',
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w090'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%\n爆傷+20%' } }
@@ -918,7 +1008,8 @@ const DB_HEROES = [
         id: 'h91', name: '小滿', nameEn: 'Xiaoman', element: 'earth', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w091'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰傷+50%' } },
             sixStar: { ex1: { text: '近戰傷+55%' } }
@@ -928,7 +1019,8 @@ const DB_HEROES = [
         id: 'h92', name: 'J', nameEn: 'J', element: 'water', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['bow'], exclusiveWeapons: ['w092'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '一般攻+55%\n技傷+30%' } },
             sixStar: { ex1: { text: '一般攻+60%\n技傷+35%' } }
@@ -938,7 +1030,8 @@ const DB_HEROES = [
         id: 'h93', name: '黛西', nameEn: 'Daisy', element: 'water', rarity: 'unique',
         chain: { ex1: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w093'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+45%' } },
             sixStar: { ex1: { text: '防禦力+45%' } }
@@ -948,7 +1041,8 @@ const DB_HEROES = [
         id: 'h94', name: '麗', nameEn: 'Beach Cleanup Hitter Rie', element: 'basic', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w094'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+40%' } },
             sixStar: { ex1: { text: '生命力+45%' } }
@@ -958,7 +1052,8 @@ const DB_HEROES = [
         id: 'h95', name: '蘭迪', nameEn: 'Randi', element: 'fire', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w095'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程傷+50%' } },
             sixStar: { ex1: { text: '遠程傷+55%' } }
@@ -968,7 +1063,8 @@ const DB_HEROES = [
         id: 'h96', name: '克露希埃', nameEn: 'Chriselle', element: 'earth', rarity: 'unique',
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w096'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+40%' } },
             sixStar: { ex1: { text: '生命力+45%' } }
@@ -978,7 +1074,8 @@ const DB_HEROES = [
         id: 'h97', name: '卡洛兒', nameEn: 'Kahlor', element: 'fire', rarity: 'unique',
         chain: { ex1: { start: 'injured', end: 'downed' } }, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w097'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+40%' } },
             sixStar: { ex1: { text: '爆擊率+40%\n爆傷+20%' } }
@@ -988,7 +1085,8 @@ const DB_HEROES = [
         id: 'h98', name: '伊露妮', nameEn: 'Illuni', element: 'light', rarity: 'unique',
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w098'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技回+30%\n技傷+30%' } },
             sixStar: { ex1: { text: '技回+30%\n技傷+50%' } }
@@ -998,7 +1096,8 @@ const DB_HEROES = [
         id: 'h99', name: '若藻', nameEn: 'Wakamo', element: 'water', rarity: 'unique',
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w099'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '水屬攻+50%' } },
             sixStar: { ex1: { text: '水屬攻+55%' } }
@@ -1008,27 +1107,19 @@ const DB_HEROES = [
         id: 'h100', name: '遙', nameEn: 'Haruka', element: 'light', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'injured' } }, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w100'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰傷+50%' } },
             sixStar: { ex1: { text: '近戰傷+55%' } }
-        }
-    },
-	{ 
-        id: 'h131', name: '諾艾爾', nameEn: 'Noel', element: 'earth', rarity: 'unique',
-        chain: { ex1: { start: 'all', end: 'downed' } }, 
-        allowWeapons: ['basket'], exclusiveWeapons: ['w131'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
-        buffs: {
-            base: { ex1: { text: '技回+30%\n技傷+30%' } },
-            sixStar: { ex1: { text: '技回+30%\n技傷+50%' } }
         }
     },
     { 
         id: 'h101', name: '女騎士', nameEn: 'Female Knight', element: 'basic', rarity: 'rare',
         chain: { ex1: { start: 'airborne', end: 'downed' } ,ex2: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['1h_sword' , '2h_sword' , 'bow' , 'rifle'], exclusiveWeapons: ['w101' , 'w101_ex2'], 
-        coreStates: { base: {}, ascended: {} , sixStar: {} },
+        coreStates: { base: {}, ascended: {} , sixStar: { hasImage: false } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '攻擊力+36%\n普屬攻+10%' } , ex2: { text: '普屬攻+46%' }},
 			ascended: { ex1: { text: '攻擊力+50%' } , ex2: { text: '普屬攻+46%' } },
@@ -1040,6 +1131,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' }}, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w102'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+22%\n光屬攻+22%' } },
 			ascended: { ex1: { text: '防禦力+22%\n光屬攻+22%' } },
@@ -1051,6 +1143,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'injured' }}, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w103'], 
         coreStates: { base: {}, ascended: {} , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+48%' } },
 			ascended: { ex1: { text: '遠程攻+52%' } },
@@ -1062,6 +1155,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' }}, 
         allowWeapons: ['claw'], exclusiveWeapons: ['w104'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '水屬攻+48%' } },
 			ascended: { ex1: { text: '水屬攻+52%' } },
@@ -1073,6 +1167,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' }}, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w105'], 
         coreStates: { base: {}, ascended: {} , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '暗屬攻+40%\n擊殺恢復+3%' } },
 			ascended: { ex1: { text: '暗屬攻+46%\n擊殺恢復+5%' } },
@@ -1084,6 +1179,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'injured' }}, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w106'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '護盾+36%' } },
 			ascended: { ex1: { text: '護盾+36%' } },
@@ -1095,6 +1191,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w107'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+48%' } },
 			ascended: { ex1: { text: '防禦力+48%' } },
@@ -1106,6 +1203,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'injured' }}, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w108'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '受傷連鎖，攻擊力、回復力+240%' } },
 			ascended: { ex1: { text: '受傷連鎖，攻擊力、回復力+240%' } },
@@ -1117,6 +1215,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'downed' }}, 
         allowWeapons: ['bow'], exclusiveWeapons: ['w109'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '土屬攻+45%' } },
 			ascended: { ex1: { text: '土屬攻+45%' } },
@@ -1127,7 +1226,8 @@ const DB_HEROES = [
         id: 'h110', name: '葛蕾茉莉', nameEn: 'Gremory', element: 'dark', rarity: 'rare',
         chain: { ex1: { start: 'all', end: 'airborne' }}, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w110'], 
-        coreStates: { base: {}, ascended: {} , sixStar: {} },
+        coreStates: { base: {}, ascended: {} , sixStar: { hasImage: true } },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+80%' } },
 			ascended: { ex1: { text: '技傷+93%' } },
@@ -1139,6 +1239,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' }}, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w111'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+48%' } },
 			ascended: { ex1: { text: '遠程攻+48%' } },
@@ -1150,6 +1251,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' }}, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w112'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+37%' } },
 			ascended: { ex1: { text: '爆擊率+37%' } },
@@ -1161,6 +1263,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' }}, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w113'], 
         coreStates: { base: {}, ascended: {} , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+80%' } },
 			ascended: { ex1: { text: '技傷+93%' } },
@@ -1172,6 +1275,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w114'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '土屬攻+46%' } },
 			ascended: { ex1: { text: '土屬攻+46%' } },
@@ -1183,6 +1287,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w115'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技回+30%\n技傷+30%' } },
 			ascended: { ex1: { text: '技回+30%\n技傷+30%' } },
@@ -1194,6 +1299,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w116'], 
         coreStates: { base: {}, ascended: {} , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰防+64%' } },
 			ascended: { ex1: { text: '近戰防+80%' } },
@@ -1205,6 +1311,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w116'], 
         coreStates: { base: {}, ascended: {} , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰防+64%' } },
 			ascended: { ex1: { text: '近戰防+80%' } },
@@ -1216,6 +1323,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' }}, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w118'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+38%' } },
 			ascended: { ex1: { text: '生命力+38%' } },
@@ -1227,6 +1335,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w119'], 
         coreStates: { base: {}, ascended: {} , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+44%' } },
 			ascended: { ex1: { text: '防禦力+48%' } },
@@ -1238,6 +1347,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'downed' }}, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w120'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+38%' } },
 			ascended: { ex1: { text: '爆擊率+38%' } },
@@ -1249,6 +1359,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' }}, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w121'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+42%' } },
 			ascended: { ex1: { text: '防禦力+42%' } },
@@ -1260,6 +1371,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'injured' }}, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w122'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+36%' } },
 			ascended: { ex1: { text: '生命力+36%' } },
@@ -1271,6 +1383,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'all', end: 'downed' }}, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w123'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+36%' } },
 			ascended: { ex1: { text: '生命力+36%' } },
@@ -1282,6 +1395,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'injured' }}, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w124'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰傷+46%' } },
 			ascended: { ex1: { text: '近戰傷+46%' } },
@@ -1293,6 +1407,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' }}, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w125'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技回+28%\n技傷+33%' } },
 			ascended: { ex1: { text: '技回+28%\n技傷+33%' } },
@@ -1304,6 +1419,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' }}, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w126'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰傷+48%' } },
 			ascended: { ex1: { text: '近戰傷+48%' } },
@@ -1315,6 +1431,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'injured', end: 'airborne' }}, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w127'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+82%' } },
 			ascended: { ex1: { text: '技傷+82%' } },
@@ -1326,6 +1443,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'injured' }}, 
         allowWeapons: ['bow'], exclusiveWeapons: ['w128'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程防+66%' } },
 			ascended: { ex1: { text: '遠程防+66%' } },
@@ -1337,6 +1455,7 @@ const DB_HEROES = [
         chain: { ex1: { start: 'airborne', end: 'downed' }}, 
         allowWeapons: ['2h_sword'], exclusiveWeapons: ['w129'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '爆擊率+37%' } },
 			ascended: { ex1: { text: '爆擊率+37%' } },
@@ -1348,10 +1467,22 @@ const DB_HEROES = [
         chain: { ex1: { start: 'downed', end: 'injured' }}, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w130'], 
         coreStates: { base: {}, ascended: null , sixStar: null },
+		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '光屬攻+46%' } },
 			ascended: { ex1: { text: '光屬攻+46%' } },
             sixStar: { ex1: { text: '光屬攻+46%' } }
+        }
+    },
+	{ 
+        id: 'h131', name: '諾艾爾', nameEn: 'Noel', element: 'earth', rarity: 'unique',
+        chain: { ex1: { start: 'all', end: 'downed' } }, 
+        allowWeapons: ['basket'], exclusiveWeapons: ['w131'], 
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
+        buffs: {
+            base: { ex1: { text: '技回+30%\n技傷+30%' } },
+            sixStar: { ex1: { text: '技回+30%\n技傷+50%' } }
         }
     },
     { 
@@ -1442,7 +1573,7 @@ const DB_HEROES = [
         id: 's13', name: '克雷恩', nameEn: 'Kien', element: 'dark', rarity: 'unique',
         chain: { ex1: { start: 'downed', end: 'airborne' } }, 
         allowWeapons: ['basket'], exclusiveWeapons: ['s013'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: false } },
         buffs: {
             base: { ex1: { text: '遠程傷+50%' } },
             sixStar: { ex1: { text: '遠程傷+55%' } }
@@ -1452,7 +1583,7 @@ const DB_HEROES = [
         id: 's14', name: '涅路路', nameEn: 'Nelluru', element: 'fire', rarity: 'unique',
         chain: { ex1: { start: 'all', end: 'downed' } }, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['s014'], 
-        coreStates: { base: {}, ascended: null, sixStar: {} },
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: false } },
         buffs: {
             base: { ex1: { text: '生命力+40%' } },
             sixStar: { ex1: { text: '生命力+45%' } }
@@ -1635,7 +1766,6 @@ const DB_RELICS = [
 ];
 
 const DB_BOSSES = [
-    // 確保所有 Boss 都有 element 屬性，以符合 script.js 的邏輯
     { id: 'b01', name: '九尾狐', icon: './images/boss/Garam.gif' },
     { id: 'b02', name: '牛頭人', icon: './images/boss/Minotaur.png' },
     { id: 'b03', name: '沙漠牛蟲', icon: './images/boss/Bullworm.gif' },
@@ -1662,7 +1792,7 @@ const DB_BOSSES = [
 	{ id: 'b24', name: '鉻小姐', icon: './images/boss/Miss Chrome.png' },
 	{ id: 'b25', name: '暗砲', icon: './images/boss/Arabelle.png' },
 	{ id: 'b26', name: '小紅帽', icon: './images/boss/Elvirabium.png' },
-	{ id: 'b26', name: '阿瑞克涅', icon: './images/boss/Arachne.gif' },
+	{ id: 'b27', name: '阿瑞克涅', icon: './images/boss/Arachne.gif' },
 ];
 //#5cd65c
 const CONSTANTS = {

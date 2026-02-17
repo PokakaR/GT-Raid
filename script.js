@@ -10,6 +10,10 @@ let currentRarity = 'all';
 let modalBossState = { step: 'element', element: null };
 let globalHeroState = 'sixStar';
 let globalHeroStyle = 'base';
+// 用於記錄正在拖曳的物件資訊
+let dragSrcEl = null;
+let dragType = null; // 'team' or 'hero'
+let dragData = null; // { qIdx, tIdx, mIdx }
 
 // DOM Elements
 const modal = document.getElementById('selection-modal');
@@ -51,7 +55,253 @@ function createDefaultChainSet() {
         activeRows: 2, 
     };
 }
+/* --- Drag and Drop Logic --- */
 
+let dragSrcData = null; // { type: 'team'|'hero'|'quadrant', qIdx, tIdx, mIdx }
+let dropPosition = null; // 'before', 'after'
+
+// --- 1. 開始拖曳 (Start) ---
+
+function handleDragStart(e, type, data) {
+    dragSrcData = { ...data, type };
+    e.target.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', JSON.stringify(dragSrcData));
+}
+
+function handleQuadrantDragStart(e, qIdx) {
+    handleDragStart(e, 'quadrant', { qIdx });
+}
+
+function handleTeamDragStart(e, qIdx, tIdx) {
+    e.stopPropagation(); // 阻止觸發區域拖曳
+    handleDragStart(e, 'team', { qIdx, tIdx });
+}
+
+function handleHeroDragStart(e, qIdx, tIdx, mIdx) {
+    e.stopPropagation(); // 阻止觸發隊伍拖曳
+    handleDragStart(e, 'hero', { qIdx, tIdx, mIdx });
+}
+
+// --- 2. 結束拖曳 (End) ---
+
+function handleDragEnd(e) {
+    if(e.target) e.target.classList.remove('dragging');
+    
+    // 清除所有可能的視覺樣式
+    const selectors = [
+        '.drag-over', '.drag-over-container', 
+        '.drop-above', '.drop-below', 
+        '.drag-over-quadrant'
+    ];
+    document.querySelectorAll(selectors.join(',')).forEach(el => {
+        el.classList.remove(...selectors.map(s => s.substring(1)));
+    });
+    
+    dragSrcData = null;
+    dropPosition = null;
+}
+
+// --- 3. 拖曳過程 (Over/Enter/Leave) ---
+
+// A. 隊伍卡片上的 DragOver
+function handleDragOver(e) {
+    e.preventDefault(); 
+    
+    // 修正 BUG 關鍵：如果是拖曳「區域」，不要阻擋冒泡，讓它傳到 handleQuadrantDragOver
+    if (dragSrcData && dragSrcData.type === 'quadrant') return;
+
+    e.stopPropagation(); // 只有拖曳隊伍或英雄時，才阻擋冒泡
+
+    const target = e.currentTarget;
+    
+    // 隊伍排序視覺
+    if (dragSrcData && dragSrcData.type === 'team' && target.classList.contains('team-container')) {
+        const rect = target.getBoundingClientRect();
+        const midY = rect.top + rect.height / 2;
+        
+        target.classList.remove('drop-above', 'drop-below');
+        if (e.clientY < midY) {
+            target.classList.add('drop-above');
+            dropPosition = 'before';
+        } else {
+            target.classList.add('drop-below');
+            dropPosition = 'after';
+        }
+    }
+    
+    // 英雄拖曳視覺
+    if (dragSrcData && dragSrcData.type === 'hero' && target.classList.contains('hero-container')) {
+        target.classList.add('drag-over');
+    }
+}
+
+// B. 隊伍列表容器上的 DragOver
+function handleContainerDragOver(e) {
+    e.preventDefault();
+    
+    // 修正 BUG 關鍵：如果是拖曳「區域」，不要阻擋冒泡
+    if (dragSrcData && dragSrcData.type === 'quadrant') return;
+
+    // 只有拖曳隊伍時才顯示容器框線
+    if (dragSrcData && dragSrcData.type === 'team') {
+        e.stopPropagation(); // 阻止冒泡到 Quadrant
+        e.currentTarget.classList.add('drag-over-container');
+    }
+}
+
+function handleContainerDragLeave(e) {
+    if (e.currentTarget.contains(e.relatedTarget)) return;
+    e.currentTarget.classList.remove('drag-over-container');
+}
+
+// C. 區域 (Quadrant) 上的 DragOver
+function handleQuadrantDragOver(e) {
+    e.preventDefault();
+    
+    // 只有拖曳區域時才觸發
+    if (dragSrcData && dragSrcData.type === 'quadrant') {
+        // 加上視覺效果
+        e.currentTarget.classList.add('drag-over-quadrant');
+    }
+}
+
+function handleQuadrantDragLeave(e) {
+    // 檢查是否真的離開了區域 (而不是進入了子元素)
+    if (e.currentTarget.contains(e.relatedTarget)) return;
+    e.currentTarget.classList.remove('drag-over-quadrant');
+}
+
+// D. 英雄格子的 Enter/Leave (輔助)
+function handleDragEnter(e) {
+    e.preventDefault();
+    if (dragSrcData && dragSrcData.type === 'hero' && e.currentTarget.classList.contains('hero-container')) {
+        e.currentTarget.classList.add('drag-over');
+    }
+}
+function handleDragLeave(e) {
+    const container = e.currentTarget;
+    if (container.contains(e.relatedTarget)) return;
+    container.classList.remove('drag-over', 'drop-above', 'drop-below');
+}
+
+
+// --- 4. 放置處理 (Drop) ---
+
+// A. 區域交換 (Swap Quadrant)
+function handleQuadrantDrop(e, targetQIdx) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over-quadrant');
+    
+    // 嘗試恢復資料
+    if (!dragSrcData) try { dragSrcData = JSON.parse(e.dataTransfer.getData('text/plain')); } catch(err){}
+    
+    if (!dragSrcData || dragSrcData.type !== 'quadrant') return;
+    if (dragSrcData.qIdx === targetQIdx) return; // 原地不動
+
+    // 交換資料
+    const temp = appData[dragSrcData.qIdx];
+    appData[dragSrcData.qIdx] = appData[targetQIdx];
+    appData[targetQIdx] = temp;
+
+    saveAndRender();
+}
+
+// B. 隊伍放置 (Drop on Team Card)
+function handleTeamDrop(e, targetQIdx, targetTIdx) {
+    // 修正 BUG 關鍵：如果是拖曳區域，直接返回，讓事件冒泡到 handleQuadrantDrop
+    if (dragSrcData && dragSrcData.type === 'quadrant') return;
+
+    e.stopPropagation();
+    e.currentTarget.classList.remove('drop-above', 'drop-below');
+    
+    if (!dragSrcData) try { dragSrcData = JSON.parse(e.dataTransfer.getData('text/plain')); } catch(err){}
+    
+    if (!dragSrcData || dragSrcData.type !== 'team') return;
+
+    const srcQ = appData[dragSrcData.qIdx];
+    const targetQ = appData[targetQIdx];
+    
+    // 1. 移除
+    const [movedTeam] = srcQ.teams.splice(dragSrcData.tIdx, 1);
+    
+    // 2. 插入
+    let insertIndex = targetTIdx;
+    // 若同區且由上往下拖，修正索引
+    if (dragSrcData.qIdx === targetQIdx && dragSrcData.tIdx < targetTIdx) {
+        insertIndex--;
+    }
+    if (dropPosition === 'after') {
+        insertIndex++;
+    }
+    
+    targetQ.teams.splice(insertIndex, 0, movedTeam);
+    saveAndRender();
+}
+
+// C. 容器放置 (Drop into empty space)
+function handleContainerDrop(e, targetQIdx) {
+    // 修正 BUG 關鍵：如果是拖曳區域，讓它冒泡
+    if (dragSrcData && dragSrcData.type === 'quadrant') return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove('drag-over-container');
+    
+    if (!dragSrcData) try { dragSrcData = JSON.parse(e.dataTransfer.getData('text/plain')); } catch(err){}
+    
+    if (!dragSrcData || dragSrcData.type !== 'team') return;
+
+    const srcQ = appData[dragSrcData.qIdx];
+    const targetQ = appData[targetQIdx];
+    
+    const [movedTeam] = srcQ.teams.splice(dragSrcData.tIdx, 1);
+    targetQ.teams.push(movedTeam); // 加到最後
+    saveAndRender();
+}
+
+// D. 英雄放置 (Drop Hero)
+function handleHeroDrop(e, targetQIdx, targetTIdx, targetMIdx) {
+    // 修正：區域拖曳不應觸發此處
+    if (dragSrcData && dragSrcData.type === 'quadrant') return;
+
+    e.stopPropagation();
+    e.currentTarget.classList.remove('drag-over');
+    
+    if (!dragSrcData) try { dragSrcData = JSON.parse(e.dataTransfer.getData('text/plain')); } catch(err){}
+    
+    if (!dragSrcData || dragSrcData.type !== 'hero') return;
+    
+    if (dragSrcData.qIdx === targetQIdx && dragSrcData.tIdx === targetTIdx && dragSrcData.mIdx === targetMIdx) return;
+
+    const srcMembers = appData[dragSrcData.qIdx].teams[dragSrcData.tIdx].members;
+    const tgtMembers = appData[targetQIdx].teams[targetTIdx].members;
+    
+    // 交換資料
+    const temp = srcMembers[dragSrcData.mIdx];
+    srcMembers[dragSrcData.mIdx] = tgtMembers[targetMIdx];
+    tgtMembers[targetMIdx] = temp;
+
+    // 連鎖同步 (僅限同隊伍)
+    if (dragSrcData.qIdx === targetQIdx && dragSrcData.tIdx === targetTIdx) {
+        const team = appData[targetQIdx].teams[targetTIdx];
+        const sIdx = dragSrcData.mIdx;
+        const tIdx = targetMIdx;
+        
+        team.chainData.forEach(set => {
+            set.presets.forEach(row => {
+                row.forEach(slot => {
+                    // 修正邏輯：暫存值避免連續替換
+                    const currentVal = slot.selectedIndex;
+                    if (currentVal === sIdx) slot.selectedIndex = tIdx;
+                    else if (currentVal === tIdx) slot.selectedIndex = sIdx;
+                });
+            });
+        });
+    }
+
+    saveAndRender();
+}
 
 // ==========================================================
 // 2. 輔助函式 (Helpers)
@@ -65,23 +315,42 @@ function findRelic(id) { return (typeof DB_RELICS !== 'undefined' ? DB_RELICS : 
 //英雄狀態造型路徑
 function getHeroIconUrl(id, state, style) {
     const hero = findHero(id);
-    let stateSuffix = '';
-	
-	if (state === 'ascended' && hero.coreStates && hero.coreStates.ascended !== null) {
-        stateSuffix = '_Ascended';
-    } else if (state === 'sixStar' && hero.coreStates && hero.coreStates.sixStar !== null) {
-        stateSuffix = '_6Star';
+    if (!hero) return './images/slots/hero.png';
+
+    // 1. 造型優先 (Skin Priority)
+    // 如果全域選擇了特殊造型，且該英雄擁有此造型
+    if (style && style !== 'base' && hero.styles && hero.styles.includes(style)) {
+        
+        let fileName = hero.nameEn;
+
+        // --- 針對「Super Costume」的特殊命名處理 ---
+        if (style === 'Super Costume') {
+            // 只有超級時裝要在檔名後面加 "_Super Costume"
+            fileName = `${hero.nameEn}_Super Costume`;
+        } 
+        // 其他造型 (如 april_fool) 則保持原樣，只改變資料夾路徑
+
+        return `./images/heroes/styles/${style}/${fileName}.png`;
     }
 
-    // 造型前綴/資料夾 (決定造型)
-    let stylePrefix = '';
-    if (style !== 'base' && hero.styles && hero.styles.includes(style)) {
-        // 假設造型圖片放在 ./images/heroes/styles/ 中，且命名為 HeroName_style.png
-        return `./images/heroes/styles/${hero.nameEn}_${style}.png`; 
-    }
+    // 2. 狀態圖片判斷 (Fallback Mechanism)
+    let suffix = '';
     
-    // 預設路徑 (英雄基本名稱 + 狀態後綴)
-    return `./images/heroes/${hero.nameEn}${stateSuffix}.png`;
+    // 檢查目前全域設定的狀態
+    if (state === 'sixStar') {
+        if (hero.coreStates?.sixStar?.hasImage) {
+            suffix = '_6Star';
+        } else if (hero.coreStates?.ascended?.hasImage) {
+            suffix = '_Ascended';
+        }
+    } else if (state === 'ascended') {
+        if (hero.coreStates?.ascended?.hasImage) {
+            suffix = '_Ascended';
+        }
+    }
+
+    // 基本圖片路徑
+    return `./images/heroes/${hero.nameEn}${suffix}.png`;
 }
 function getWeaponIconUrl(id) {
     const w = findWeapon(id);
@@ -281,23 +550,49 @@ function renderApp() {
     appData.forEach((qData, qIdx) => {
         const qEl = document.getElementById(`q-${qIdx}`);
         if(!qEl) return;
-
+		
+		// --- 1. 設定區域拖曳事件 ---
+        // 注意：為了不影響內部文字選取，建議只在 header 觸發 dragstart，
+        // 但為了方便，這裡設在整個 quadrant 上，並利用 handleDragStart 過濾
+        qEl.setAttribute('draggable', 'true');
+        qEl.setAttribute('ondragstart', `handleQuadrantDragStart(event, ${qIdx})`);
+        qEl.setAttribute('ondragover', `handleQuadrantDragOver(event)`);
+        qEl.setAttribute('ondragleave', `handleQuadrantDragLeave(event)`);
+        qEl.setAttribute('ondrop', `handleQuadrantDrop(event, ${qIdx})`);
+        qEl.setAttribute('ondragend', `handleDragEnd(event)`); // 共用結束處理
+		
         const boss = DB_BOSSES.find(b => b.id === qData.bossId) || DB_BOSSES.find(b => b.element === qData.element);
         const elemData = CONSTANTS.elements[qData.element] || CONSTANTS.elements.basic;
         
+        // --- 2. 標題拆分：屬性按鈕 & Boss 按鈕 ---
+        // 注意：onclick 分別呼叫 'element' 和 'boss-list'
         qEl.querySelector('.quadrant-header').innerHTML = `
-            <div class="boss-display-wrapper" onclick="openModal(${qIdx},0,0,'boss')" style="border-color:${elemData.color}">
-                <div class="boss-info-text">
+            <div class="boss-display-wrapper" style="border-color:${elemData.color}">
+                <div class="header-btn-element" onclick="openModal(${qIdx},0,0,'element')" title="點擊更換屬性">
                     <img src="${elemData.icon}" class="boss-attr-icon">
                     <span style="color:${elemData.color}">${elemData.label}</span>
+                </div>
+                <div class="header-btn-boss" onclick="openModal(${qIdx},0,0,'boss-list')" title="點擊更換 BOSS">
                     <span>${boss ? boss.name : '選擇BOSS'}</span>
                 </div>
             </div>
             <button onclick="addTeam(${qIdx})">+ 隊伍</button>
         `;
+		
+		// 操作 team-list 容器，賦予它拖曳事件
+        const teamListContainer = qEl.querySelector('.team-list');
+		// 清空舊內容
+        teamListContainer.innerHTML = '';
         
-        qEl.querySelector('.team-list').innerHTML = qData.teams.map((t, tIdx) => renderTeam(t, qIdx, tIdx)).join('');
+        // 設定事件 (支援拖曳到空區域)
+        teamListContainer.setAttribute('ondragover', 'handleContainerDragOver(event)');
+        teamListContainer.setAttribute('ondragleave', 'handleContainerDragLeave(event)');
+        teamListContainer.setAttribute('ondrop', `handleContainerDrop(event, ${qIdx})`);
+        
+        // 填入隊伍內容
+        teamListContainer.innerHTML = qData.teams.map((t, tIdx) => renderTeam(t, qIdx, tIdx)).join('');
     });
+	
 	
     // 更新狀態按鈕文字 (base: 🌱, sixStar: 🌸, ascended: 🌟)
     let stateText = '🌱 基本'; 
@@ -309,8 +604,26 @@ function renderApp() {
     // NEW: 更新造型按鈕文字
     if (styleToggleBtn) {
          let styleLabel = globalHeroStyle.toUpperCase();
-         if (globalHeroStyle === 'april_fool') styleLabel = '愚人節';
-         if (globalHeroStyle === 'supper') styleLabel = '超時';
+		 if (globalHeroStyle === 'base') styleLabel = '基本頭像';
+         if (globalHeroStyle === 'april_fool') styleLabel = '愚人節頭像';
+         if (globalHeroStyle === 'Super Costume') styleLabel = '超時頭像';
+         styleToggleBtn.innerText = `造型: ${styleLabel}`;
+    }
+	updateGlobalButtons(); // 建議抽成小函式或保留原代碼
+}
+
+// 輔助：更新全域按鈕文字 (保留您原本的邏輯)
+function updateGlobalButtons() {
+    let stateText = '🌱 基本'; 
+	if (globalHeroState === 'ascended') stateText = '🌟 晉升'; 
+    if (globalHeroState === 'sixStar') stateText = '🌸 最大';
+    if (globalStateToggleBtn) globalStateToggleBtn.innerText = `${stateText}`;
+    
+    if (styleToggleBtn) {
+         let styleLabel = globalHeroStyle.toUpperCase();
+		 if (globalHeroStyle === 'base') styleLabel = '基本頭像';
+         if (globalHeroStyle === 'april_fool') styleLabel = '愚人節頭像';
+         if (globalHeroStyle === 'Super Costume') styleLabel = '超時頭像';
          styleToggleBtn.innerText = `造型: ${styleLabel}`;
     }
 }
@@ -422,11 +735,20 @@ function renderTeam(team, qIdx, tIdx) {
     }
     
     return `
-        <div class="team-container">
-            <div class="team-header">
+        <div class="team-container" 
+             draggable="true"
+             ondragstart="handleTeamDragStart(event, ${qIdx}, ${tIdx})"
+             ondragover="handleDragOver(event)"
+             ondragenter="handleDragEnter(event)"
+             ondragleave="handleDragLeave(event)"
+             ondrop="handleTeamDrop(event, ${qIdx}, ${tIdx})"
+             ondragend="handleDragEnd(event)">
+             
+            <div class="team-header" style="cursor: grab;">
                 <div class="team-buff-summary">隊伍 ${tIdx + 1} (${buffText})</div>
                 <button class="btn-remove-team" onclick="removeTeam(${qIdx}, ${tIdx})">X</button>
             </div>
+            
             <div class="team-content">
                 <div class="member-grid">
                     ${auxHtml}
@@ -456,7 +778,15 @@ function renderHeroMember(member, qIdx, tIdx, mIdx) {
     }
 
     return `
-        <div class="member-container hero-container">
+        <div class="member-container hero-container"
+             draggable="true"
+             ondragstart="handleHeroDragStart(event, ${qIdx}, ${tIdx}, ${mIdx})"
+             ondragover="handleDragOver(event)"
+             ondragenter="handleDragEnter(event)"
+             ondragleave="handleDragLeave(event)"
+             ondrop="handleHeroDrop(event, ${qIdx}, ${tIdx}, ${mIdx})"
+             ondragend="handleDragEnd(event)">
+             
             <div class="hero-name-top" style="color:${elem.color}">${h ? h.name : '英雄'}</div>
             <div class="hero-slot" onclick="openModal(${qIdx},${tIdx},${mIdx},'hero')" style="border-color:${elem.color}">
                 <img src="${info.icon}">
@@ -502,7 +832,7 @@ function toggleAllHeroStates() {
 }
 
 // NEW: 造型切換函數
-const HERO_STYLES = ['base', 'jp', 'kr', 'supper', 'april_fool'];
+const HERO_STYLES = ['base', 'Super Costume', 'april_fool'];
 
 function toggleAllHeroStyle() {
     const currentIndex = HERO_STYLES.indexOf(globalHeroStyle);
@@ -606,29 +936,6 @@ function updateChainNote(q, t, setIdx, v) {
 }
 
 /* --- Modal --- */
-function openModal(qIdx, tIdx, mIdx, type) {
-    editContext = { qIdx, tIdx, mIdx, type };
-    
-    document.getElementById('search-bar').style.display = 'flex';
-    document.getElementById('btn-clear-slot').style.display = 'block';
-    toggleExclusive.parentElement.style.display = 'none';
-    
-    if (type === 'boss') {
-        modalTitle.textContent = '選擇 BOSS';
-        modalBossState.step = 'element';
-        document.getElementById('search-bar').style.display = 'none';
-        document.getElementById('btn-clear-slot').style.display = 'none';
-        renderBossModal();
-    } else {
-        modalTitle.textContent = '選擇項目';
-        if (type === 'w1' || type === 'w2') toggleExclusive.parentElement.style.display = 'inline-flex';
-        searchInput.value = '';
-        currentTab = 'all';
-        renderTabs(type);
-        renderGrid();
-    }
-    modal.style.display = 'flex';
-}
 
 function selectItem(id) {
     const { qIdx, tIdx, mIdx, type } = editContext;
@@ -722,22 +1029,18 @@ function renderGrid() {
 // NEW: 渲染屬性選擇網格
 function renderElementSelectionGrid() {
     grid.innerHTML = '';
-    
     Object.entries(CONSTANTS.elements).forEach(([k,v]) => {
         const el = document.createElement('div');
         el.className = 'selection-grid-item';
         el.innerHTML = `<div class="selection-icon-container" style="background:${v.bg}"><img src="${v.icon}"></div><div class="modal-item-name" style="color:${v.color}">${v.label}</div>`;
         
-        // 點擊屬性時的處理邏輯
         el.onclick = () => { 
-            // 1. 設定象限屬性
+            // 1. 設定屬性
             appData[editContext.qIdx].element = k; 
-            // 2. 儲存並渲染主畫面 (更新象限顏色)
+            // 2. 儲存並刷新 (Boss 欄位會根據屬性變色)
             saveAndRender(); 
-            // 3. 關閉當前屬性選擇模態視窗
+            // 3. 僅關閉視窗，不跳轉
             closeModal();
-            // 4. 立即開啟 BOSS 選擇模態視窗
-            openModal(editContext.qIdx, editContext.tIdx, editContext.mIdx, 'boss-list');
         };
         grid.appendChild(el);
     });
@@ -789,27 +1092,43 @@ function renderBossModal() {
 function openModal(qIdx, tIdx, mIdx, type) {
     editContext = { qIdx, tIdx, mIdx, type };
     
+    /// UI 重置
     document.getElementById('search-bar').style.display = 'flex';
     document.getElementById('btn-clear-slot').style.display = 'block';
     toggleExclusive.parentElement.style.display = 'none';
     
-    if (type === 'boss') {
-        // 初始點擊 '選擇BOSS' 按鈕時，只顯示屬性選擇
+	// --- 邏輯分流 ---
+    if (type === 'element') {
+        // 新增：單獨選擇屬性
         modalTitle.textContent = '選擇屬性';
         document.getElementById('search-bar').style.display = 'none';
         document.getElementById('btn-clear-slot').style.display = 'none';
-        renderBossModal(); // 這裡現在只渲染屬性列表 (renderElementSelectionGrid)
+        renderElementSelectionGrid();
     } else if (type === 'boss-list') {
-        // 從屬性選擇跳轉過來，顯示所有 BOSS 列表
+        // 單獨選擇 Boss
         modalTitle.textContent = '選擇 BOSS';
         document.getElementById('search-bar').style.display = 'none';
         document.getElementById('btn-clear-slot').style.display = 'none';
-        renderBossListGrid(); // 渲染所有 BOSS 列表
+        renderBossListGrid();
+    } else if (type === 'boss') { 
+        // 保留舊代碼相容 (雖然 UI 已改用 element/boss-list)
+        renderElementSelectionGrid();
     } else {
+        // 英雄/裝備選擇
         modalTitle.textContent = '選擇項目';
-        if (type === 'w1' || type === 'w2') toggleExclusive.parentElement.style.display = 'inline-flex';
         searchInput.value = '';
         currentTab = 'all';
+
+        if (type === 'w1' || type === 'w2') {
+            toggleExclusive.parentElement.style.display = 'inline-flex';
+            const member = appData[qIdx].teams[tIdx].members[mIdx];
+            if (member && member.heroId) {
+                const hero = findHero(member.heroId);
+                if (hero && hero.allowWeapons && hero.allowWeapons.length > 0) {
+                    currentTab = hero.allowWeapons[0];
+                }
+            }
+        }
         renderTabs(type);
         renderGrid();
     }
@@ -820,17 +1139,52 @@ function openModal(qIdx, tIdx, mIdx, type) {
 function renderTabs(type) {
     tabContainer.innerHTML = '';
     let tabs = [];
+    
+    // 取得分類列表
     if(type === 'hero') tabs = Object.keys(CONSTANTS.elements);
     if(type.startsWith('w')) tabs = Object.keys(CONSTANTS.weaponTypes);
-    let html = `<button class="tab-button ${currentTab==='all'?'active':''}" onclick="switchTab('all')">全部</button>`;
+    
+    // --- 處理「全部」按鈕 ---
+    // 如果選中「全部」，不加行內顏色(讓CSS處理黑字金底)，否則預設白色
+    const isAllActive = (currentTab === 'all');
+    let html = `<button class="tab-button ${isAllActive ? 'active' : ''}" 
+                        onclick="switchTab('all')"
+                        style="${isAllActive ? '' : 'color: #fff'}">
+                        全部
+                </button>`;
+    
+    // --- 處理各分類按鈕 ---
     tabs.forEach(t => {
         const label = CONSTANTS.elements[t]?.label || CONSTANTS.weaponTypes[t] || t;
-        const color = CONSTANTS.elements[t]?.color || '#fff';
-        html += `<button class="tab-button ${currentTab===t?'active':''}" onclick="switchTab('${t}')" style="color:${color}">${label}</button>`;
+        const isActive = (currentTab === t);
+        
+        // 取得該屬性的代表色 (未選中時顯示用)
+        // 武器預設為灰色 #aaa，屬性則用定義好的 color
+        const baseColor = CONSTANTS.elements[t]?.color || '#aaa'; 
+        
+        // 關鍵邏輯：
+        // 如果是 Active (選中): 不設定 style (讓 CSS .active 的 !important 生效 -> 變黑字)
+        // 如果是 Inactive (未選中): 設定 style="color:..." (顯示屬性顏色)
+        const styleAttr = isActive ? '' : `color: ${baseColor}`;
+        
+        html += `<button class="tab-button ${isActive ? 'active' : ''}" 
+                         onclick="switchTab('${t}')" 
+                         style="${styleAttr}">
+                         ${label}
+                 </button>`;
     });
+    
     tabContainer.innerHTML = html;
 }
-function switchTab(t) { currentTab = t; renderGrid(); }
+function switchTab(t) {
+    currentTab = t;
+    
+    // 1. 重新渲染標籤列 (這樣 active class 才會跑到新的按鈕上)
+    renderTabs(editContext.type); 
+    
+    // 2. 重新渲染網格內容
+    renderGrid();
+}
 function closeModal() { modal.style.display = 'none'; }
 function clearCurrentSlot() { selectItem(null); }
 function exportData() {

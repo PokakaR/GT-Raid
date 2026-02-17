@@ -51,51 +51,110 @@ header .controls button, .btn-danger, #global-state-toggle {
     overflow-y: auto;
 }
 
-/* Quadrant */
+/* --- 1. Quadrant Dragging (區域拖曳) --- */
 .quadrant {
+   /* 確保有足夠空間與樣式 */
     background: var(--panel-bg);
     border: 1px solid var(--border);
     border-radius: 0.5rem;
     padding: 0.5rem;
     display: flex; flex-direction: column;
-    overflow: hidden;
-	min-width: 700px;
-    min-height: 300px;
+    min-width: 300px; /* 稍微調整手機版寬度容忍度 */
+    height: 100%;
+    transition: transform 0.2s, opacity 0.2s;
 }
 
+/* 區域標題改為可抓取游標 */
 .quadrant-header {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 0.5rem;
+    cursor: grab; /* 提示可拖曳 */
 }
+.quadrant-header:active { cursor: grabbing; }
+
+/* 區域拖曳時的樣式 */
+.quadrant.dragging {
+    opacity: 0.5;
+    border: 2px dashed #ffcc00;
+    transform: scale(0.98);
+}
+
+.quadrant.drag-over-quadrant {
+    border: 2px dashed #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
 .quadrant-header button {
     background: #444; color: var(--text); border: none; padding: 0.3rem 0.6rem;
     border-radius: 0.2rem; cursor: pointer; font-size: 0.8rem;
 }
 
+/* --- 2. Boss/Element Split Header (標題拆分) --- */
+/* 原本的 .boss-display-wrapper 修改為容器 */
 .boss-display-wrapper {
-    background: #2a2a2a; padding: 0.3rem 0.6rem; border-radius: 0.2rem;
-    font-weight: bold; font-size: 0.9rem; border: 2px solid; cursor: pointer;
-    display: inline-flex;
+    display: flex;
+    align-items: stretch; /* 讓兩個按鈕等高 */
+    background: #2a2a2a;
+    border-radius: 0.2rem;
+    border: 2px solid; /* 顏色由 JS 動態設定 */
+    overflow: hidden;
 }
+
+/* 左側：屬性選擇 */
+.header-btn-element {
+    display: flex; align-items: center; gap: 5px;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    background: rgba(0,0,0,0.2);
+    transition: background 0.2s;
+    border-right: 1px solid rgba(255,255,255,0.1);
+}
+.header-btn-element:hover { background: rgba(255,255,255,0.1); }
+
+/* 右側：Boss 選擇 */
+.header-btn-boss {
+    display: flex; align-items: center;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.header-btn-boss:hover { background: rgba(255,255,255,0.1); }
+
+.boss-attr-icon { width: 1.2rem; height: 1.2rem; display: block; }
 .boss-info-text { display: flex; align-items: center; gap: 5px; }
-.boss-attr-icon { width: 1.2rem; height: 1.2rem; }
+
 
 
 /* Team List */
+/* 1. 確保隊伍列表有最小高度，這樣就算沒有隊伍也能被拖曳進去 */
 .team-list {
-    display: flex; flex-direction: column;
-    gap: 0.8rem;
-    overflow-y: auto;
-    padding-right: 5px; /* for scrollbar spacing */
+    display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 0.5rem;
+    min-height: 100px; /* 關鍵：給予最小高度 */
+    transition: background-color 0.2s;
+    border-radius: 0.5rem;
+}
+/* 2. 當拖曳到「空區域」或「列表本身」時的視覺回饋 */
+.team-list.drag-over-container {
+    background-color: rgba(255, 204, 0, 0.1);
+    border: 2px dashed #555;
 }
 
-/* Team Container */
+/* 3. 隊伍卡片拖曳樣式 */
 .team-container {
-    border: 1px solid #333;
-    background: #222;
-    padding: 0.5rem;
-    border-radius: 0.4rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    transition: transform 0.2s, border 0.1s;
+}
+
+/* 上方插入線 (亮黃色粗線) */
+.team-container.drop-above {
+    border-top: 4px solid var(--accent) !important;
+    margin-top: -4px; /* 防止版面跳動 */
+}
+
+/* 下方插入線 (亮黃色粗線) */
+.team-container.drop-below {
+    border-bottom: 4px solid var(--accent) !important;
+    margin-bottom: -4px;
 }
 .team-header {
     display: flex; justify-content: space-between; align-items: center;
@@ -425,24 +484,30 @@ header .controls button, .btn-danger, #global-state-toggle {
     display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.5rem;
 }
 .tab-button {
-    background: #333; color: #aaa; border: 1px solid #555;
-    padding: 0.3rem 0.6rem; border-radius: 0.2rem;
-    cursor: pointer; font-size: 0.8rem;
-    transition: background 0.2s;
+    background: #333; 
+    color: #aaa;       /* 預設未選中為灰色/白色 */
+    border: 1px solid #555;
+    padding: 0.3rem 0.6rem; 
+    border-radius: 0.2rem;
+    cursor: pointer; 
+    font-size: 0.8rem;
+    transition: all 0.2s; /* 加入過渡效果讓變色更滑順 */
 }
 .tab-button:hover {
-    background-color: #444; /* 使用您在 :root 中定義的強調色 (#ffcc00) */
-    color: #111;                     /* 將文字顏色變深以搭配亮色背景 */
-    /* 或者，僅變亮背景 */
-    /* background-color: #444; */ 
+    background-color: #444; 
+    color: #fff;
+    border-color: #777;
 }
 
 .tab-button.active {
-    background: var(--accent); color: #111; border-color: var(--accent);
+    background: var(--accent) !important;  /* 強制背景變為金色 */
+    color: #000 !important;                /* 強制文字變為黑色 (高對比) */
+    border-color: var(--accent) !important;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(255, 204, 0, 0.5); /* 加入發光效果更明顯 */
 }
 .tab-button.active:hover {
-    background-color: #ffbb00; /* 保持激活狀態的顏色不變或輕微變化 */
-    border-color: #ffffff; 
+    background-color: #ffbb00 !important; /* 保持激活狀態的懸停色 */
 }
 
 #grid-content {
@@ -504,4 +569,35 @@ header .controls button, .btn-danger, #global-state-toggle {
 .btn-clear-slot {
     background: #555; color: var(--text); padding: 0.4rem 0.8rem; border: none;
     border-radius: 0.3rem; cursor: pointer; font-size: 0.9rem;
+}
+
+/* --- Drag and Drop 樣式 --- */
+
+/* 可拖曳的元素游標 */
+.team-container[draggable="true"] .team-header,
+.member-container[draggable="true"] {
+    cursor: grab;
+}
+
+.team-container[draggable="true"] .team-header:active,
+.member-container[draggable="true"]:active {
+    cursor: grabbing;
+}
+
+/* 拖曳中的元素本體 (變半透明) */
+.dragging {
+    opacity: 0.4;
+    border: 2px dashed #ffcc00 !important;
+}
+
+/* 拖曳經過的目標區域 (提示可以放開) */
+.drag-over {
+    border: 2px dashed #fff !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+}
+
+/* 為了讓拖曳更順暢，防止圖片本身被瀏覽器預設拖曳行為干擾 */
+.member-container img {
+    pointer-events: none;
 }
