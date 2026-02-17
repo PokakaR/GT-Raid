@@ -191,7 +191,7 @@ function init() {
             appData = JSON.parse(saved);
             appData.forEach(q => {
                 if(!q.teams) q.teams = [];
-                while(q.teams.length < 3) addTeamToData(q);
+                while(q.teams.length < 1) addTeamToData(q);
                 q.teams.forEach(t => {
                     if(!t.members || t.members.length < 5) {
                         const oldM = t.members || [];

@@ -1025,90 +1025,6 @@ const DB_HEROES = [
         }
     },
     { 
-        id: 's1', name: '莉娜', nameEn: 'Lina', element: 'fire', rarity: 'unique',
-        chain: { ex1: { start: 'injured', end: 'airborne' } }, 
-        allowWeapons: ['gauntlet'], exclusiveWeapons: ['s001'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '遠程攻+50%' } } }
-    },
-    { 
-        id: 's2', name: '高里', nameEn: 'Gourry', element: 'light', rarity: 'unique',
-        chain: { ex1: { start: 'downed', end: 'airborne' } }, 
-        allowWeapons: ['2h_sword'], exclusiveWeapons: ['s002'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '近戰攻+50%' } } }
-    },
-    { 
-        id: 's3', name: '傑洛士', nameEn: 'Xelloss', element: 'dark', rarity: 'unique',
-        chain: { ex1: { start: 'all', end: 'downed' } }, 
-        allowWeapons: ['staff'], exclusiveWeapons: ['s003'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '技回+30%\n技傷+30%' } } }
-    },
-    { 
-        id: 's4', name: '達伊', nameEn: 'Dai', element: 'light', rarity: 'unique',
-        chain: { ex1: { start: 'downed', end: 'airborne' } }, 
-        allowWeapons: ['1h_sword'], exclusiveWeapons: ['s004'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '爆擊率+40%' } } }
-    },
-    { 
-        id: 's5', name: '瑪姆', nameEn: 'Maam', element: 'earth', rarity: 'unique',
-        chain: { ex1: { start: 'injured', end: 'airborne' } }, 
-        allowWeapons: ['gauntlet'], exclusiveWeapons: ['s005'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '生命力+40%' } } }
-    },
-    { 
-        id: 's6', name: '波普', nameEn: 'Popp', element: 'fire', rarity: 'unique',
-        chain: { ex1: { start: 'airborne', end: 'downed' } }, 
-        allowWeapons: ['staff'], exclusiveWeapons: ['s006'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '遠程攻+50%' } } }
-    },
-    { 
-        id: 's7', name: '利姆露', nameEn: 'RimuruTempest', element: 'water', rarity: 'unique',
-        chain: { ex1: { start: 'airborne', end: 'injured' } }, 
-        allowWeapons: ['1h_sword'], exclusiveWeapons: ['s007'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '近戰攻+50%' } } }
-    },
-    { 
-        id: 's8', name: '朱菜', nameEn: 'Shuna', element: 'fire', rarity: 'unique',
-        chain: { ex1: { start: 'all', end: 'downed' } }, 
-        allowWeapons: ['staff'], exclusiveWeapons: ['s008'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '技回+30%\n技傷+30%' } } }
-    },
-    { 
-        id: 's9', name: '米莉姆', nameEn: 'MilimNava', element: 'dark', rarity: 'unique',
-        chain: { ex1: { start: 'downed', end: 'injured' } }, 
-        allowWeapons: ['claw'], exclusiveWeapons: ['s009'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '近戰攻+50%' } } }
-    },
-    { 
-        id: 's10', name: '芙莉蓮', nameEn: 'Frieren', element: 'light', rarity: 'unique',
-        chain: { ex1: { start: 'downed', end: 'airborne' } }, 
-        allowWeapons: ['staff'], exclusiveWeapons: ['s010'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '遠程攻+50%' } } }
-    },
-    { 
-        id: 's11', name: '修塔爾克', nameEn: 'Stark', element: 'fire', rarity: 'unique',
-        chain: { ex1: { start: 'injured', end: 'airborne' } }, 
-        allowWeapons: ['2h_sword'], exclusiveWeapons: ['s011'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '防禦力+45%' } } }
-    },
-    { 
-        id: 's12', name: '費倫', nameEn: 'Fern', element: 'basic', rarity: 'unique',
-        chain: { ex1: { start: 'airborne', end: 'downed' } }, 
-        allowWeapons: ['staff'], exclusiveWeapons: ['s012'], 
-        coreStates: { base: {}, ascended: null, sixStar: null },
-        buffs: { base: { ex1: { text: '技傷+90%' } } }
-    },
-    { 
         id: 'h101', name: '女騎士', nameEn: 'Female Knight', element: 'basic', rarity: 'rare',
         chain: { ex1: { start: 'airborne', end: 'downed' } ,ex2: { start: 'airborne', end: 'downed' } }, 
         allowWeapons: ['1h_sword' , '2h_sword' , 'bow' , 'rifle'], exclusiveWeapons: ['w101' , 'w101_ex2'], 
@@ -1437,6 +1353,110 @@ const DB_HEROES = [
 			ascended: { ex1: { text: '光屬攻+46%' } },
             sixStar: { ex1: { text: '光屬攻+46%' } }
         }
+    },
+    { 
+        id: 's1', name: '莉娜', nameEn: 'Lina', element: 'fire', rarity: 'unique',
+        chain: { ex1: { start: 'injured', end: 'airborne' } }, 
+        allowWeapons: ['gauntlet'], exclusiveWeapons: ['s001'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '遠程攻+50%' } } }
+    },
+    { 
+        id: 's2', name: '高里', nameEn: 'Gourry', element: 'light', rarity: 'unique',
+        chain: { ex1: { start: 'downed', end: 'airborne' } }, 
+        allowWeapons: ['2h_sword'], exclusiveWeapons: ['s002'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '近戰攻+50%' } } }
+    },
+    { 
+        id: 's3', name: '傑洛士', nameEn: 'Xelloss', element: 'dark', rarity: 'unique',
+        chain: { ex1: { start: 'all', end: 'downed' } }, 
+        allowWeapons: ['staff'], exclusiveWeapons: ['s003'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '技回+30%\n技傷+30%' } } }
+    },
+    { 
+        id: 's4', name: '達伊', nameEn: 'Dai', element: 'light', rarity: 'unique',
+        chain: { ex1: { start: 'downed', end: 'airborne' } }, 
+        allowWeapons: ['1h_sword'], exclusiveWeapons: ['s004'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '爆擊率+40%' } } }
+    },
+    { 
+        id: 's5', name: '瑪姆', nameEn: 'Maam', element: 'earth', rarity: 'unique',
+        chain: { ex1: { start: 'injured', end: 'airborne' } }, 
+        allowWeapons: ['gauntlet'], exclusiveWeapons: ['s005'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '生命力+40%' } } }
+    },
+    { 
+        id: 's6', name: '波普', nameEn: 'Popp', element: 'fire', rarity: 'unique',
+        chain: { ex1: { start: 'airborne', end: 'downed' } }, 
+        allowWeapons: ['staff'], exclusiveWeapons: ['s006'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '遠程攻+50%' } } }
+    },
+    { 
+        id: 's7', name: '利姆露', nameEn: 'RimuruTempest', element: 'water', rarity: 'unique',
+        chain: { ex1: { start: 'airborne', end: 'injured' } }, 
+        allowWeapons: ['1h_sword'], exclusiveWeapons: ['s007'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '近戰攻+50%' } } }
+    },
+    { 
+        id: 's8', name: '朱菜', nameEn: 'Shuna', element: 'fire', rarity: 'unique',
+        chain: { ex1: { start: 'all', end: 'downed' } }, 
+        allowWeapons: ['staff'], exclusiveWeapons: ['s008'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '技回+30%\n技傷+30%' } } }
+    },
+    { 
+        id: 's9', name: '米莉姆', nameEn: 'MilimNava', element: 'dark', rarity: 'unique',
+        chain: { ex1: { start: 'downed', end: 'injured' } }, 
+        allowWeapons: ['claw'], exclusiveWeapons: ['s009'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '近戰攻+50%' } } }
+    },
+    { 
+        id: 's10', name: '芙莉蓮', nameEn: 'Frieren', element: 'light', rarity: 'unique',
+        chain: { ex1: { start: 'downed', end: 'airborne' } }, 
+        allowWeapons: ['staff'], exclusiveWeapons: ['s010'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '遠程攻+50%' } } }
+    },
+    { 
+        id: 's11', name: '修塔爾克', nameEn: 'Stark', element: 'fire', rarity: 'unique',
+        chain: { ex1: { start: 'injured', end: 'airborne' } }, 
+        allowWeapons: ['2h_sword'], exclusiveWeapons: ['s011'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '防禦力+45%' } } }
+    },
+    { 
+        id: 's12', name: '費倫', nameEn: 'Fern', element: 'basic', rarity: 'unique',
+        chain: { ex1: { start: 'airborne', end: 'downed' } }, 
+        allowWeapons: ['staff'], exclusiveWeapons: ['s012'], 
+        coreStates: { base: {}, ascended: null, sixStar: null },
+        buffs: { base: { ex1: { text: '技傷+90%' } } }
+    },
+    { 
+        id: 's13', name: '克雷恩', nameEn: 'Kien', element: 'dark', rarity: 'unique',
+        chain: { ex1: { start: 'downed', end: 'airborne' } }, 
+        allowWeapons: ['basket'], exclusiveWeapons: ['s013'], 
+        coreStates: { base: {}, ascended: null, sixStar: {} },
+        buffs: {
+            base: { ex1: { text: '遠程傷+50%' } },
+            sixStar: { ex1: { text: '遠程傷+55%' } }
+        }
+    },
+    { 
+        id: 's14', name: '涅路路', nameEn: 'Nelluru', element: 'fire', rarity: 'unique',
+        chain: { ex1: { start: 'all', end: 'downed' } }, 
+        allowWeapons: ['gauntlet'], exclusiveWeapons: ['s014'], 
+        coreStates: { base: {}, ascended: null, sixStar: {} },
+        buffs: {
+            base: { ex1: { text: '生命力+40%' } },
+            sixStar: { ex1: { text: '生命力+45%' } }
+        }
     }
 ];
 
@@ -1550,7 +1570,6 @@ const DB_WEAPONS = [
     { id: 'w098', name: '魔力護符', nameEn: 'Talisman of Mana', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w098_Talisman of Mana.png' },
     { id: 'w099', name: '森羅萬象', nameEn: 'Entirety', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w099_Entirety.png' },
     { id: 'w100', name: '星能王冠', nameEn: 'Star Power Tiara', type: 'staff', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w100_Star Power Tiara.png' },
-	{ id: 'w131', name: '地精醫療包', nameEn: 'Gnome Medical Bag', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w131_Gnome Medical Bag.png' },
 	{ id: 'w101', name: '利貝拉', nameEn: 'Libera', type: '1h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w101_Libera.png' },
 	{ id: 'w101_ex2', name: '利貝拉Type.B', nameEn: 'Libera Type.B', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w101_ex2_Libera Type.B.png' },
 	{ id: 'w102', name: '正義', nameEn: 'Justice', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w102_Justice.png' },
@@ -1580,6 +1599,7 @@ const DB_WEAPONS = [
 	{ id: 'w127', name: '龍之怒', nameEn: 'Wrath of Dragon', type: 'staff', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w127_Wrath of Dragon.png' },
 	{ id: 'w128', name: '掠奪者', nameEn: 'Marauder', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w128_Marauder.png' },
 	{ id: 'w129', name: '維多利亞', nameEn: 'Victoria', type: '2h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w129_Victoria.png' },
+	{ id: 'w131', name: '地精醫療包', nameEn: 'Gnome Medical Bag', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w131_Gnome Medical Bag.png' },
 	{ id: 's001', name: '魔血符', nameEn: 'Demons Blood Talisman', type: 'gauntlet', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s001_Demons Blood Talisman.png' },
 	{ id: 's002', name: '光之劍', nameEn: 'Sword of Light', type: '2h_sword', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s002_Sword of Light.png' },
 	{ id: 's003', name: '傑洛士的權杖', nameEn: 'Xellos Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s003_Xellos Staff.png' },
@@ -1592,10 +1612,12 @@ const DB_WEAPONS = [
 	{ id: 's010', name: '芙莉蓮的手杖', nameEn: 'Frierens Staff', type: 'staff', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s010_Frierens Staff.png' },
 	{ id: 's011', name: '修塔爾克的斧頭', nameEn: 'Starks Axe', type: '2h_sword', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s011_Starks Axe.png' },
 	{ id: 's012', name: '費倫的手杖', nameEn: 'Ferns Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s012_Ferns Staff.png' },
+	{ id: 's013', name: '托亞之書', nameEn: 'The Book Toah', type: 'basket', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s013_The Book Toah.png' },
+	{ id: 's014', name: '魔血拳', nameEn: 'Dark Ichor Fist', type: 'gauntlet', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s014_Dark Ichor Fist.png' },
 ];
 
 const DB_ACCESSORIES = [
-    { id: 'a1', name: '牛頭人項鍊', icon: './images/accessories/Minotaurs Necklace.png', partyBuff: { text: '普屬攻+0%' } },
+    { id: 'a1', name: '牛頭人項鍊', icon: './images/accessories/Minotaurs Necklace.png', partyBuff: { text: '爆擊率+5%' } },
     { id: 'a2', name: '手環', icon: './images/accessories/Shadow beast Confining Bracelet.png', partyBuff: { text: '爆擊率+10%' } },
     { id: 'a3', name: '普魔鏡項鍊', icon: './images/accessories/Mirror Earring of Patience.png', partyBuff: { text: '普屬攻+15%' } },
 	{ id: 'a3', name: '火魔鏡項鍊', icon: './images/accessories/Ruby Mirror Ring.png', partyBuff: { text: '火屬攻+15%' } },
@@ -1614,32 +1636,33 @@ const DB_RELICS = [
 
 const DB_BOSSES = [
     // 確保所有 Boss 都有 element 屬性，以符合 script.js 的邏輯
-    { id: 'b01', name: '九尾狐', icon: './images/boss/Garam.png' },
+    { id: 'b01', name: '九尾狐', icon: './images/boss/Garam.gif' },
     { id: 'b02', name: '牛頭人', icon: './images/boss/Minotaur.png' },
-    { id: 'b03', name: '沙漠牛蟲', icon: './images/boss/Bullworm.png' },
+    { id: 'b03', name: '沙漠牛蟲', icon: './images/boss/Bullworm.gif' },
     { id: 'b04', name: '卡門', icon: './images/attribute/ic_attribute_basic.png' },
-    { id: 'b05', name: '史萊姆', icon: './images/boss/Lava Slime.png' },
+    { id: 'b05', name: '史萊姆', icon: './images/boss/Lava Slime.gif' },
     { id: 'b06', name: '司令官', icon: './images/boss/Invader Commander.png' },
     { id: 'b07', name: '老鼠', icon: './images/attribute/ic_attribute_basic.png' },
-    { id: 'b08', name: '妖精', icon: './images/boss/Fairy.png' }, 
-	{ id: 'b09', name: '阿嬤', icon: './images/boss/Cyborg Erina.png' },
+    { id: 'b08', name: '妖精', icon: './images/boss/Fairy.gif' }, 
+	{ id: 'b09', name: '阿嬤', icon: './images/boss/Cyborg Erina.gif' },
 	{ id: 'b10', name: '帝國騎士', icon: './images/boss/Empire Kinght.png' },
-	{ id: 'b11', name: '哥布林', icon: './images/boss/Goblin Chief.png' },
+	{ id: 'b11', name: '哥布林', icon: './images/boss/Goblin Chief.gif' },
 	{ id: 'b12', name: '校長', icon: './images/boss/Elphaba.png' },
-	{ id: 'b13', name: '海軍', icon: './images/boss/Marina.png' },
+	{ id: 'b13', name: '海軍', icon: './images/boss/Marina.gif' },
 	{ id: 'b14', name: '蚊子', icon: './images/boss/Harvester.png' },
-	{ id: 'b15', name: '雪人', icon: './images/boss/Gast.png' },
+	{ id: 'b15', name: '雪人', icon: './images/boss/Gast.gif' },
 	{ id: 'b16', name: '傑利小瓦爾特', icon: './images/attribute/ic_attribute_basic.png' },
-	{ id: 'b17', name: '惡魔', icon: './images/boss/Ancient Demon.png' },
-	{ id: 'b18', name: '暗影', icon: './images/boss/Shadow Beast.png' },
-	{ id: 'b19', name: '熊貓', icon: './images/boss/Mad Panda.png' },
+	{ id: 'b17', name: '惡魔', icon: './images/boss/Ancient Demon.gif' },
+	{ id: 'b18', name: '暗影', icon: './images/boss/Shadow Beast.gif' },
+	{ id: 'b19', name: '熊貓', icon: './images/boss/Mad Panda.gif' },
 	{ id: 'b20', name: '導演', icon: './images/attribute/ic_attribute_basic.png' },
-	{ id: 'b21', name: '鄧肯', icon: './images/boss/Minister Duncan.png' },
-	{ id: 'b22', name: '老頭', icon: './images/boss/Viper Clan Leader.png' },
+	{ id: 'b21', name: '鄧肯', icon: './images/boss/Minister Duncan.gif' },
+	{ id: 'b22', name: '老頭', icon: './images/boss/Viper Clan Leader.gif' },
 	{ id: 'b23', name: '沙沙', icon: './images/boss/Sandmonster.png' },
 	{ id: 'b24', name: '鉻小姐', icon: './images/boss/Miss Chrome.png' },
 	{ id: 'b25', name: '暗砲', icon: './images/boss/Arabelle.png' },
 	{ id: 'b26', name: '小紅帽', icon: './images/boss/Elvirabium.png' },
+	{ id: 'b26', name: '阿瑞克涅', icon: './images/boss/Arachne.gif' },
 ];
 //#5cd65c
 const CONSTANTS = {
