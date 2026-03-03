@@ -11,16 +11,18 @@
     <header>
         <h1>守望傳說 - 公會討伐隊伍編輯器</h1>
         <div class="controls">
-            <button id="global-state-toggle">全部開花: 🌱</button>
-			<button id="global-style-toggle" onclick="toggleAllHeroStyle()">造型: BASE</button>
-			
-            <button onclick="saveToLocal()">💾 儲存</button>
-            <button onclick="exportData()">📤 匯出 JSON</button>
-            <label class="btn-import" style="background:#444; color:#fff; padding:0.4rem 0.8rem; border-radius:0.3rem; cursor:pointer; font-size:0.9rem;">
+            <button id="global-state-toggle" class="btn-primary">全部開花: 🌱</button>
+            <button id="global-style-toggle" class="btn-primary" onclick="toggleAllHeroStyle()">造型: BASE</button>
+            
+            <button class="btn-primary" onclick="saveToLocal()">💾 儲存</button>
+            <button id="global-export-toggle" class="btn-primary" onclick="exportData()">📤 匯出 JSON</button>
+            
+            <label class="btn-import">
                 📥 匯入 JSON
                 <input type="file" accept=".json" onchange="importData(this)" hidden>
             </label>
-            <button onclick="clearAllData()" class="btn-danger">🗑️ 重置全部</button>
+            
+            <button class="btn-danger" onclick="clearAllData()">🗑️ 重置全部</button>
         </div>
     </header>
 
@@ -48,24 +50,19 @@
             <span class="modal-close" onclick="closeModal()">&times;</span>
 
             <div class="modal-header">
-                <h2 id="modal-title" style="margin:0; margin-bottom:10px; color:#ffcc00;">選擇項目</h2>
+                <h2 id="modal-title">選擇項目</h2>
             </div>
             
             <div class="search-bar" id="search-bar">
                 <input type="text" id="search-input" class="search-input" placeholder="搜尋名稱 (中/英)...">
-                
-                <div id="modal-hero-state-toggle-container" style="display:none !important;">
-                    <button id="modal-hero-state-toggle-btn">開花預覽: 🌱</button>
-                </div>
-                
-                <label style="display:inline-flex; align-items:center; cursor:pointer; font-size:0.9rem; color:#aaa;">
-                    <input type="checkbox" id="toggle-exclusive" style="margin-right:5px;"> 僅顯示專武
+                <label class="checkbox-label">
+                    <input type="checkbox" id="toggle-exclusive"> 僅顯示專武
                 </label>
             </div>
 
             <div id="tab-container" class="tab-container"></div>
 
-            <button id="btn-clear-slot" class="btn-clear-slot" onclick="clearCurrentSlot()" style="background:#555; margin-bottom:10px; width:100%;">清除此格</button>
+            <button id="btn-clear-slot" class="btn-clear-slot" onclick="clearCurrentSlot()">清除此格</button>
 
             <div id="grid-content" class="grid-container"></div>
         </div>

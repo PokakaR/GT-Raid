@@ -44,7 +44,7 @@ const DB_HEROES = [
 		styles: ['Super Costume', 'april_fool'],
         buffs: {
             base: { ex1: { text: '生命力+40%' } },
-            sixStar: { ex1: { text: '光屬攻+50%' } } // 這裡原文似乎有誤(光屬攻?)，保留原樣
+            sixStar: { ex1: { text: '光屬攻+50%' } }
         }
     },
     { 
@@ -1142,7 +1142,7 @@ const DB_HEROES = [
         id: 'h103', name: '艾薇拉', nameEn: 'Elvira', element: 'fire', rarity: 'rare',
         chain: { ex1: { start: 'airborne', end: 'injured' }}, 
         allowWeapons: ['rifle'], exclusiveWeapons: ['w103'], 
-        coreStates: { base: {}, ascended: {} , sixStar: null },
+        coreStates: { base: {}, ascended: { hasImage: true } , sixStar: null },
 		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '遠程攻+48%' } },
@@ -1166,7 +1166,7 @@ const DB_HEROES = [
         id: 'h105', name: '卡麗娜', nameEn: 'Karina', element: 'dark', rarity: 'rare',
         chain: { ex1: { start: 'downed', end: 'injured' }}, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w105'], 
-        coreStates: { base: {}, ascended: {} , sixStar: null },
+        coreStates: { base: {}, ascended: { hasImage: true } , sixStar: null },
 		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '暗屬攻+40%\n擊殺恢復+3%' } },
@@ -1226,7 +1226,7 @@ const DB_HEROES = [
         id: 'h110', name: '葛蕾茉莉', nameEn: 'Gremory', element: 'dark', rarity: 'rare',
         chain: { ex1: { start: 'all', end: 'airborne' }}, 
         allowWeapons: ['basket'], exclusiveWeapons: ['w110'], 
-        coreStates: { base: {}, ascended: {} , sixStar: { hasImage: true } },
+        coreStates: { base: {}, ascended: { hasImage: true } , sixStar: { hasImage: true } },
 		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+80%' } },
@@ -1262,7 +1262,7 @@ const DB_HEROES = [
         id: 'h113', name: '可可', nameEn: 'Coco', element: 'water', rarity: 'rare',
         chain: { ex1: { start: 'injured', end: 'airborne' }}, 
         allowWeapons: ['staff'], exclusiveWeapons: ['w113'], 
-        coreStates: { base: {}, ascended: {} , sixStar: null },
+        coreStates: { base: {}, ascended: { hasImage: true } , sixStar: null },
 		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '技傷+80%' } },
@@ -1298,7 +1298,7 @@ const DB_HEROES = [
         id: 'h116', name: '梅兒', nameEn: 'Mei', element: 'light', rarity: 'rare',
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w116'], 
-        coreStates: { base: {}, ascended: {} , sixStar: null },
+        coreStates: { base: {}, ascended: { hasImage: true } , sixStar: null },
 		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰防+64%' } },
@@ -1310,7 +1310,7 @@ const DB_HEROES = [
         id: 'h117', name: '飛兒', nameEn: 'Fei', element: 'light', rarity: 'rare',
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['gauntlet'], exclusiveWeapons: ['w116'], 
-        coreStates: { base: {}, ascended: {} , sixStar: null },
+        coreStates: { base: {}, ascended: { hasImage: true } , sixStar: null },
 		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '近戰防+64%' } },
@@ -1334,7 +1334,7 @@ const DB_HEROES = [
         id: 'h119', name: '克雷格', nameEn: 'Craig', element: 'earth', rarity: 'rare',
         chain: { ex1: { start: 'downed', end: 'airborne' }}, 
         allowWeapons: ['1h_sword'], exclusiveWeapons: ['w119'], 
-        coreStates: { base: {}, ascended: {} , sixStar: null },
+        coreStates: { base: {}, ascended: { hasImage: true } , sixStar: null },
 		styles: ['april_fool'],
         buffs: {
             base: { ex1: { text: '防禦力+44%' } },
@@ -1588,6 +1588,16 @@ const DB_HEROES = [
             base: { ex1: { text: '生命力+40%' } },
             sixStar: { ex1: { text: '生命力+45%' } }
         }
+    },
+    { 
+        id: 's15', name: '艾莉西亞', nameEn: 'Alicia', element: 'basic', rarity: 'unique',
+        chain: { ex1: { start: 'injured', end: 'downed' } }, 
+        allowWeapons: ['1h_sword'], exclusiveWeapons: ['s015'], 
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: false } },
+        buffs: {
+            base: { ex1: { text: '近戰傷+50%' } },
+            sixStar: { ex1: { text: '近戰傷+55%' } }
+        }
     }
 ];
 
@@ -1745,6 +1755,7 @@ const DB_WEAPONS = [
 	{ id: 's012', name: '費倫的手杖', nameEn: 'Ferns Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s012_Ferns Staff.png' },
 	{ id: 's013', name: '托亞之書', nameEn: 'The Book Toah', type: 'basket', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s013_The Book Toah.png' },
 	{ id: 's014', name: '魔血拳', nameEn: 'Dark Ichor Fist', type: 'gauntlet', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s014_Dark Ichor Fist.png' },
+	{ id: 's015', name: '斬瀑', nameEn: 'Stream Splitter', type: '1h_sword', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s015_Stream Splitter.png' },
 ];
 
 const DB_ACCESSORIES = [

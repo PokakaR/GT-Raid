@@ -1,4 +1,6 @@
-/* style.css */
+/* ==========================================================
+   1. 全域變數與基礎設定 (Variables & Base)
+   ========================================================== */
 :root {
     --bg-color: #121212;
     --panel-bg: #1e1e1e;
@@ -10,9 +12,9 @@
     /* 尺寸定義 */
     --slot-size: 2.0rem; 
     --hero-size: 4.2rem; 
-    --general-slot-size: 4.2rem; 
 }
 
+/* 響應式字體大小 */
 html { font-size: 14px; } 
 @media (min-width: 1600px) { html { font-size: 16px; } } 
 @media (max-width: 1000px) { html { font-size: 12px; } } 
@@ -21,638 +23,321 @@ body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
     background: var(--bg-color);
     color: var(--text);
-    margin: 0; padding: 0.5rem;
-    min-height: 100vh; box-sizing: border-box;
-    display: flex; flex-direction: column;
+    margin: 0; 
+    padding: 0.5rem;
+    min-height: 100vh; 
+    box-sizing: border-box;
+    display: flex; 
+    flex-direction: column;
 }
 * { box-sizing: border-box; }
 
-/* Header */
+/* ==========================================================
+   2. 按鈕與 UI 元件 (Buttons & UI)
+   ========================================================== */
+/* 通用按鈕基礎樣式 */
+.btn-primary, .btn-danger, .btn-import, .btn-clear-slot {
+    padding: 0.4rem 0.8rem; 
+    border: none;
+    border-radius: 0.3rem; 
+    cursor: pointer; 
+    font-size: 0.9rem;
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* 頂部控制列按鈕 */
+.controls .btn-primary, .controls .btn-import {
+    background: #444; 
+    color: var(--text); 
+    margin-left: 0.5rem;
+}
+.controls .btn-primary:hover, .controls .btn-import:hover { background: #aa4444; }
+.controls .btn-primary:active, .controls .btn-import:active { background: #aa3333; transform: translateY(1px); }
+
+/* 危險/警告按鈕 */
+.btn-danger { background: #883333; color: var(--text); margin-left: 0.5rem;}
+.btn-danger:hover { background: #aa4444; }
+
+/* 清除格子按鈕 */
+.btn-clear-slot { background: #555; color: var(--text); width: 100%; margin-bottom: 10px; }
+.btn-clear-slot:hover { background: #666; }
+
+/* ==========================================================
+   3. 佈局與區域 (Layout & Quadrants)
+   ========================================================== */
 header {
     display: flex; justify-content: space-between; align-items: center;
     padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
     margin-bottom: 0.5rem; flex-shrink: 0;
 }
 header h1 { font-size: 1.2rem; color: var(--accent); margin: 0; }
-header .controls button, .btn-danger, #global-state-toggle {
-    background: #444; color: var(--text); padding: 0.4rem 0.8rem; border: none;
-    border-radius: 0.3rem; cursor: pointer; font-size: 0.9rem; margin-left: 0.5rem;
-    transition: background 0.2s;
-}
-.btn-danger { background: #883333; }
-.btn-danger:hover { background: #aa4444; }
 
-/* Quadrant Container */
 #quadrant-container {
     display: grid;
-    /* 預設維持兩欄 */
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
     gap: 0.5rem;
     flex-grow: 1; 
     overflow: hidden;
 }
-/* 新增：當螢幕寬度小於 1100px 時，強制變為單欄顯示 */
 @media (max-width: 1100px) {
     #quadrant-container {
-        grid-template-columns: 1fr; /* 改為單欄 */
-        overflow-y: auto; /* 允許垂直捲動 */
-    }
-    
-    /* 讓區域高度自適應內容，而不是被壓縮 */
-    .quadrant {
-        min-height: auto; 
-        height: auto;
+        grid-template-columns: 1fr; 
+        overflow-y: auto; 
     }
 }
 
-/* --- 1. Quadrant Dragging (區域拖曳) --- */
 .quadrant {
-   background: var(--panel-bg);
+    background: var(--panel-bg);
     border: 1px solid var(--border);
     border-radius: 0.5rem;
     padding: 0.5rem;
     display: flex; flex-direction: column;
-    
-    /* 修改這裡：原本可能是 min-width: 300px; */
-    /* 改為 0 或 100%，讓它能隨 Grid 縮小 */
-    min-width: 0; 
-    width: 100%;
-    
-    height: 100%;
+    min-width: 0; width: 100%; height: 100%;
     transition: transform 0.2s, opacity 0.2s;
 }
+@media (max-width: 1100px) {
+    .quadrant { min-height: auto; height: auto; }
+}
 
-/* 區域標題改為可抓取游標 */
 .quadrant-header {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 0.5rem;
-    cursor: grab; /* 提示可拖曳 */
+    cursor: grab; 
 }
 .quadrant-header:active { cursor: grabbing; }
-
-/* 區域拖曳時的樣式 */
-.quadrant.dragging {
-    opacity: 0.5;
-    border: 2px dashed #ffcc00;
-    transform: scale(0.98);
-}
-
-.quadrant.drag-over-quadrant {
-    border: 2px dashed #fff;
-    background: rgba(255, 255, 255, 0.05);
-}
-
 .quadrant-header button {
     background: #444; color: var(--text); border: none; padding: 0.3rem 0.6rem;
     border-radius: 0.2rem; cursor: pointer; font-size: 0.8rem;
 }
 
-/* --- 2. Boss/Element Split Header (標題拆分) --- */
-/* 原本的 .boss-display-wrapper 修改為容器 */
+/* 標題拆分 (Boss/屬性) */
 .boss-display-wrapper {
-    display: flex;
-    align-items: stretch; /* 讓兩個按鈕等高 */
-    background: #2a2a2a;
-    border-radius: 0.2rem;
-    border: 2px solid; /* 顏色由 JS 動態設定 */
-    overflow: hidden;
+    display: flex; align-items: stretch; background: #2a2a2a;
+    border-radius: 0.2rem; border: 2px solid; overflow: hidden;
 }
-
-/* 左側：屬性選擇 */
-.header-btn-element {
+.header-btn-element, .header-btn-boss {
     display: flex; align-items: center; gap: 5px;
-    padding: 0.3rem 0.6rem;
-    cursor: pointer;
-    background: rgba(0,0,0,0.2);
-    transition: background 0.2s;
-    border-right: 1px solid rgba(255,255,255,0.1);
+    padding: 0.3rem 0.6rem; cursor: pointer; transition: background 0.2s;
 }
-.header-btn-element:hover { background: rgba(255,255,255,0.1); }
-
-/* 右側：Boss 選擇 */
-.header-btn-boss {
-    display: flex; align-items: center;
-    padding: 0.3rem 0.6rem;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
-}
-.header-btn-boss:hover { background: rgba(255,255,255,0.1); }
-
+.header-btn-element { background: rgba(0,0,0,0.2); border-right: 1px solid rgba(255,255,255,0.1); }
+.header-btn-element:hover, .header-btn-boss:hover { background: rgba(255,255,255,0.1); }
+.header-btn-boss { font-weight: bold; }
 .boss-attr-icon { width: 1.2rem; height: 1.2rem; display: block; }
-.boss-info-text { display: flex; align-items: center; gap: 5px; }
 
-
-
-/* Team List */
-/* 1. 確保隊伍列表有最小高度，這樣就算沒有隊伍也能被拖曳進去 */
+/* ==========================================================
+   4. 隊伍與英雄卡片 (Team & Hero Cards)
+   ========================================================== */
 .team-list {
     display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 0.5rem;
-    min-height: 100px; /* 關鍵：給予最小高度 */
-    transition: background-color 0.2s;
-    border-radius: 0.5rem;
-}
-/* 2. 當拖曳到「空區域」或「列表本身」時的視覺回饋 */
-.team-list.drag-over-container {
-    background-color: rgba(255, 204, 0, 0.1);
-    border: 2px dashed #555;
+    min-height: 100px; transition: background-color 0.2s; border-radius: 0.5rem;
 }
 
-/* 3. 隊伍卡片拖曳樣式 */
-.team-container {
-    transition: transform 0.2s, border 0.1s;
-}
-
-/* 上方插入線 (亮黃色粗線) */
-.team-container.drop-above {
-    border-top: 4px solid var(--accent) !important;
-    margin-top: -4px; /* 防止版面跳動 */
-}
-
-/* 下方插入線 (亮黃色粗線) */
-.team-container.drop-below {
-    border-bottom: 4px solid var(--accent) !important;
-    margin-bottom: -4px;
-}
-.team-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 0.5rem;
-}
-.team-buff-summary {
-    font-size: 0.8rem; color: #ffcc00;
-    flex-grow: 1;
-}
+.team-container { transition: transform 0.2s, border 0.1s; }
+.team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.team-buff-summary { font-size: 0.8rem; color: #ffcc00; flex-grow: 1; }
 .btn-remove-team {
     background: #555; color: var(--text); border: none; padding: 0.1rem 0.4rem;
     border-radius: 0.2rem; cursor: pointer; font-size: 0.8rem; margin-left: 0.5rem;
 }
 
-.team-content {
-    display: flex;
-    gap: 0.5rem;
-}
+.team-content { display: flex; gap: 0.5rem; }
+.member-grid { display: flex; flex-direction: row; gap: 0.5rem; flex-shrink: 0; align-items: flex-start; }
+.member-container { display: flex; flex-direction: column; align-items: center; position: relative; }
+.member-container img { pointer-events: none; } /* 防止拖曳圖片本身 */
 
-/* Member Grid (Hero Slots) - 修正：改為水平排列 */
-.member-grid {
-    display: flex;
-    flex-direction: row; /* 修正為水平排列 */
-    gap: 0.5rem;
-    flex-shrink: 0;
-    align-items: flex-start; /* 確保內容在頂部對齊 */
-}
+.hero-name-top { font-size: 0.8rem; font-weight: bold; margin-bottom: 3px; height: 1.2rem; }
 
-.member-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
-.hero-name-top {
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-bottom: 3px;
-    height: 1.2rem; /* 固定高度防止抖動 */
-}
-
-/* --- Hero Slot --- */
 .hero-slot {
-    width: var(--hero-size); height: var(--hero-size);
-    border: 2px solid #555;
-    cursor: pointer;
-	border-radius: 5%;
-    background: var(--slot-bg);
-    position: relative;
-    box-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
+    width: var(--hero-size); height: var(--hero-size); border: 2px solid #555;
+    cursor: pointer; border-radius: 5%; background: var(--slot-bg);
+    position: relative; box-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
+    transition: transform 0.1s, border-color 0.1s;
 }
-.hero-slot > img {
-    width: 100%; height: 100%; object-fit: cover;
+.hero-slot:hover { border-color: var(--accent); transform: translateY(1px); z-index: 10; }
+.hero-slot > img { width: 100%; height: 100%; object-fit: cover; }
+
+.hero-attribute-badge {
+    position: absolute; bottom: -5px; right: -5px; width: 33%; height: 33%;
+    background: rgba(0,0,0,0.8); border-radius: 50%; border: 2px solid; 
+    z-index: 5; display: flex; justify-content: center; align-items: center;
 }
+.hero-attribute-badge-img { max-width: 100%; max-height: 100%; border-radius: 50%; object-fit: contain; }
 
-
-/* --- 屬性圖標修正 (Hero Attribute Badge) --- */
-.hero-attribute-badge { /* 替換 .hero-element-icon */
-    position: absolute;
-    bottom: -5px; 
-    right: -5px; 
-    width: 33%; 
-    height: 33%;
-    background: rgba(0,0,0,0.8);
-    border-radius: 50%;
-    border: 2px solid; 
-    z-index: 5; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.hero-attribute-badge-img { /* 替換 .hero-element-icon img */
-    max-width: 100%; 
-    max-height: 100%; 
-	border-radius: 50%;
-    object-fit: contain; 
-}
-
-
-/* --- Chain Icons (Inside hero-slot) --- */
 .hero-chain-icons {
-    position: absolute;
-    top: 0px; left: 0px;
-	padding: 0.1rem 0.1rem;
-    transform: translate(0%, 0%);
-    display: flex; 
-	align-items: center; gap: 2px;
-    background: rgba(0,0,0,0.5);
-    border-radius: 0.3rem;
-    z-index: 10;
+    position: absolute; top: 0; left: 0; padding: 0.1rem;
+    display: flex; align-items: center; gap: 2px;
+    background: rgba(0,0,0,0.5); border-radius: 0.3rem; z-index: 10;
 }
-.hero-chain-icons img {
-    /*width: 1.2rem; height: 1.2rem; */
-	width: 35%; height: 35%;
-	object-fit: contain;
-}
-.hero-chain-icons span {
-    color: #fff; font-weight: bold; font-size: 0.9rem;
-}
+.hero-chain-icons img { width: 35%; height: 35%; object-fit: contain; }
+.hero-chain-icons span { color: #fff; font-weight: bold; font-size: 0.9rem; }
 
-/* --- Equipment Slots (w1, w2) --- */
-.equipment-slots {
-    display: flex; gap: 0.3rem;
-    margin-top: 0.3rem;
-}
+/* 裝備槽位 */
+.equipment-slots { display: flex; gap: 0.3rem; margin-top: 0.3rem; }
 .slot {
     width: var(--slot-size); height: var(--slot-size);
     border: 1px solid #555; background: var(--slot-bg);
-    border-radius: 0.2rem;
-    cursor: pointer;
+    border-radius: 0.2rem; cursor: pointer; transition: border-color 0.1s;
 }
-.slot img {
-    width: 100%; height: 100%; object-fit: contain;
-}
+.slot:hover { border-color: var(--accent); z-index: 10; }
+.slot img { width: 100%; height: 100%; object-fit: contain; }
 
-/* --- Aux Container (Relic, Acc) --- */
-.aux-container {
-    /* 調整高度以對齊英雄槽位，並將內容垂直放置 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; 
-}
-.aux-container .hero-name-top {
-    font-size: 0.7rem; color: #999;
-}
+/* 飾品/遺物區 */
+.aux-container { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+.aux-container .hero-name-top { font-size: 0.7rem; color: #999; }
 .general-slots {
-    display: grid;
-    grid-template-columns: 1fr; /* 兩欄，平均分配 */
-	grid-template-rows: 0.5fr 0.5fr;    /* 兩列，平均分配 */
-    gap: 0.3rem;
-    align-items: center;
-    justify-content: center; 
+    display: grid; grid-template-columns: 1fr; grid-template-rows: 0.5fr 0.5fr;    
+    gap: 0.3rem; align-items: center; justify-content: center; 
 }
 
-/* Chain Panels */
-
-/* 確保連鎖設定容器不會超出父層寬度 */
+/* ==========================================================
+   5. 連鎖設定區 (Chain Panels)
+   ========================================================== */
 .chain-panels-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    width: 100%;       /* 限制寬度 */
-    max-width: 100%;   /* 強制不超出 */
-    overflow-x: auto;  /* 關鍵：內容過長時顯示橫向捲軸 */
-    padding-bottom: 5px; /* 預留捲軸空間 */
+    display: flex; flex-direction: column; gap: 2px;
+    width: 100%; max-width: 100%; overflow-x: auto; padding-bottom: 5px; 
 }
+.chain-panels-container::-webkit-scrollbar { height: 6px; }
+.chain-panels-container::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+.chain-panels-container::-webkit-scrollbar-track { background: #222; }
 
-/* 美化橫向捲軸 (Chrome/Safari/Edge) */
-.chain-panels-container::-webkit-scrollbar {
-    height: 6px;
-}
-.chain-panels-container::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 3px;
-}
-.chain-panels-container::-webkit-scrollbar-track {
-    background: #222;
-}
+.chain-set-group { display: flex; align-items: center; gap: 5px; width: 100%; position: relative; }
+.chain-set-content { display: flex; flex-direction: row; gap: 0.3rem; width: 100%; }
 
-/* 針對連鎖按鈕群組 */
-.chain-set-group {
-    display: flex;
-    align-items: center; /* 垂直置中 */
-    gap: 5px;            /* 元件間距 */
-    
-    /* 關鍵：強制佔滿父容器的 100% 寬度，這樣內部的輸入框才有空間伸展 */
-    width: 100%;
-}
-.chain-set-group .btn-remove-chain-set {
-    position: absolute;
-    top: -8px; right: -8px;
-    background: #883333; color: white; border: none;
-    border-radius: 50%; width: 16px; height: 16px;
-    font-size: 0.6rem; line-height: 1; cursor: pointer;
-    display: flex; justify-content: center; align-items: center;
-	display: none;
-}
-
-.chain-set-content {
-    display: flex;
-    flex-direction: row;
-    gap: 0.3rem;
-    
-    /* 修正重點：加入這行，強制這個容器填滿上一層 (.chain-set-group) 的空間 */
-    width: 100%;
-}
-
-.chain-timing-steps-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    flex-shrink: 0;
-}
-
-.chain-rows-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-	flex-shrink: 0;
-}
-.chain-steps-row-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.chain-steps-row {
-    display: flex;
-    gap: 0.2rem;
-    align-items: center;
-    flex-grow: 1; /* 讓連鎖步驟佔據大部分空間 */
-}
-
-.chain-step-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 25%; /* 確保 4 個格子平均分佈 */
-    flex-shrink: 0;
-}
+.chain-timing-steps-content { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+.chain-rows-group { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+.chain-steps-row-container { display: flex; align-items: center; gap: 10px; }
+.chain-steps-row { display: flex; gap: 0.2rem; align-items: center; flex-grow: 1; padding: 5px 0; }
+.chain-step-item { display: flex; flex-direction: row; align-items: center; width: 20%; flex-shrink: 0; }
 
 .chain-row-icon {
-    width: var(--slot-size); height: var(--slot-size);
-    border: 1.5px solid;
-	border-color: #555;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    background: var(--slot-bg);
-    margin-bottom: 2px;
+    width: var(--slot-size); height: var(--slot-size); border: 1.5px solid #555;
+    border-radius: 50%; overflow: hidden; cursor: pointer; background: var(--slot-bg);
+    margin-bottom: 2px; transition: border-color 0.1s;
 }
-
-.chain-row-icon img {
-    width: 100%; height: 100%; object-fit: cover;
-}
-.chain-row-icon.unselected {
-	border: 1.5px dashed #555;
-    border-color: #555;
-    background: #444;
-}
-
-.chain-row-icon.unselected img {
-    opacity: 0.5;
-}
+.chain-row-icon:hover { border-color: var(--accent); z-index: 10; }
+.chain-row-icon img { width: 100%; height: 100%; object-fit: cover; }
+.chain-row-icon.unselected { border: 1.5px dashed #555; background: #444; }
+.chain-row-icon.unselected img { opacity: 0.5; }
 
 .chain-time-input {
-    width: 2.5rem;
-    background: #333;
-    color: var(--text);
-    border: 1px solid #555;
-    border-radius: 0.2rem;
-    font-size: 0.7rem;
-    text-align: center;
-    padding: 1px 0;
+    width: 2.5rem; background: #333; color: var(--text); border: 1px solid #555;
+    border-radius: 0.2rem; font-size: 0.7rem; text-align: center; padding: 1px 0;
 }
 
 .chain-note-input {
-    /* --- 佈局設定 (解決縮放問題) --- */
-    flex: 1;              /* 關鍵：分配所有剩餘空間給這個輸入框 */
-    width: 100%;          /* 保險起見，確保寬度撐開 */
-    min-width: 0;         /* 防止 Flex 子元素溢出問題 */
-
-    /* --- 視覺設定 (解決不明顯問題) --- */
-    background-color: rgba(255, 255, 255, 0.1); /* 深色半透明背景，讓它與底色區分 */
-    border: 1px solid #444;               /* 給予明顯的邊框 */
-    border-radius: 4px;                   /* 圓角比較好看 */
-    color: #eee;                          /* 文字顏色 */
-    
-    /* --- 其他設定 --- */
-    padding: 4px 8px;     /* 內距，讓文字不要貼邊 */
-    font-size: 0.85rem;
-    line-height: 1.4;
-    resize: none;         /* 禁止手動拉大，由程式控制高度 */
-    
-    /* 確保有最小高度，方便點擊 */
-    min-height: 28px;
+    flex: 1; width: 100%; min-width: 0;
+    background-color: rgba(255, 255, 255, 0.1); border: 1px solid #444; border-radius: 4px; 
+    color: #eee; padding: 4px 8px; font-size: 0.85rem; line-height: 1.4; resize: none; min-height: 28px;
 }
-
-.chain-note-input:focus {
-    background-color: rgba(0, 0, 0, 0.6); /* 聚焦時背景變更深 */
-    border-color: var(--accent);          /* 邊框變亮 */
-    outline: none;
-}
-
+.chain-note-input:focus { background-color: rgba(0, 0, 0, 0.6); border-color: var(--accent); outline: none; }
 
 .btn-add-chain-step {
-    background: #333; color: #bbb; border: 1px dashed #555;
-    padding: 0.2rem; border-radius: 0.2rem;
-    font-size: 0.7rem; cursor: pointer;
-    transition: background 0.2s;
+    background: #333; color: #bbb; border: 1px dashed #555; padding: 0.2rem; 
+    border-radius: 0.2rem; font-size: 0.7rem; cursor: pointer; transition: background 0.2s;
 }
 .btn-add-chain-step:hover { background: #555; }
-
 .btn-remove-chain-row {
-    background: #444; 
-    color: white; 
-    border: none; 
-    border-radius: 0.3rem; 
-    width: 1rem; 
-    height: 1rem;
-    font-size: 0.7rem; 
-    line-height: 1; 
-    cursor: pointer;
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-    flex-shrink: 0;
+    background: #444; color: white; border: none; border-radius: 0.3rem; 
+    width: 1rem; height: 1rem; font-size: 0.7rem; line-height: 1; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; flex-shrink: 0;
 }
 
-.btn-add-chain-set-set {
-    position: absolute;
-    top: 0; right: 0;
-    width: 20px; height: 20px;
-    background: var(--accent); color: #222;
-    border-radius: 0.2rem;
-    display: flex; justify-content: center; align-items: center;
-    font-weight: bold; font-size: 1.2rem;
-    cursor: pointer;
-    transform: translate(50%, -50%);
-    z-index: 10;
-	display: none; /* 已隱藏 */
-}
-
-
-/* Modal */
+/* ==========================================================
+   6. 彈出視窗 (Modal)
+   ========================================================== */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: none; justify-content: center; align-items: center;
-    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8); display: none; justify-content: center; align-items: center; z-index: 1000;
 }
-
 .modal-content {
     background: var(--panel-bg); padding: 1.5rem; border-radius: 0.5rem;
-    width: 80%; max-width: 900px; max-height: 90vh;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    display: flex; flex-direction: column;
-	position :absolute;
+    width: 80%; max-width: 900px; max-height: 90vh; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    display: flex; flex-direction: column; position: absolute;
 }
+.modal-header h2 { margin: 0 0 10px 0; color: var(--accent); }
+.modal-close { position: absolute; top: 10px; right: 10px; font-size: 1.5rem; color: #aaa; cursor: pointer; }
+.modal-close:hover { color: #f00; }
 
-.modal-close {
-    position: absolute; top: 10px; right: 10px;
-    font-size: 1.5rem; color: #aaa; cursor: pointer;
-}
-.modal-close:hover {
-    position: absolute; top: 10px; right: 10px;
-    font-size: 1.5rem; color: #f00; cursor: pointer;
-}
-
-.search-bar {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 0.5rem;
-}
+.search-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem; }
 .search-input {
-    flex-grow: 1; padding: 0.4rem; background: #333;
-    border: 1px solid #555; color: var(--text);
-    border-radius: 0.2rem; font-size: 0.9rem;
+    flex-grow: 1; padding: 0.4rem; background: #333; border: 1px solid #555; 
+    color: var(--text); border-radius: 0.2rem; font-size: 0.9rem;
 }
+.checkbox-label { display: inline-flex; align-items: center; cursor: pointer; font-size: 0.9rem; color: #aaa; }
+.checkbox-label input { margin-right: 5px; }
 
-.tab-container {
-    display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.5rem;
-}
+.tab-container { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.5rem; }
 .tab-button {
-    background: #333; 
-    color: #aaa;       /* 預設未選中為灰色/白色 */
-    border: 1px solid #555;
-    padding: 0.3rem 0.6rem; 
-    border-radius: 0.2rem;
-    cursor: pointer; 
-    font-size: 0.8rem;
-    transition: all 0.2s; /* 加入過渡效果讓變色更滑順 */
+    background: #333; color: #aaa; border: 1px solid #555; padding: 0.3rem 0.6rem; 
+    border-radius: 0.2rem; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
 }
-.tab-button:hover {
-    background-color: #444; 
-    color: #fff;
-    border-color: #777;
-}
-
+.tab-button:hover { background-color: #444; color: #fff; border-color: #777; }
 .tab-button.active {
-    background: var(--accent) !important;  /* 強制背景變為金色 */
-    color: #000 !important;                /* 強制文字變為黑色 (高對比) */
-    border-color: var(--accent) !important;
-    font-weight: bold;
-    box-shadow: 0 0 5px rgba(255, 204, 0, 0.5); /* 加入發光效果更明顯 */
+    background: var(--accent) !important; color: #000 !important; border-color: var(--accent) !important;
+    font-weight: bold; box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
 }
-.tab-button.active:hover {
-    background-color: #ffbb00 !important; /* 保持激活狀態的懸停色 */
-}
+.tab-button.active:hover { background-color: #ffbb00 !important; }
 
 #grid-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); 
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); 
     gap: 0.5rem; overflow-y: auto; flex-grow: 1; padding: 2px;
 }
-@media (min-width: 700px) {
-    #grid-content {
-        grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
-    }
-}
-@media (min-width: 1000px) {
-    #grid-content {
-        grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
-    }
-}
+@media (min-width: 700px) { #grid-content { grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); } }
+@media (min-width: 1000px) { #grid-content { grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr)); } }
 
 .selection-grid-item {
-    background: #333; border: 1px solid #444; height: 10rem; 
-    cursor: pointer; position: relative; display: flex; flex-direction: column;
-    transition: transform 0.1s; border-radius: 0.3rem; overflow: hidden;
+    background: #333; border: 1px solid #444; height: 10rem; cursor: pointer; position: relative; 
+    display: flex; flex-direction: column; transition: transform 0.1s; border-radius: 0.3rem; overflow: hidden;
 }
-.selection-grid-item:hover{ border-color: var(--accent); transform: translateY(-2px); z-index: 10; }
-.slot:hover{ border-color: var(--accent); z-index: 10; }
-.hero-slot:hover{ border-color: var(--accent); transform: translateY(1px); z-index: 10; }
-.chain-row-icon:hover{ border-color: var(--accent); z-index: 10; }
+.selection-grid-item:hover { border-color: var(--accent); transform: translateY(-2px); z-index: 10; }
 
 .selection-icon-container {
-    display: flex; justify-content: center; align-items: center; 
-    overflow: hidden; padding: 0.3rem; background: #222; position: relative;
-	aspect-ratio: 1 / 1;
-	flex-grow: 0;
-    flex-shrink: 0; /* 確保它不會在 flex-direction: column 中被壓縮 */
+    display: flex; justify-content: center; align-items: center; overflow: hidden; 
+    padding: 0.3rem; background: #222; position: relative; aspect-ratio: 1 / 1; flex-shrink: 0;
 }
-.selection-icon-container > img:first-child { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-}
-
+.selection-icon-container > img:first-child { width: 100%; height: 100%; object-fit: cover; }
 
 .modal-item-name { background: #111; font-size: 0.7rem; text-align: center; padding: 2px; color: #fff; font-weight: bold; }
 .modal-hero-buff-summary {
     font-size: 0.6rem; padding: 3px; background: #1a1a1a; color: #bbb;
-    text-align: left; white-space: pre-wrap; line-height: 1.2; 
-    min-height: 2.2rem;
+    text-align: left; white-space: pre-wrap; line-height: 1.2; min-height: 2.2rem;
 }
-
 .weapon-chain-overlay {
-    position: absolute;
-    bottom: 0; left: 0;
-    background: rgba(0,0,0,0.8);
-    padding: 2px; border-top-right-radius: 0.3rem;
-    z-index: 5;
+    position: absolute; bottom: 0; left: 0; background: rgba(0,0,0,0.8);
+    padding: 2px; border-top-right-radius: 0.3rem; z-index: 5;
 }
 .weapon-chain-overlay img { width: 1.2rem; height: 1.2rem; object-fit: contain; }
 
-.btn-clear-slot {
-    background: #555; color: var(--text); padding: 0.4rem 0.8rem; border: none;
-    border-radius: 0.3rem; cursor: pointer; font-size: 0.9rem;
-}
+/* ==========================================================
+   7. 拖曳與特效 (Drag & Drop, Effects)
+   ========================================================== */
+.quadrant.dragging { opacity: 0.5; border: 2px dashed #ffcc00; transform: scale(0.98); }
+.quadrant.drag-over-quadrant { border: 2px dashed #fff; background: rgba(255, 255, 255, 0.05); }
 
-/* --- Drag and Drop 樣式 --- */
+.team-list.drag-over-container { background-color: rgba(255, 204, 0, 0.1); border: 2px dashed #555; }
+.team-container.drop-above { border-top: 4px solid var(--accent) !important; margin-top: -4px; }
+.team-container.drop-below { border-bottom: 4px solid var(--accent) !important; margin-bottom: -4px; }
 
-/* 可拖曳的元素游標 */
 .team-container[draggable="true"] .team-header,
-.member-container[draggable="true"] {
-    cursor: grab;
-}
-
+.member-container[draggable="true"] { cursor: grab; }
 .team-container[draggable="true"] .team-header:active,
-.member-container[draggable="true"]:active {
-    cursor: grabbing;
-}
+.member-container[draggable="true"]:active { cursor: grabbing; }
 
-/* 拖曳中的元素本體 (變半透明) */
-.dragging {
-    opacity: 0.4;
-    border: 2px dashed #ffcc00 !important;
-}
+.dragging { opacity: 0.4; border: 2px dashed #ffcc00 !important; }
+.drag-over { border: 2px dashed #fff !important; background-color: rgba(255, 255, 255, 0.1); transform: scale(1.02); }
 
-/* 拖曳經過的目標區域 (提示可以放開) */
-.drag-over {
-    border: 2px dashed #fff !important;
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: scale(1.02);
+/* 隊長特殊連鎖特效 (霓虹發光) */
+.chain-row-icon.is-leader {
+    border: 0px solid #ff5959; 
+    box-shadow: 0 0 10px #ff0000, 0 0 6px #ff0000;
+    position: relative; z-index: 10; 
+    animation: neon-pulse 1.5s infinite alternate;
 }
-
-/* 為了讓拖曳更順暢，防止圖片本身被瀏覽器預設拖曳行為干擾 */
-.member-container img {
-    pointer-events: none;
+@keyframes neon-pulse {
+    0% { box-shadow: 0 0 2px #ff0000, 0 0 5px #ff0000; }
+    100% { box-shadow: 0 0 8px #ff0000, 0 0 15px #ff0000; }
 }
