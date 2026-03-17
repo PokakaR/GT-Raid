@@ -1485,6 +1485,17 @@ const DB_HEROES = [
             sixStar: { ex1: { text: '技回+30%\n技傷+50%' } }
         }
     },
+	{ 
+        id: 'h132', name: '拉克里瑪', nameEn: 'Lacrima', element: 'light', rarity: 'unique',
+        chain: { ex1: { start: 'downed', end: 'injured' } }, 
+        allowWeapons: ['basket'], exclusiveWeapons: ['w132'], 
+        coreStates: { base: {}, ascended: null, sixStar: { hasImage: true } },
+		styles: ['april_fool'],
+        buffs: {
+            base: { ex1: { text: '一般攻+55%\n技傷+30%' } },
+            sixStar: { ex1: { text: '一般攻+60%\n技傷+35%' } }
+        }
+    },
     { 
         id: 's1', name: '莉娜', nameEn: 'Lina', element: 'fire', rarity: 'unique',
         chain: { ex1: { start: 'injured', end: 'airborne' } }, 
@@ -1741,6 +1752,7 @@ const DB_WEAPONS = [
 	{ id: 'w128', name: '掠奪者', nameEn: 'Marauder', type: 'bow', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w128_Marauder.png' },
 	{ id: 'w129', name: '維多利亞', nameEn: 'Victoria', type: '2h_sword', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/w129_Victoria.png' },
 	{ id: 'w131', name: '地精醫療包', nameEn: 'Gnome Medical Bag', type: 'basket', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/w131_Gnome Medical Bag.png' },
+	{ id: 'w132', name: '火山魔島書', nameEn: 'Volcanic Grimoire', type: 'basket', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/w132_Volcanic Grimoire.png' },
 	{ id: 's001', name: '魔血符', nameEn: 'Demons Blood Talisman', type: 'gauntlet', isExclusive: true, chainSkill: 'injured', icon: './images/weapons/s001_Demons Blood Talisman.png' },
 	{ id: 's002', name: '光之劍', nameEn: 'Sword of Light', type: '2h_sword', isExclusive: true, chainSkill: 'downed', icon: './images/weapons/s002_Sword of Light.png' },
 	{ id: 's003', name: '傑洛士的權杖', nameEn: 'Xellos Staff', type: 'staff', isExclusive: true, chainSkill: 'airborne', icon: './images/weapons/s003_Xellos Staff.png' },
